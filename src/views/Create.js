@@ -10,7 +10,7 @@ const Create = () => {
     <PageBase title="Create new Post"
       breadcrumb="Readable / Create Page">
       <Paper style={themeDefault.paper}>
-        <form>
+        <form style={themeDefault.form}>
           <TextField
             label="Name"
             defaultValue="Name"

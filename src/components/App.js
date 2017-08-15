@@ -8,6 +8,7 @@ import NotFoundPage from '../views/NotFoundPage.js';
 import UserPage from '../views/UserPage';
 import LoginPage from '../views/LoginPage';
 import PostPage from '../views/PostPage';
+import CategoriesPage from '../views/CategoriesPage';
 import Create from '../views/Create';
 import Dashboard from '../views/DashboardPage';
 import Header from '../components/Header';
@@ -64,6 +65,7 @@ class App extends Component {
                 <Route exact path="/" render={() => <Redirect exact from="/" to="/login" />} />
                 <Route path="/login" component={LoginPage} />
                 <Route path="/post" component={PostPage} />
+                <Route path="/categories" component={CategoriesPage} />
                 <Route exact path="/dashboard" component={Dashboard} />
                 <Route path="/create" component={Create} />
                 <Route path="/user" component={UserPage} />

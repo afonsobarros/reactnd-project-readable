@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PageBase from '../components/PageBase';
 import Post from '../components/Post';
 import themeDefault from '../theme-default';
+import Data from '../data';
 
 const DashboardPage = () => {
 

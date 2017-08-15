@@ -30,7 +30,7 @@ const themeDefault = createMuiTheme({
     width: 60,
     height: 60,
     backgroundColor: accent[500],
-    color:'white'
+    color: 'white'
   },
   appBar: {
     height: 57,
@@ -39,23 +39,15 @@ const themeDefault = createMuiTheme({
   card: {
     maxWidth: 400,
   },
-  raisedButton: {
-    primaryColor: primary[600],
-    color: 'white',
+  form: {
+
   },
-  page: {
-    width: '90%',
-    maxWidth: 900,
-    margin: '0 auto',
-    minHeight: 'calc( 100vh - 170px)'
-  },
-  paper: {
-    padding: '3% 2vw',
-  },
+
   drawer: {
     width: 236,
     color: grey[900]
   },
+
   actionsDiv: {
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -71,6 +63,20 @@ const themeDefault = createMuiTheme({
     position: 'fixed',
     backgroundColor: accent[500],
     color: 'white'
+  },
+
+  page: {
+    width: '90%',
+    maxWidth: 900,
+    margin: '0 auto',
+    minHeight: 'calc( 100vh - 170px)'
+  },
+  paper: {
+    padding: '3% 2vw',
+  },
+  raisedButton: {
+    primaryColor: primary[600],
+    color: 'white',
   },
   overrides: {
     /*
