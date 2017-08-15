@@ -7,4 +7,10 @@ body {
   padding: 0;
   font-family: sans-serif;
   font-family: 'Quicksand';
+  background:#fafafa
+}
+
+
+a{
+  text-decoration: none;
 }
