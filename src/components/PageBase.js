@@ -1,45 +1,64 @@
-import React, { PropTypes } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from 'react';
 import { Route, Switch } from 'react-router';
 
 import themeDefault from '../theme-default';
-import { Button, Divider } from 'material-ui/';
+import { Button, Divider } from 'material-ui';
 
-const PageBase = (props) => {
+import PostFormDialogue from './PostFormDialogue';
+import Data from '../data';
 
-  const { title, breadcrumb, children } = props;
 
-  return (
-    <div style={themeDefault.page}>
-      <span>{breadcrumb}</span>
-      <h2>{title}</h2>
-      <Divider />
-      <div className="row">
+
+class PageBase extends Component {
+
+  state = {
+    dialogueOpen: false,
+    newPostData:{}
+  };
+  openDialogue = event => {
+    this.setState({ dialogueOpen: true, anchorEl: event.currentTarget });
+  };
+  
+  handleRequestClose = value => {
+    this.setState({ newPostData: value, dialogueOpen: false });
+  };
+
+  render() {
+    const { title, breadcrumb, children } = this.props;
+
+    return (
+      <div style={themeDefault.page}>
+        <span>{breadcrumb}</span>
+        <h2 style={themeDefault.capitalize}>{title}</h2>
+        <Divider />
+        <div className="row">
 
           {children}
 
-      </div>
-      <Switch>
-        <Route exact path="/login" />
-        <Route exact path="/create" />
-        <Route path="*" >
-          <Link to="/create">
-            <Button fab 
-                    style={themeDefault.fabButton}
-                    aria-label="create" >
-              <i className="material-icons">playlist_add</i>
-            </Button>
-          </Link>
-        </Route>
-      </Switch>
-    </div>
-  );
-};
+        </div>
 
-PageBase.propTypes = {
-  title: PropTypes.string,
-  breadcrumb: PropTypes.string,
-  children: PropTypes.element
-};
+        <Switch>
+          <Route exact path="/login" />
+          <Route path="*" >
+            <div>
+              <PostFormDialogue
+                user={Data.user}
+                selectedValue={this.state.selectedValue}
+                open={this.state.dialogueOpen}
+                onRequestClose={this.handleRequestClose}
+              />
+              <Button fab
+                onClick={this.openDialogue}
+                style={themeDefault.fabButton}
+                aria-label="create" >
+                <i className="material-icons">playlist_add</i>
+              </Button>
+            </div>
+          </Route>
+        </Switch>
+      </div >
+    );
+  };
+}
 
 export default PageBase;

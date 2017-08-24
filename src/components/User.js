@@ -9,29 +9,38 @@ import Data from '../data';
 
 class User extends Component {
   state = {
-    remember: Data.user.remember,
+    isHuman: Data.user.isHuman,
     userName: Data.user.userName,
-    password: ''
+    password: Data.user.password
   };
 
   updateCheckbox = prop => (event, value) => {
     this.setState({ [prop]: value });
   };
   updateUser = (prop, value) => {
-    console.log('updateUser', prop, value)
-    Data.user[prop] = value; 
+    //console.log('updateUser', prop, value)
+    Data.user[prop] = value;
     this.setState({ [prop]: value });
   };
 
   render() {
-    const { remember, userName, password } = this.state;
-    const disabled = !remember || userName.length < 1 || password.length < 1
+    const { isHuman, userName, password } = this.state;
+    const disabled = !isHuman || (userName && userName.length < 1) || (password && password.length < 1)
     return (
-      <form >
+      <form style={themeDefault.login}>
+        <Switch>
+          <Route exact path="/login" />
+          <Route path="*" >
+            <h3 >Edit user details</h3>
+          </Route>
+        </Switch>
+
         <TextField
           label="Username"
           value={userName}
-          onChange={(event) => this.updateUser('userName', event.target.value )}
+          onChange={(event) => this.updateUser('userName', event.target.value)}
+          helperText="Username to identify your posts"
+          style={themeDefault.input}
         />
 
         <TextField
@@ -39,28 +48,30 @@ class User extends Component {
           type="password"
           value={password}
           onChange={event => this.setState({ password: event.target.value })}
+          helperText="Two characters are enough"
+          style={themeDefault.input}
         />
-
-        <Divider />
 
         <div>
           <FormControlLabel
             control={
               <Checkbox
-                checked={remember}
-                onChange={event => this.updateUser('remember', !remember )}
+                checked={isHuman}
+                onChange={event => this.updateUser('isHuman', !isHuman)}
               />
             }
-            label="Remember me"
+            label="I'm not a robot"
           />
 
         </div>
+        <Divider />
+
         <div>
           <Switch>
             <Route exact path="/login">
               <div style={themeDefault.actionsDiv}>
                 <span></span>
-                <Link to="/dashboard" onClick={e => { if (disabled) e.preventDefault() }}>
+                <Link to="/all" onClick={e => { if (disabled) e.preventDefault() }}>
                   <Button raised color="accent" disabled={disabled} style={themeDefault.raisedButton}>
                     Login
                   </Button>
@@ -70,16 +81,12 @@ class User extends Component {
             <Route path="*" >
               <div style={themeDefault.actionsDiv}>
                 <span></span>
-                <Link to="/dashboard" >
-                  <Button color="primary" style={themeDefault.raisedButton}>
+                <Link to="/all" >
+                  <Button raised color="primary" style={themeDefault.raisedButton}>
                     Cancel
                   </Button>
                 </Link>
-                <Link to="/login">
-                  <Button raised color="accent" style={themeDefault.raisedButton}>
-                    <i className="material-icons" >exit_to_app</i> Logout
-                </Button>
-                </Link>
+
               </div>
             </Route>
           </Switch>

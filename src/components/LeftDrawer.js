@@ -1,64 +1,116 @@
-import React, { PropTypes } from 'react';
-import { AppBar, Avatar, Drawer, List, ListItem, ListItemIcon, ListItemText, Toolbar, Typography } from 'material-ui/';
+import React, { Component } from 'react';
+import { AppBar, Divider, Drawer, ListItem, ListItemIcon, ListItemText, Toolbar, Typography } from 'material-ui/';
 import { Link } from 'react-router-dom';
 import themeDefault from '../theme-default';
 import Data from '../data';
+import UserAvatar from './UserAvatar';
+import PostFormDialogue from './PostFormDialogue';
 
-const LeftDrawer = (props) => {
-  let { navDrawerOpen, handleChangeRequestNavDrawer } = props;
-  const isMobile = window.innerWidth < 1000;
-  const isDocked = navDrawerOpen && !isMobile;
-  const menus = Data.menus;
-  let username = Data.user.userName;
-  let firstLetters = username.substring(0, 1).toUpperCase();
+class LeftDrawer extends Component {
 
-  if (username.split(" ").length > 1)
-    firstLetters += username.split(" ")[1].substring(0, 1).toUpperCase();
-  
-  return (
-    <Drawer
-      onClick={handleChangeRequestNavDrawer}
-      docked={isDocked}
-      open={navDrawerOpen}
-      style={themeDefault.drawer}>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography type="title" color="inherit" >
-            Menu
+  state = {
+    dialogueOpen: false,
+    newPostData: {}
+  };
+  openDialogue = event => {
+    event.preventDefault();
+    event.stopPropagation();
+    this.setState({ dialogueOpen: true, anchorEl: event.currentTarget });
+  };
+
+  closeDialogue = value => {
+    this.setState({ newPostData: value, dialogueOpen: false });
+    this.props.handleChangeRequestNavDrawer();
+  };
+
+  render() {
+    let { navDrawerOpen, handleChangeRequestNavDrawer, isMobile } = this.props;
+    const isDocked = navDrawerOpen && !isMobile;
+    const menus = Data.menus;
+    const categories = Data.Categories;
+    let username = Data.user.userName;
+
+    return (
+      <Drawer
+        onClick={handleChangeRequestNavDrawer}
+        docked={isDocked}
+        open={navDrawerOpen}
+        style={themeDefault.drawer}>
+        <AppBar position="static">
+          <Toolbar>
+            <Typography type="title" color="inherit" >
+              Menu
           </Typography>
-        </Toolbar>
-      </AppBar>
+          </Toolbar>
+        </AppBar>
 
-      <div style={themeDefault.drawer}>
-        <List>
-          <Link to="/user">
-            <ListItem button>
-              <ListItemIcon>
-                <Avatar style={themeDefault.avatar}>{firstLetters}</Avatar>
-              </ListItemIcon>
-              <ListItemText primary={username} />
-            </ListItem>
-          </Link>
-          {menus.map((menu, index) =>
-            <Link to={menu.link} key={index}>
+        <div style={themeDefault.drawer}>
+
+          <div style={themeDefault.menu}>
+            
+            <Link to="/user">
               <ListItem button>
                 <ListItemIcon>
-                  {menu.icon}
+                  <UserAvatar username={username} />
                 </ListItemIcon>
-                <ListItemText primary={menu.text} secondary={menu.description} />
+                <ListItemText primary={username} />
               </ListItem>
             </Link>
-          )}
-        </List>
-      </div>
-    </Drawer >
-  );
+            <Link to={'/all'}>
+              <ListItem button>
+                <ListItemIcon>
+                  <i className="material-icons" >filter_list</i>
+                </ListItemIcon>
+                <ListItemText primary='all posts' secondary='/all' />
+              </ListItem>
+            </Link>
+            {categories.map((menu, index) =>
+              <Link to={'/' + menu.name} key={index}>
+                <ListItem button>
+                  <ListItemIcon>
+                    <i className="material-icons" >filter_list</i>
+                  </ListItemIcon>
+                  <ListItemText primary={menu.name + ' posts'} secondary={'/' + menu.path} />
+                </ListItem>
+              </Link>
+            )}
+            <Divider />
+
+          </div>
+
+          <div style={themeDefault.menu}>
+            <Divider />
+
+            <PostFormDialogue
+              user={Data.user}
+              selectedValue={this.state.selectedValue}
+              open={this.state.dialogueOpen}
+              onRequestClose={this.closeDialogue}
+            />
+
+            <ListItem button onClick={this.openDialogue}            >
+              <ListItemIcon>
+                <i className="material-icons">playlist_add</i>
+              </ListItemIcon>
+              <ListItemText primary="New Post" secondary="Create a new Post" />
+            </ListItem>
+
+            {menus.map((menu, index) =>
+              <Link to={menu.link} key={index}>
+                <ListItem button>
+                  <ListItemIcon>
+                    {menu.icon}
+                  </ListItemIcon>
+                  <ListItemText primary={menu.text} secondary={menu.description} />
+                </ListItem>
+              </Link>
+            )}
+          </div>
+        </div>
+      </Drawer >
+    );
+  }
 };
 
-LeftDrawer.propTypes = {
-  navDrawerOpen: PropTypes.bool,
-  menus: PropTypes.array,
-  username: PropTypes.string,
-};
 
 export default LeftDrawer;

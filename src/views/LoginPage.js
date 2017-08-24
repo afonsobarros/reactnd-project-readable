@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PageBase from '../components/PageBase';
 import User from '../components/User';
-import { Paper} from 'material-ui/';
+import { Paper } from 'material-ui/';
 import themeDefault from '../theme-default';
 
 

@@ -11,6 +11,8 @@ body {
 }
 
 
-a{
+a,
+*[class^="MuiListItem-button"]{
   text-decoration: none;
+  outline:none !important;
 }

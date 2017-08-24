@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 import { Link } from 'react-router-dom'
 import { AppBar, IconButton, Menu, MenuItem, Toolbar, Typography } from 'material-ui/';
-import themeDefault from '../theme-default';
 
 class Header extends Component {
 
@@ -67,9 +65,5 @@ class Header extends Component {
     );
   }
 }
-
-Header.propTypes = {
-  handleChangeRequestNavDrawer: PropTypes.func
-};
 
 export default Header;

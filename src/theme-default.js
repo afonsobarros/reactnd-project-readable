@@ -26,10 +26,22 @@ const themeDefault = createMuiTheme({
     grey: grey
     //type:'dark'
   }),
+  actionsDiv: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
   avatar: {
     width: 60,
     height: 60,
     backgroundColor: accent[500],
+    color: 'white'
+  },
+  avatarSmall: {
+    width: 35,
+    height: 35,
+    backgroundColor: grey[500],
     color: 'white'
   },
   appBar: {
@@ -37,23 +49,55 @@ const themeDefault = createMuiTheme({
     color: primary[600]
   },
   card: {
-    maxWidth: 400,
+    position: 'relative',
+    width: '100%',
+    margin: '0 auto',
+    padding: '5% auto',
+  },
+  cardNoShadow:{
+    position: 'relative',
+    width: '100%',
+    margin: '0 auto',
+    padding: '5% auto',
+    boxShadow:'none',
+  },
+  cardList: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    overflow: 'visible',
+    width: '100%'
+  },
+  chip: {
+    position: 'absolute',
+    cursor: 'pointer',
+    top: '16px',
+    right: '16px',
+  },
+  capitalize:{
+
   },
   form: {
 
   },
-
+  input: {
+    margin: '3% 3% 3% 0',
+    width: '47%'
+  },
+  inputFull: {
+    margin: '3% 0',
+    width: '95%'
+  },
   drawer: {
     width: 236,
-    color: grey[900]
+    color: grey[900],
+    flexDirection: 'column',
+    flex: '1',
+    justifyContent: 'space-between',
+    display: 'flex'
   },
 
-  actionsDiv: {
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
+
   fabButton: {
     margin: 0,
     top: 'auto',
@@ -64,10 +108,14 @@ const themeDefault = createMuiTheme({
     backgroundColor: accent[500],
     color: 'white'
   },
-
+  menu: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+  },
   page: {
     width: '90%',
-    maxWidth: 900,
+    maxWidth: 1200,
     margin: '0 auto',
     minHeight: 'calc( 100vh - 170px)'
   },
@@ -78,7 +126,36 @@ const themeDefault = createMuiTheme({
     primaryColor: primary[600],
     color: 'white',
   },
+
+  overflow: {
+    overflow: 'visible',
+  },
   overrides: {
+    MuiDivider: {
+      root: {
+        margin: '2% 0'
+      }
+    },
+    MuiCardActions: {
+      root: {
+        flexFlow: 'row-reverse'
+      }
+    },
+    MuiGridList: {
+      root: {
+        width: '100%',
+      },
+    },
+    MuiGridListTile: {
+      root: {
+        overflow: 'visible',
+      },
+      tile: {
+        overflow: 'visible',
+        width: '100%',
+        
+      }
+    }
     /*
     MuiButton: {
       // Name of the styleSheet
@@ -95,8 +172,6 @@ const themeDefault = createMuiTheme({
     },
     */
   },
-
 });
-console.log('aqui accent', accent)
 
 export default themeDefault;

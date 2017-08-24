@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router';
-import { withStyles, createStyleSheet } from 'material-ui/styles';
-import classnames from 'classnames';
-
 import { Link } from 'react-router-dom'
-import { Avatar, Button, IconButton, Card, CardHeader, CardMedia, CardContent, CardActions, Typography } from 'material-ui';
+
+import { withStyles, createStyleSheet } from 'material-ui/styles';
+
+import { Avatar, Badge, Chip, Divider, IconButton, Card, CardHeader, CardContent, CardActions, TextField, Typography } from 'material-ui';
 import Collapse from 'material-ui/transitions/Collapse';
 
 import themeDefault from '../theme-default';
 
+import UserAvatar from './UserAvatar';
 import Data from '../data';
 
 
@@ -29,84 +29,111 @@ const styleSheet = createStyleSheet(theme => ({
 }));
 
 class Post extends Component {
-   state = { expanded: false };
+  state = { expanded: false };
 
   handleExpandClick = () => {
     this.setState({ expanded: !this.state.expanded });
   };
 
   render() {
-    const classes = this.props.classes;
+    const { classes, post, insidedialogue } = this.props;
+    const date = post && post.timestamp ? new Date(post.timestamp).toDateString() : '';
+    let comments = [];
+
+    Object.keys(Data.Comments)
+      .map((comment, index) => {
+        if (Data.Comments[comment].parentId === post.id)
+          comments.push(Data.Comments[comment])
+        return true
+      });
 
     return (
       <div>
-        <Card style={themeDefault.card}>
+        <Card style={ !insidedialogue ? themeDefault.card : themeDefault.cardNoShadow}>
+          <Link to={"/" + post.category}>
+            <Chip style={themeDefault.chip}
+              avatar={<Avatar>{post.category[0]}</Avatar>}
+              label={post.category} />
+          </Link>
           <CardHeader
             avatar={
-              <Avatar aria-label="Avatar" style={themeDefault.avatar}>
-                R
-              </Avatar>
+              <UserAvatar username={post.author} />
             }
-            title="Shrimp and Chorizo Paella"
-            subheader="September 14, 2016"
+            title={post.author}
+            subheader={date}
           />
-          <CardMedia>
-            <img src={`http://lorempixel.com/400/200/business/`} alt="Contemplative Reptile" />
-          </CardMedia>
+          <Divider />
+
           <CardContent>
+
+            <Typography type="headline" >
+              {post.title}
+            </Typography>
             <Typography component="p">
-              This impressive paella is a perfect party dish and a fun meal to cook together with
-              your guests. Add 1 cup of frozen peas along with the mussels, if you like.
+              {post.body}
             </Typography>
           </CardContent>
-          <CardActions disableActionSpacing>
-            <IconButton aria-label="Add to favorites">
-              <i className="material-icons">favorite</i>
-            </IconButton>
-            <IconButton aria-label="Share">
-              <i className="material-icons">share</i>
-            </IconButton>
-            <div className={classes.flexGrow} />
-            <IconButton
-              className={classnames(classes.expand, {
-                [classes.expandOpen]: this.state.expanded,
-              })}
-              onClick={this.handleExpandClick}
-              aria-expanded={this.state.expanded}
-              aria-label="Show more"
-            >
-              <i className="material-icons">expand_more</i>
-            </IconButton>
-          </CardActions>
-          <Collapse in={this.state.expanded} transitionDuration="auto" unmountOnExit>
-            <CardContent>
-              <Typography paragraph type="body2">
-                Method:
-              </Typography>
-              <Typography paragraph>
-                Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
-                minutes.
-              </Typography>
-              <Typography paragraph>
-                Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high
-                heat. Add chicken, shrimp and chorizo, and cook, stirring occasionally until lightly
-                browned, 6 to 8 minutes. Transfer shrimp to a large plate and set aside, leaving
-                chicken and chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes, onion,
-                salt and pepper, and cook, stirring often until thickened and fragrant, about 10
-                minutes. Add saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-              </Typography>
-              <Typography paragraph>
-                Add rice and stir very gently to distribute. Top with artichokes and peppers, and
-                cook without stirring, until most of the liquid is absorbed, 15 to 18 minutes.
-                Reduce heat to medium-low, add reserved shrimp and mussels, tucking them down into
-                the rice, and cook again without stirring, until mussels have opened and rice is
-                just tender, 5 to 7 minutes more. (Discard any mussels that don’t open.)
-              </Typography>
-              <Typography>
-                Set aside off of the heat to let rest for 10 minutes, and then serve.
-              </Typography>
-            </CardContent>
-          </Collapse>
+          <div>
+            <Divider />
+
+            <CardActions >
+              <IconButton aria-label="Rating" color="primary">
+                <Badge badgeContent={post.voteScore} color="accent">
+                  <i className="material-icons">stars</i>
+                </Badge>
+              </IconButton>
+              <IconButton aria-label="Vote up" >
+                <i className="material-icons">thumb_up</i>
+              </IconButton>
+              <IconButton aria-label="Vote down">
+                <i className="material-icons">thumb_down</i>
+              </IconButton>
+
+              <div className={classes.flexGrow} />
+              <IconButton
+                onClick={this.handleExpandClick}
+                color="primary"
+              >
+                <Badge badgeContent={comments.length} color="accent">
+                  <i className="material-icons">comment</i>
+                </Badge>
+              </IconButton>
+            </CardActions>
+            <Collapse in={this.state.expanded} transitionDuration="auto" unmountOnExit>
+              <Divider />
+              <CardContent>
+                {
+                  comments.map((comment, index) =>
+                    <div key={index}>
+                      <CardHeader
+                        avatar={
+                          <UserAvatar small={true} username={comment.author} />
+                        }
+                        title={comment.author}
+                        subheader={new Date(comment.timestamp).toDateString()}
+                      />
+                      <CardContent>
+                        <Typography type="title" gutterBottom={true}>
+                          {comment.body}
+                        </Typography>
+                        <Divider />
+                      </CardContent>
+                    </div>
+
+                  )
+                }
+
+                <TextField
+                  multiline
+                  label="Add a comment"
+                  helperText="Please don't be a troll..."
+                  rowsMax="4"
+                  style={themeDefault.inputFull}
+                />
+
+              </CardContent>
+            </Collapse>
+          </div>
         </Card>
       </div>
     );

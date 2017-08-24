@@ -1,69 +1,65 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { IconButton, Menu, MenuItem } from 'material-ui/';
-import themeDefault from '../theme-default';
+import { Route, Switch } from 'react-router';
+
+
 import PageBase from '../components/PageBase';
-import Post from '../components/Post';
+import PostDetailDialogue from '../components/PostDetailDialogue';
+import PostGrid from '../components/PostGrid';
 import Data from '../data';
 
 class CategoriesPage extends Component {
 
   state = {
-    open: false,
-    anchorEl: undefined,
+    dialogueOpen: true,
+    newPostData: {}
+  };
+  openDialogue = event => {
+    event.preventDefault();
+    event.stopPropagation();
+    this.setState({ dialogueOpen: true, anchorEl: event.currentTarget });
   };
 
-  handleClick = event => {
-    this.setState({ open: true, anchorEl: event.currentTarget });
-  };
-
-  handleRequestClose = () => {
-    this.setState({ open: false });
+  closeDialogue = value => {
+    this.setState({ newPostData: value, dialogueOpen: false });
+    //this.props.handleChangeRequestNavDrawer();
   };
 
   render() {
+    const { match, isMobile } = this.props;
 
-    const categories = Data.Categories;
+    const currentCat = match.params['category'] || 'all';
+    const currentPost = match.params['post_id'] || '';
 
+    let user = Data.user;
+    let post = Data.Posts[currentPost];
+    let categories = [];
+    Object.keys(Data.Categories)
+      .map((category, index) =>
+        categories.push(Data.Categories[category])
+      );
+    console.log('this.props', this.props, match.params)
+    
     return (
 
-      <PageBase title="Categories Page"
+      <PageBase title={currentCat}
         breadcrumb="Readable / Categories Page">
-        <div>
-          <div style={themeDefault.actionsDiv}>
-            <span></span>
-            <IconButton
-              color="contrast"
-              aria-label="More"
-              aria-owns={this.state.open ? 'long-menu' : null}
-              aria-haspopup="true"
-              onClick={this.handleClick}
-              color="accent" 
-            >
-              <i className="material-icons">filter_list</i>
-            </IconButton>
-            <Menu
-              anchorEl={this.state.anchorEl}
-              open={this.state.open}
-              onRequestClose={this.handleRequestClose}
-              
-            >
-            { categories.map( (category, index) =>
-                <Link to={`/categories/${category.path}`} key={index}>
-                  <MenuItem onClick={this.handleRequestClose}>
-                    {category.name}
-                  </MenuItem>
-                </Link>
-              )
-            }
-              
-            </Menu>
-          </div>
-          <Link to="/post">
-            <Post />
-          </Link>
-        </div>
-
+        <Switch>
+          <Route path="/:category/:post_id" >
+            <div>
+              <h2>asdasdasdsd</h2>
+              <PostDetailDialogue
+                selectedValue={this.state.selectedValue}
+                open={true}
+                onRequestClose={this.closeDialogue}
+                post={post}
+                user={user}
+                category={currentCat}
+              />
+            </div>
+          </Route>
+          <Route path="*" />
+        </Switch>
+        <PostGrid isMobile={isMobile} posts={Data.Posts} currentCat={currentCat} categories={categories} />
       </PageBase>
     );
   };
