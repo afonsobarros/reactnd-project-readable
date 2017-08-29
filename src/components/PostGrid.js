@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { IconButton, Menu, MenuItem } from 'material-ui/';
+import { Button, IconButton, Menu, MenuItem } from 'material-ui/';
 import { GridList, GridListTile } from 'material-ui/GridList';
 import themeDefault from '../theme-default';
 import Post from '../components/Post';
@@ -98,7 +98,8 @@ class PostGrid extends Component {
         </div>
         <div style={themeDefault.cardList}>
           <GridList cellHeight={'auto'} spacing={50} cols={isMobile && window.innerWidth < 900 ? 1 : 2}>
-            {filteredPosts.map((post, index) =>
+            {
+              filteredPosts.map((post, index) =>
               <GridListTile key={index} cols={1} >
                 <Link key={index}
                   to={`/${currentCat}/${post.id}`}>
@@ -106,7 +107,13 @@ class PostGrid extends Component {
                 </Link>
               </GridListTile>,
             )}
+            
           </GridList>
+          {
+              filteredPosts.length < 1 
+              ? <p style={themeDefault.noResult}> no posts found for <b>"{currentCat}"</b>.<br/><br/>Try another category, or <Link to="/all"><Button >view all</Button></Link></p>
+              : null
+            }
         </div>
       </div>
 

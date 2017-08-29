@@ -37,7 +37,7 @@ class CategoriesPage extends Component {
       .map((category, index) =>
         categories.push(Data.Categories[category])
       );
-    console.log('this.props', this.props, match.params)
+    //console.log('this.props', this.props, match.params)
     
     return (
 
@@ -46,7 +46,6 @@ class CategoriesPage extends Component {
         <Switch>
           <Route path="/:category/:post_id" >
             <div>
-              <h2>asdasdasdsd</h2>
               <PostDetailDialogue
                 selectedValue={this.state.selectedValue}
                 open={true}

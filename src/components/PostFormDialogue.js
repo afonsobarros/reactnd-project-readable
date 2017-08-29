@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import themeDefault from '../theme-default';
-import { Avatar,  Button, Chip, CardHeader, CardContent, Divider, Menu, MenuItem, TextField } from 'material-ui';
+import { Avatar, Button, Chip, CardHeader, CardContent, Divider, Menu, MenuItem, TextField } from 'material-ui';
 import UserAvatar from './UserAvatar';
 import Dialog, {
   DialogActions,
@@ -29,7 +29,7 @@ class PostFormDialogue extends Component {
     let post = this.state.post;
     post[prop] = value;
     this.setState({ post });
-    
+
   };
 
   handleRequestClose = () => {
@@ -67,7 +67,7 @@ class PostFormDialogue extends Component {
     const { classes, onRequestClose, selectedValue, user, ...other } = this.props;
     const categories = [];
     Object.keys(Data.Categories)
-      .map((category, index) => 
+      .map((category, index) =>
         categories.push(Data.Categories[category])
       );
 
@@ -89,11 +89,13 @@ class PostFormDialogue extends Component {
             />
             <CardContent>
 
-              <Chip avatar={
-                <Avatar>{categories[this.state.selectedIndex].name[0]}</Avatar>
-              }
+              <Chip
+                avatar={
+                  <Avatar>{categories[this.state.selectedIndex].name[0]}</Avatar>
+                }
                 label={categories[this.state.selectedIndex].name}
-                onClick={this.handleClickListItem} />
+                onClick={this.handleClickListItem} 
+                style={themeDefault.chip}/>
               <Menu
                 id="cat-menu"
                 anchorEl={this.state.anchorEl}

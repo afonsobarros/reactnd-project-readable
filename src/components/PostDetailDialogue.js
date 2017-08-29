@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router';
 import { Link } from 'react-router-dom'
 
 import themeDefault from '../theme-default';
-import { Avatar, Badge, Button, Chip, CardHeader, CardContent, Divider, Menu, MenuItem, TextField, Typography } from 'material-ui';
-import UserAvatar from './UserAvatar';
+import { Button, TextField } from 'material-ui';
 import Dialog, {
   DialogActions,
   DialogContent,
-  DialogTitle,
 } from 'material-ui/Dialog';
-import List, { ListItem, ListItemText } from 'material-ui/List';
 import Post from './Post';
-import Data from '../data';
 
 class PostDetailDialogue extends Component {
 
@@ -30,7 +25,10 @@ class PostDetailDialogue extends Component {
 
   button = undefined;
   updatePost = (prop, value) => {
-    this.state.post[prop] = value;
+    let post = this.state.post;
+    post[prop] = value
+    this.setState({ post });
+
   };
 
   handleRequestClose = () => {
@@ -66,28 +64,36 @@ class PostDetailDialogue extends Component {
     }*/
 
     const { classes, onRequestClose, selectedValue, post, user, category, categories, ...other } = this.props;
-    const date = post && post.timestamp ? new Date(post.timestamp).toDateString() : '';
-    console.log('post', post)
+    //console.log('post', post)
     return (
-      post 
-      ? <Dialog onRequestClose={this.handleRequestClose} {...other}>
-        <form>
-          <DialogContent>
-            <Post post={post} insidedialogue={true} />
-          </DialogContent>
-          <DialogActions>
-            <Link to={`/${category}`}>
-              <Button raised onClick={this.handleRequestClose} color="primary" style={themeDefault.raisedButton}>
-                cancel
-            </Button>
-            </Link>
-            <Button raised color="accent" onClick={this.handleRequestClose} style={themeDefault.raisedButton}>
-              save
-            </Button>
-          </DialogActions>
-        </form>
-      </Dialog>
-      : null
+      post
+        ? <Dialog onRequestClose={this.handleRequestClose} {...other}>
+          <form>
+            <DialogContent>
+              <Post post={post} insidedialogue={true} />
+            </DialogContent>
+            <DialogActions>
+              <div style={themeDefault.actionsDiv}>
+                <TextField
+                  multiline
+                  label="Add a comment"
+                  helperText="Please don't be a troll..."
+                  rowsMax="4"
+                  style={themeDefault.inputFullActions}
+                />
+                <Link to={`/${category}`}>
+                  <Button raised onClick={this.handleRequestClose} color="primary" style={themeDefault.raisedButton}>
+                    cancel
+                </Button>
+                </Link>
+                <Button raised color="accent" onClick={this.handleRequestClose} style={themeDefault.raisedButton}>
+                  save
+              </Button>
+              </div>
+            </DialogActions>
+          </form>
+        </Dialog>
+        : null
     );
   }
 }

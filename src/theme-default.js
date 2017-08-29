@@ -1,4 +1,4 @@
-import { blueGrey, cyan, amber, grey, white } from 'material-ui/colors';
+import { blueGrey, cyan, amber, grey, white, red, green } from 'material-ui/colors';
 import { createMuiTheme } from 'material-ui/styles';
 import createPalette from 'material-ui/styles/palette';
 
@@ -23,7 +23,8 @@ const themeDefault = createMuiTheme({
       contrastDefaultColor: 'dark'
     },
     white: white,
-    grey: grey
+    grey: grey,
+    warn:red
     //type:'dark'
   }),
   actionsDiv: {
@@ -54,12 +55,12 @@ const themeDefault = createMuiTheme({
     margin: '0 auto',
     padding: '5% auto',
   },
-  cardNoShadow:{
+  cardNoShadow: {
     position: 'relative',
     width: '100%',
     margin: '0 auto',
     padding: '5% auto',
-    boxShadow:'none',
+    boxShadow: 'none',
   },
   cardList: {
     display: 'flex',
@@ -69,12 +70,19 @@ const themeDefault = createMuiTheme({
     width: '100%'
   },
   chip: {
+    cursor: 'pointer',
+    top: '16px',
+    right: '16px',
+    textTransform: 'capitalize'
+  },
+  shipAbsolute:{
     position: 'absolute',
     cursor: 'pointer',
     top: '16px',
     right: '16px',
+    textTransform: 'capitalize'
   },
-  capitalize:{
+  capitalize: {
 
   },
   form: {
@@ -88,6 +96,10 @@ const themeDefault = createMuiTheme({
     margin: '3% 0',
     width: '95%'
   },
+  inputFullActions: {
+    margin: '24px 24px 24px 0',
+    flex: '1'
+  },
   drawer: {
     width: 236,
     color: grey[900],
@@ -96,7 +108,9 @@ const themeDefault = createMuiTheme({
     justifyContent: 'space-between',
     display: 'flex'
   },
-
+  flexGrow: {
+    flex: '1 1 auto',
+  },
 
   fabButton: {
     margin: 0,
@@ -108,10 +122,17 @@ const themeDefault = createMuiTheme({
     backgroundColor: accent[500],
     color: 'white'
   },
+  commentsContainer:{
+    marginTop:'24px',
+    padding:'0 24px'
+  },
   menu: {
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
+  },
+  noResult:{
+    textAlign:'center'
   },
   page: {
     width: '90%',
@@ -125,10 +146,20 @@ const themeDefault = createMuiTheme({
   raisedButton: {
     primaryColor: primary[600],
     color: 'white',
+    width:'auto',
+    margin: '16px 0 16px 16px'
   },
-
+  noPadding: {
+    padding: 0
+  },
   overflow: {
     overflow: 'visible',
+  },
+  warnColor: {
+    color:red[900]
+  },
+  greenColor: {
+    color:green[900]
   },
   overrides: {
     MuiDivider: {
@@ -139,6 +170,12 @@ const themeDefault = createMuiTheme({
     MuiCardActions: {
       root: {
         flexFlow: 'row-reverse'
+      }
+    },
+    MuiCardContent: {
+      root: {
+        maxHeight: '20vh',
+        overflow: 'auto',
       }
     },
     MuiGridList: {
@@ -153,8 +190,17 @@ const themeDefault = createMuiTheme({
       tile: {
         overflow: 'visible',
         width: '100%',
-        
+
       }
+    },
+    MuiDialogActions: {
+      root:{
+        margin: 0,
+        padding: '0 24px'
+      },
+      action:{
+        //width: '100%'
+       }
     }
     /*
     MuiButton: {
