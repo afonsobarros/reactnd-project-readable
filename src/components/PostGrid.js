@@ -8,6 +8,7 @@ import Post from '../components/Post';
 class PostGrid extends Component {
 
   state = {
+    orderBy: 'timestamp',
     filterOpen: false,
     orderOpen: false,
     anchorEl: undefined,
@@ -21,12 +22,12 @@ class PostGrid extends Component {
     this.setState({ filterOpen: true, anchorEl: event.currentTarget });
   };
 
-  handleRequestClose = () => {
-    this.setState({ filterOpen: false, orderOpen: false });
-  };
+  orderBy = (val) => {
+    this.setState({ orderBy: val, filterOpen: false, orderOpen: false });
+  }
 
   render() {
-    const { categories, currentCat, posts, isMobile } = this.props;
+    const { categories, orderBy, currentCat, posts, isMobile } = this.props;
     let filteredPosts = [];
 
     Object.keys(posts)
@@ -36,6 +37,8 @@ class PostGrid extends Component {
         return true
       }
       );
+
+    filteredPosts.sort(function (a, b) { return b[orderBy] - a[orderBy] });
 
     return (
       <div>
@@ -56,11 +59,11 @@ class PostGrid extends Component {
               open={this.state.orderOpen}
               onRequestClose={this.handleRequestClose}
             >
-              <MenuItem onClick={this.handleRequestClose}>
+              <MenuItem selected={orderBy === 'timestamp'} onClick={this.orderBy('timestamp')}>
                 date
               </MenuItem>
-              <MenuItem onClick={this.handleRequestClose}>
-                rating
+              <MenuItem selected={orderBy === 'voteScore'} onClick={this.orderBy('voteScore')}>
+                votes
               </MenuItem>
             </Menu>
 
@@ -100,20 +103,20 @@ class PostGrid extends Component {
           <GridList cellHeight={'auto'} spacing={50} cols={isMobile && window.innerWidth < 900 ? 1 : 2}>
             {
               filteredPosts.map((post, index) =>
-              <GridListTile key={index} cols={1} >
-                <Link key={index}
-                  to={`/${currentCat}/${post.id}`}>
-                  <Post post={post} />
-                </Link>
-              </GridListTile>,
-            )}
-            
+                <GridListTile key={index} cols={1} >
+                  <Link key={index}
+                    to={`/${currentCat}/${post.id}`}>
+                    <Post post={post} />
+                  </Link>
+                </GridListTile>,
+              )}
+
           </GridList>
           {
-              filteredPosts.length < 1 
-              ? <p style={themeDefault.noResult}> no posts found for <b>"{currentCat}"</b>.<br/><br/>Try another category, or <Link to="/all"><Button >view all</Button></Link></p>
+            filteredPosts.length < 1
+              ? <p style={themeDefault.noResult}> no posts found for <b>"{currentCat}"</b>.<br /><br />Try another category, or <Link to="/all"><Button >view all</Button></Link></p>
               : null
-            }
+          }
         </div>
       </div>
 

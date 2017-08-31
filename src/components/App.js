@@ -11,22 +11,55 @@ import Header from '../components/Header';
 import LeftDrawer from '../components/LeftDrawer';
 import withWidth from 'material-ui/utils/withWidth';
 
+import { Snackbar } from 'material-ui'
+import { CircularProgress } from 'material-ui/Progress';
+
+import * as ReadableAPI from '../utils/ReadableAPI';
+
+import { connect } from 'react-redux'
+import { toggleSidenav, hideLoading, showLoading, hideSnackbar} from '../actions/appState'
+import { updateUser } from '../actions/user'
+
 
 class App extends Component {
-  state = {
-    navDrawerOpen: false
-  };
+  totalLoad = 0;
+
+  componentDidMount = () => {
+    this.props.showLoading();
+
+    ReadableAPI.getUser()
+      .then((res) => this.props.updateUser(res));
+
+    ReadableAPI.getPosts()
+      .then((posts) => this.onDataLoad('posts', posts));
+
+    ReadableAPI.getCategories()
+      .then((categories) => this.onDataLoad('categories', categories));
+
+    ReadableAPI.getComments()
+      .then((comments) => this.onDataLoad('comments', comments));
+  }
+
+  onDataLoad = (prop, val) => {
+    this.totalLoad++;
+    console.log('onDataLoad', prop, val)
+    if (this.totalLoad >= 3) {
+      this.props.hideLoading()
+    }
+  }
+
+  handleSnackRequestClose(){
+    this.props.hideSnackbar()
+  }
 
   handleChangeRequestNavDrawer() {
-    //console.log('handleChangeRequestNavDrawer', !this.state.navDrawerOpen)
-    this.setState({
-      navDrawerOpen: !this.state.navDrawerOpen
-    });
+    this.props.toggleSidenav(!this.props.navDrawerOpen)
   }
 
   render() {
-    let { navDrawerOpen } = this.state;
-    let { width } = this.props;
+    const { width } = this.props;
+    const { navDrawerOpen, isLoading, snackBarOpen, snackBarMessage } = this.props.appState;
+
     const paddingLeftDrawerOpen = themeDefault.drawer.width;
     const isMobile = width !== 'lg' && width !== 'xl';
 
@@ -53,26 +86,40 @@ class App extends Component {
                     <Header
                       handleChangeRequestNavDrawer={this.handleChangeRequestNavDrawer.bind(this)} />
                     <LeftDrawer navDrawerOpen={navDrawerOpen}
-                                handleChangeRequestNavDrawer={this.handleChangeRequestNavDrawer.bind(this)}
-                                isMobile ={isMobile}/>
+                      handleChangeRequestNavDrawer={this.handleChangeRequestNavDrawer.bind(this)}
+                      isMobile={isMobile} />
                   </div>
                 </Route>
               </Switch>
 
             </div>
             <div style={styles.container}>
-              <Switch>
-                <Route path="/login" component={LoginPage} />
-                <Route path="/user" component={UserPage} />
-                <Route exact path="/:category" render={(props) => (
-                  <CategoriesPage isMobile={isMobile} match={props.match} />
-                )} />
-                <Route path="/:category/:post_id" render={(props) => (
-                  <CategoriesPage isMobile={isMobile} match={props.match} />
-                )} />
-                <Route path="*" component={NotFoundPage} />
-              </Switch>
+
+              {
+                !isLoading
+                  ? <Switch>
+                    <Route path="/login" component={LoginPage} />
+                    <Route path="/user" component={UserPage} />
+                    <Route exact path="/:category" render={(props) => (
+                      <CategoriesPage isMobile={isMobile} match={props.match} />
+                    )} />
+                    <Route path="/:category/:post_id" render={(props) => (
+                      <CategoriesPage isMobile={isMobile} match={props.match} />
+                    )} />
+                    <Route path="*" component={NotFoundPage} />
+                  </Switch>
+                  : <CircularProgress style={themeDefault.center} color="primary" size={50} />
+              }
             </div>
+            <Snackbar
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+              onRequestClose={this.handleSnackRequestClose}
+              open={snackBarOpen}
+              SnackbarContentProps={{
+                'aria-describedby': 'message-id',
+              }}
+              message={<span id="message-id">{snackBarMessage}</span>}
+              />
           </div>
         </BrowserRouter>
       </MuiThemeProvider>
@@ -81,4 +128,23 @@ class App extends Component {
 }
 
 
-export default withWidth()(App)
+function mapStateToProps(state) {
+  return {
+    ...state
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    updateUser: (data) => dispatch(updateUser(data)),
+    toggleSidenav: (isExpanded) => dispatch(toggleSidenav(isExpanded)),
+    hideSnackbar: () => dispatch(hideSnackbar()),
+    showLoading: () => dispatch(showLoading()),
+    hideLoading: () => dispatch(hideLoading()),
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withWidth()(App));

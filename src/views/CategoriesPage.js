@@ -4,8 +4,11 @@ import { Route, Switch } from 'react-router';
 
 import PageBase from '../components/PageBase';
 import PostDetailDialogue from '../components/PostDetailDialogue';
-import PostGrid from '../components/PostGrid';
+
 import Data from '../data';
+
+//import { CircularProgress } from 'material-ui/Progress';
+//import themeDefault from '../theme-default';
 
 class CategoriesPage extends Component {
 
@@ -13,6 +16,7 @@ class CategoriesPage extends Component {
     dialogueOpen: true,
     newPostData: {}
   };
+
   openDialogue = event => {
     event.preventDefault();
     event.stopPropagation();
@@ -25,7 +29,7 @@ class CategoriesPage extends Component {
   };
 
   render() {
-    const { match, isMobile } = this.props;
+    const { match } = this.props;
 
     const currentCat = match.params['category'] || 'all';
     const currentPost = match.params['post_id'] || '';
@@ -33,19 +37,20 @@ class CategoriesPage extends Component {
     let user = Data.user;
     let post = Data.Posts[currentPost];
     let categories = [];
+    //let orderBy = 'timestamp';
+    
     Object.keys(Data.Categories)
       .map((category, index) =>
         categories.push(Data.Categories[category])
       );
     //console.log('this.props', this.props, match.params)
-    
+
     return (
 
       <PageBase title={currentCat}
         breadcrumb="Readable / Categories Page">
         <Switch>
           <Route path="/:category/:post_id" >
-            <div>
               <PostDetailDialogue
                 selectedValue={this.state.selectedValue}
                 open={true}
@@ -54,11 +59,9 @@ class CategoriesPage extends Component {
                 user={user}
                 category={currentCat}
               />
-            </div>
           </Route>
           <Route path="*" />
         </Switch>
-        <PostGrid isMobile={isMobile} posts={Data.Posts} currentCat={currentCat} categories={categories} />
       </PageBase>
     );
   };

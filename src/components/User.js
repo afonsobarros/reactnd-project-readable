@@ -5,27 +5,41 @@ import { Link } from 'react-router-dom'
 import { Button, Divider, Checkbox, FormControlLabel, TextField } from 'material-ui';
 import themeDefault from '../theme-default';
 
-import Data from '../data';
+import { connect } from 'react-redux'
+
+
+import { updateUser} from '../actions/user'
+import { showSnackbar, hideSnackbar} from '../actions/appState'
+
+import * as ReadableAPI from '../utils/ReadableAPI';
 
 class User extends Component {
-  state = {
-    isHuman: Data.user.isHuman,
-    userName: Data.user.userName,
-    password: Data.user.password
-  };
+  hideSnackbarTimeout = 0;
 
   updateCheckbox = prop => (event, value) => {
-    this.setState({ [prop]: value });
+    this.updateUser(prop, value);
   };
+
   updateUser = (prop, value) => {
-    //console.log('updateUser', prop, value)
-    Data.user[prop] = value;
-    this.setState({ [prop]: value });
+    let user = {
+      ...this.props.user,
+      [prop]: value
+    }
+    //console.log('updateUser', user)
+    ReadableAPI.updateUser(user)
+    .then( () => {
+      this.props.updateUser(user)
+      this.props.showSnackbar('user data updated');
+      clearTimeout(this.hideSnackbarTimeout);
+      this.hideSnackbarTimeout = setTimeout( this.props.hideSnackbar, 5000 )
+    })
   };
 
   render() {
-    const { isHuman, userName, password } = this.state;
-    const disabled = !isHuman || (userName && userName.length < 1) || (password && password.length < 1)
+    //console.log('user state', this.state)
+    const { isHuman, userName, password } = this.props.user;
+    const disabled = !isHuman || (userName && userName.length === 0 ) || (password && password.length < 2)
+
     return (
       <form style={themeDefault.login}>
         <Switch>
@@ -37,7 +51,7 @@ class User extends Component {
 
         <TextField
           label="Username"
-          value={userName}
+          value={userName || ""}
           onChange={(event) => this.updateUser('userName', event.target.value)}
           helperText="Username to identify your posts"
           style={themeDefault.input}
@@ -46,24 +60,22 @@ class User extends Component {
         <TextField
           label="Password"
           type="password"
-          value={password}
-          onChange={event => this.setState({ password: event.target.value })}
+          value={password || ""}
+          onChange={event => this.updateUser('password', event.target.value)}
           helperText="Two characters are enough"
           style={themeDefault.input}
         />
 
-        <div>
           <FormControlLabel
             control={
               <Checkbox
-                checked={isHuman}
+                checked={isHuman || false}
                 onChange={event => this.updateUser('isHuman', !isHuman)}
               />
             }
             label="I'm not a robot"
           />
 
-        </div>
         <Divider />
 
         <div>
@@ -83,7 +95,7 @@ class User extends Component {
                 <span></span>
                 <Link to="/all" >
                   <Button raised color="primary" style={themeDefault.raisedButton}>
-                    Cancel
+                    Back to posts
                   </Button>
                 </Link>
 
@@ -96,4 +108,21 @@ class User extends Component {
   }
 }
 
-export default User;
+function mapStateToProps(state) {
+  return {
+    ...state
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    updateUser: (user) => dispatch(updateUser(user)),
+    showSnackbar: (message) => dispatch(showSnackbar(showSnackbar)),
+    hideSnackbar: () => dispatch(hideSnackbar()),
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(User);

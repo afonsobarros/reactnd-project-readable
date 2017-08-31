@@ -52,17 +52,7 @@ class PostDetailDialogue extends Component {
   };
 
   render() {
-    /*
-    const post = this.props || {
-      id: '8xf0y6ziyjabvozdd253nd',
-      timestamp: 1467166872634,
-      title: 'post title',
-      body: 'post body',
-      category: 'react',
-      voteScore: 6,
-      deleted: false
-    }*/
-
+    
     const { classes, onRequestClose, selectedValue, post, user, category, categories, ...other } = this.props;
     //console.log('post', post)
     return (

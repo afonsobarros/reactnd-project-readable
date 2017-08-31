@@ -29,7 +29,7 @@ class Header extends Component {
     this.setState({ open: false });
   };
   render() {
-    const { handleChangeRequestNavDrawer } = this.props;
+    const { handleChangeRequestNavDrawer, user } = this.props;
 
     return (
       <div>
@@ -49,7 +49,7 @@ class Header extends Component {
               aria-haspopup="true"
               onClick={this.handleClick}
             >
-              <i className="material-icons">person</i>
+              <i className="material-icons">{user ? 'account_circle' : 'person_add'}</i>
             </IconButton>
             <Menu
               anchorEl={this.state.anchorEl}
