@@ -69,11 +69,18 @@ const themeDefault = createMuiTheme({
     overflow: 'visible',
     width: '100%'
   },
+  center:{
+    textAlign:'center',
+    margin:'0 auto'
+  },
   chip: {
     cursor: 'pointer',
     top: '16px',
     right: '16px',
     textTransform: 'capitalize'
+  },
+  loading:{
+    margin:'0 auto'
   },
   shipAbsolute:{
     position: 'absolute',
