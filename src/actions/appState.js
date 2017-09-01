@@ -8,24 +8,21 @@ export const HIDE_LOADING = 'HIDE_LOADING'
 export const SHOW_SNACKBAR = 'SHOW_SNACKBAR'
 export const HIDE_SNACKBAR = 'HIDE_SNACKBAR'
 
-export function toggleSidenav({ expandedState }) {
+export function toggleSidenav() {
   return {
     type: TOGLE_SIDENAV,
-    expandedState,
   }
 }
 
-export function openSidenav({ expandedState }) {
+export function openSidenav() {
   return {
     type: OPEN_SIDENAV,
-    expandedState,
   }
 }
 
-export function closeSidenav({ expandedState }) {
+export function closeSidenav() {
   return {
     type: CLOSE_SIDENAV,
-    expandedState,
   }
 }
 
@@ -44,10 +41,10 @@ export function hideLoading() {
 
 
 //SNACKBAR
-export function showSnackbar( message ) {
+export function showSnackbar( {message} ) {
   return {
     type: SHOW_SNACKBAR,
-    message: message
+    message
   }
 }
 

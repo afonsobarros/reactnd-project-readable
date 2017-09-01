@@ -17,7 +17,7 @@ import { CircularProgress } from 'material-ui/Progress';
 import * as ReadableAPI from '../utils/ReadableAPI';
 
 import { connect } from 'react-redux'
-import { toggleSidenav, hideLoading, showLoading, hideSnackbar} from '../actions/appState'
+import { toggleSidenav, hideLoading, showLoading, hideSnackbar } from '../actions/appState'
 import { updateUser } from '../actions/user'
 
 
@@ -42,14 +42,15 @@ class App extends Component {
 
   onDataLoad = (prop, val) => {
     this.totalLoad++;
-    console.log('onDataLoad', prop, val)
+    //console.log('onDataLoad', prop, val)
     if (this.totalLoad >= 3) {
       this.props.hideLoading()
     }
   }
 
-  handleSnackRequestClose(){
-    this.props.hideSnackbar()
+  handleSnackRequestClose() {
+    if (this.props.appState.snackBarOpen)
+      this.props.hideSnackbar()
   }
 
   handleChangeRequestNavDrawer() {
@@ -57,7 +58,7 @@ class App extends Component {
   }
 
   render() {
-    const { width } = this.props;
+    const { width, user } = this.props;
     const { navDrawerOpen, isLoading, snackBarOpen, snackBarMessage } = this.props.appState;
 
     const paddingLeftDrawerOpen = themeDefault.drawer.width;
@@ -84,10 +85,12 @@ class App extends Component {
                 <Route path="*" >
                   <div>
                     <Header
-                      handleChangeRequestNavDrawer={this.handleChangeRequestNavDrawer.bind(this)} />
+                      handleChangeRequestNavDrawer={this.handleChangeRequestNavDrawer.bind(this)} 
+                      user={user}/>
                     <LeftDrawer navDrawerOpen={navDrawerOpen}
                       handleChangeRequestNavDrawer={this.handleChangeRequestNavDrawer.bind(this)}
-                      isMobile={isMobile} />
+                      isMobile={isMobile} 
+                      user={user}/>
                   </div>
                 </Route>
               </Switch>
@@ -111,15 +114,23 @@ class App extends Component {
                   : <CircularProgress style={themeDefault.center} color="primary" size={50} />
               }
             </div>
-            <Snackbar
-              anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-              onRequestClose={this.handleSnackRequestClose}
-              open={snackBarOpen}
-              SnackbarContentProps={{
-                'aria-describedby': 'message-id',
-              }}
-              message={<span id="message-id">{snackBarMessage}</span>}
-              />
+
+            <Switch>
+              <Route path="/login" />
+              <Route exact path="*" render={(props) => (
+                <Snackbar
+                  anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                  onRequestClose={this.handleSnackRequestClose.bind(this)}
+                  open={snackBarOpen}
+                  SnackbarContentProps={{
+                    'aria-describedby': 'message-id',
+                  }}
+                  message={<span id="message-id">{snackBarMessage}</span>}
+                />
+              )} />
+            </Switch>
+
+
           </div>
         </BrowserRouter>
       </MuiThemeProvider>

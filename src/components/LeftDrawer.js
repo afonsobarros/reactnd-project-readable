@@ -24,11 +24,10 @@ class LeftDrawer extends Component {
   };
 
   render() {
-    let { navDrawerOpen, handleChangeRequestNavDrawer, isMobile } = this.props;
+    let { navDrawerOpen, handleChangeRequestNavDrawer, isMobile, user } = this.props;
     const isDocked = navDrawerOpen && !isMobile;
     const menus = Data.menus;
     const categories = Data.Categories;
-    let username = Data.user.userName;
 
     return (
       <Drawer
@@ -51,9 +50,9 @@ class LeftDrawer extends Component {
             <Link to="/user">
               <ListItem button>
                 <ListItemIcon>
-                  <UserAvatar username={username} />
+                  <UserAvatar username={user.userName} />
                 </ListItemIcon>
-                <ListItemText primary={username} />
+                <ListItemText primary={user.userName} />
               </ListItem>
             </Link>
             <Link to={'/all'}>

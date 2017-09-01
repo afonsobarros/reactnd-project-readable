@@ -8,13 +8,14 @@ import themeDefault from '../theme-default';
 import { connect } from 'react-redux'
 
 
-import { updateUser} from '../actions/user'
-import { showSnackbar, hideSnackbar} from '../actions/appState'
+import { updateUser } from '../actions/user'
+import { showSnackbar, hideSnackbar } from '../actions/appState'
 
 import * as ReadableAPI from '../utils/ReadableAPI';
 
 class User extends Component {
-  hideSnackbarTimeout = 0;
+  snackBarHideTimeout = 0;
+  snackBarDelay = 1000;
 
   updateCheckbox = prop => (event, value) => {
     this.updateUser(prop, value);
@@ -25,20 +26,19 @@ class User extends Component {
       ...this.props.user,
       [prop]: value
     }
-    //console.log('updateUser', user)
     ReadableAPI.updateUser(user)
-    .then( () => {
-      this.props.updateUser(user)
-      this.props.showSnackbar('user data updated');
-      clearTimeout(this.hideSnackbarTimeout);
-      this.hideSnackbarTimeout = setTimeout( this.props.hideSnackbar, 5000 )
-    })
+      .then(() => {
+        this.props.updateUser(user)
+        this.props.showSnackbar('Data saved');
+        clearTimeout(this.snackBarHideTimeout);
+        this.snackBarHideTimeout = setTimeout(this.props.hideSnackbar, this.snackBarDelay)
+      })
   };
 
   render() {
     //console.log('user state', this.state)
     const { isHuman, userName, password } = this.props.user;
-    const disabled = !isHuman || (userName && userName.length === 0 ) || (password && password.length < 2)
+    const disabled = !isHuman || (userName && userName.length === 0) || (password && password.length < 2)
 
     return (
       <form style={themeDefault.login}>
@@ -65,16 +65,19 @@ class User extends Component {
           helperText="Two characters are enough"
           style={themeDefault.input}
         />
-
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={isHuman || false}
-                onChange={event => this.updateUser('isHuman', !isHuman)}
-              />
-            }
-            label="I'm not a robot"
-          />
+        <Switch>
+          <Route exact path="/login">
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={isHuman || false}
+                  onChange={event => this.updateUser('isHuman', !isHuman)}
+                />
+              }
+              label="I'm not a robot"
+            />
+          </Route>
+        </Switch>
 
         <Divider />
 
@@ -117,7 +120,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     updateUser: (user) => dispatch(updateUser(user)),
-    showSnackbar: (message) => dispatch(showSnackbar(showSnackbar)),
+    showSnackbar: (message) => dispatch(showSnackbar({ message })),
     hideSnackbar: () => dispatch(hideSnackbar()),
   }
 }
