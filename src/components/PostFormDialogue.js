@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
 
 import themeDefault from '../theme-default';
 import { Avatar, Button, Chip, CardHeader, CardContent, Divider, Menu, MenuItem, TextField } from 'material-ui';
@@ -8,7 +9,7 @@ import Dialog, {
   DialogContent,
   DialogTitle,
 } from 'material-ui/Dialog';
-import Data from '../data';
+import { hidePostFormDialogue } from '../actions/appState'
 
 class PostFormDialogue extends Component {
 
@@ -33,7 +34,7 @@ class PostFormDialogue extends Component {
   };
 
   handleRequestClose = () => {
-    this.props.onRequestClose(this.props.selectedValue);
+    this.props.hidePostFormDialogue();
   };
 
   handleListItemClick = value => {
@@ -64,13 +65,7 @@ class PostFormDialogue extends Component {
     }
     const date = post && post.timestamp ? new Date(post.timestamp).toDateString() : '';
 
-    const { classes, onRequestClose, selectedValue, user, ...other } = this.props;
-    const categories = [];
-    Object.keys(Data.Categories)
-      .map((category, index) =>
-        categories.push(Data.Categories[category])
-      );
-
+    const { classes, onRequestClose, user, categories, ...other } = this.props;
     //console.log('user', user)
     return (
       <Dialog onRequestClose={this.handleRequestClose} {...other}>
@@ -91,11 +86,11 @@ class PostFormDialogue extends Component {
 
               <Chip
                 avatar={
-                  <Avatar>{categories[this.state.selectedIndex].name[0]}</Avatar>
+                  <Avatar>{categories[this.state.selectedIndex] ? categories[this.state.selectedIndex].name[0] : ""}</Avatar>
                 }
-                label={categories[this.state.selectedIndex].name}
-                onClick={this.handleClickListItem} 
-                style={themeDefault.chip}/>
+                label={categories[this.state.selectedIndex] ? categories[this.state.selectedIndex].name : ""}
+                onClick={this.handleClickListItem}
+                style={themeDefault.chip} />
               <Menu
                 id="cat-menu"
                 anchorEl={this.state.anchorEl}
@@ -146,4 +141,19 @@ class PostFormDialogue extends Component {
 }
 
 
-export default PostFormDialogue;
+function mapStateToProps(state) {
+  return {
+    user: state.user,
+    categories: state.categories,
+  }
+}
+function mapDispatchToProps(dispatch) {
+  return {
+    hidePostFormDialogue: () => dispatch(hidePostFormDialogue()),
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PostFormDialogue);

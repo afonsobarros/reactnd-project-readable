@@ -37,7 +37,7 @@ export const updateUser = (userData) =>
 export const getPosts = () =>
   fetch(`${api}/posts`, { headers })
     .then(res => res.json())
-    .then(data => data[0]);
+    .then(data => data);
 
 export const getCategories = () =>
   fetch(`${api}/categories`, { headers })
@@ -48,4 +48,3 @@ export const getComments = (postId = "8xf0y6ziyjabvozdd253nd") =>
   fetch(`${api}/posts/${postId}/comments`, { headers })
     .then(res => res.json())
     .then(data => data);
-

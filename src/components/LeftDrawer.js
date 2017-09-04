@@ -1,33 +1,19 @@
 import React, { Component } from 'react';
-import { AppBar, Divider, Drawer, ListItem, ListItemIcon, ListItemText, Toolbar, Typography } from 'material-ui/';
+import { connect } from 'react-redux'
+
 import { Link } from 'react-router-dom';
+import { AppBar, Divider, Drawer, ListItem, ListItemIcon, ListItemText, Toolbar, Typography } from 'material-ui/';
 import themeDefault from '../theme-default';
-import Data from '../data';
+
+//import Data from '../data';
 import UserAvatar from './UserAvatar';
-import PostFormDialogue from './PostFormDialogue';
+import { showPostFormDialogue } from '../actions/appState'
 
 class LeftDrawer extends Component {
 
-  state = {
-    dialogueOpen: false,
-    newPostData: {}
-  };
-  openDialogue = event => {
-    event.preventDefault();
-    event.stopPropagation();
-    this.setState({ dialogueOpen: true, anchorEl: event.currentTarget });
-  };
-
-  closeDialogue = value => {
-    this.setState({ newPostData: value, dialogueOpen: false });
-    this.props.handleChangeRequestNavDrawer();
-  };
-
   render() {
-    let { navDrawerOpen, handleChangeRequestNavDrawer, isMobile, user } = this.props;
+    const { navDrawerOpen, handleChangeRequestNavDrawer, isMobile, user, categories } = this.props;
     const isDocked = navDrawerOpen && !isMobile;
-    const menus = Data.menus;
-    const categories = Data.Categories;
 
     return (
       <Drawer
@@ -46,7 +32,7 @@ class LeftDrawer extends Component {
         <div style={themeDefault.drawer}>
 
           <div style={themeDefault.menu}>
-            
+
             <Link to="/user">
               <ListItem button>
                 <ListItemIcon>
@@ -80,30 +66,22 @@ class LeftDrawer extends Component {
           <div style={themeDefault.menu}>
             <Divider />
 
-            <PostFormDialogue
-              user={Data.user}
-              selectedValue={this.state.selectedValue}
-              open={this.state.dialogueOpen}
-              onRequestClose={this.closeDialogue}
-            />
-
-            <ListItem button onClick={this.openDialogue}            >
+            <ListItem button onClick={this.props.showPostFormDialogue}>
               <ListItemIcon>
                 <i className="material-icons">playlist_add</i>
               </ListItemIcon>
               <ListItemText primary="New Post" secondary="Create a new Post" />
             </ListItem>
 
-            {menus.map((menu, index) =>
-              <Link to={menu.link} key={index}>
-                <ListItem button>
-                  <ListItemIcon>
-                    {menu.icon}
-                  </ListItemIcon>
-                  <ListItemText primary={menu.text} secondary={menu.description} />
-                </ListItem>
-              </Link>
-            )}
+            <Link to="/login">
+              <ListItem button>
+                <ListItemIcon>
+                  <i className="material-icons" >exit_to_app</i>
+                </ListItemIcon>
+                <ListItemText primary="Logout" secondary="App sign out" />
+              </ListItem>
+            </Link>
+
           </div>
         </div>
       </Drawer >
@@ -111,5 +89,21 @@ class LeftDrawer extends Component {
   }
 };
 
+function mapStateToProps(state) {
+  return {
+    user: state.user,
+    categories: state.categories,
+    navDrawerOpen: state.appState.navDrawerOpen
+  }
+}
 
-export default LeftDrawer;
+function mapDispatchToProps(dispatch) {
+  return {
+    showPostFormDialogue: () => dispatch(showPostFormDialogue()),
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LeftDrawer);

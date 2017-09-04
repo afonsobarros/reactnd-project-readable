@@ -4,7 +4,6 @@ import themeDefault from '../theme-default';
 
 class UserAvatar extends Component {
 
-
   render() {
     const { username, small } = this.props;
     let firstLetters = username.substring(0, 1).toUpperCase();

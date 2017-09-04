@@ -1,7 +1,12 @@
-import { ADD_POST, DELETE_POST, } from '../actions/posts'
+import {
+  ADD_POST,
+  DELETE_POST,
+  UPDATE_POSTS,
+  GET_POSTS
+} from '../actions/posts'
 
 function posts(state = {}, action) {
-  const { post } = action;
+  const { posts, post } = action;
   switch (action.type) {
     case ADD_POST:
       return {
@@ -17,6 +22,10 @@ function posts(state = {}, action) {
           }
         }
       }
+    case UPDATE_POSTS:
+      return posts
+    case GET_POSTS:
+      return state;
     default:
       return state
   }

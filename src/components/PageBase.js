@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router';
+import { connect } from 'react-redux'
 
 import themeDefault from '../theme-default';
 import { Button, Divider } from 'material-ui';
 
-import PostFormDialogue from './PostFormDialogue';
-import Data from '../data';
-
-
+import { showPostFormDialogue } from '../actions/appState'
 
 class PageBase extends Component {
 
@@ -16,13 +14,9 @@ class PageBase extends Component {
     newPostData:{}
   };
   openDialogue = event => {
-    this.setState({ dialogueOpen: true, anchorEl: event.currentTarget });
+    this.props.showPostFormDialogue()
   };
   
-  handleRequestClose = value => {
-    this.setState({ newPostData: value, dialogueOpen: false });
-  };
-
   render() {
     const { title, breadcrumb, children } = this.props;
 
@@ -41,12 +35,6 @@ class PageBase extends Component {
           <Route exact path="/login" />
           <Route path="*" >
             <div>
-              <PostFormDialogue
-                user={Data.user}
-                selectedValue={this.state.selectedValue}
-                open={this.state.dialogueOpen}
-                onRequestClose={this.handleRequestClose}
-              />
               <Button fab
                 onClick={this.openDialogue}
                 style={themeDefault.fabButton}
@@ -61,4 +49,16 @@ class PageBase extends Component {
   };
 }
 
-export default PageBase;
+function mapStateToProps(state) {
+  return {}
+}
+function mapDispatchToProps(dispatch) {
+  return {
+    showPostFormDialogue: () => dispatch(showPostFormDialogue()),
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PageBase);
