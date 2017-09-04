@@ -5,7 +5,7 @@ import {
   GET_POSTS
 } from '../actions/posts'
 
-function posts(state = {}, action) {
+function posts(state = [], action) {
   const { posts, post } = action;
   switch (action.type) {
     case ADD_POST:
@@ -30,6 +30,5 @@ function posts(state = {}, action) {
       return state
   }
 }
-
 
 export default posts;

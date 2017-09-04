@@ -13,9 +13,7 @@ class CategoriesPage extends Component {
 
     const currentCat = match.params['category'] || 'all';
     const currentPost = match.params['post_id'] || '';
-
-    let post = posts[currentPost];
-
+    let post = posts.filter( post => post.id === currentPost)[0];
     return (
 
       <PageBase title={currentCat}
