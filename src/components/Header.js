@@ -10,11 +10,6 @@ import { showHeaderSubmenu, hideHeaderSubmenu } from '../actions/appState';
 
 class Header extends Component {
 
-  state = {
-    open: false,
-    anchorEl: undefined,
-  };
-
   handleClick = event => {
     this.props.showHeaderSubmenu({ target: event.currentTarget });
   };
