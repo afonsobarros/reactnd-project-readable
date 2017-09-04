@@ -22,12 +22,13 @@ class Header extends Component {
   }
 
   handleClick = event => {
-    this.setState({ open: true, anchorEl: event.currentTarget });
+    //this.setState({ open: true, anchorEl: event.currentTarget });
   };
 
   handleRequestClose = () => {
-    this.setState({ open: false });
+    //this.setState({ open: false });
   };
+
   render() {
     const { handleChangeRequestNavDrawer, user } = this.props;
 

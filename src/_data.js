@@ -1,18 +1,16 @@
-import React from 'react';
-
 let data = {
   user: {
     userName: "",
     isHuman: ""
-  },
+  },/*
   menus: [
-    /*
+    
     { text: 'DashBoard', description: "View all posts", icon: <i className="material-icons" >view_stream</i>, link: '/dashboard' },
     { text: 'Categories', description: "View posts by category", icon: <i className="material-icons" >filter_list</i>, link: '/categories' },
     { text: 'Create Post', description: "View posts", icon: <i className="material-icons" >playlist_add</i>, link: '/create' },
-    */{ text: '404 Page', description: "not found page", icon: <i className="material-icons">location_disabled</i>, link: '/table' },
+    { text: '404 Page', description: "not found page", icon: <i className="material-icons">location_disabled</i>, link: '/table' },
     { text: 'Logout', description: "reset user data", icon: <i className="material-icons" >exit_to_app</i>, link: '/login' }
-  ],
+  ],*/
 
   Categories: [
     {
@@ -28,6 +26,7 @@ let data = {
       path: 'udacity'
     }
   ],
+
   Posts: {
     "8xf0y6ziyjabvozdd253nd": {
       id: '8xf0y6ziyjabvozdd253nd',

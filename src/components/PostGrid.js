@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux'
+
 import { Button, IconButton, Menu, MenuItem } from 'material-ui/';
 import { GridList, GridListTile } from 'material-ui/GridList';
 import themeDefault from '../theme-default';
@@ -15,15 +17,15 @@ class PostGrid extends Component {
   };
 
   openOrder = event => {
-    this.setState({ orderOpen: true, anchorEl: event.currentTarget });
+    //this.setState({ orderOpen: true, anchorEl: event.currentTarget });
   };
 
   openFilter = event => {
-    this.setState({ filterOpen: true, anchorEl: event.currentTarget });
+    //this.setState({ filterOpen: true, anchorEl: event.currentTarget });
   };
 
   orderBy = (val) => {
-    this.setState({ orderBy: val, filterOpen: false, orderOpen: false });
+    //this.setState({ orderBy: val, filterOpen: false, orderOpen: false });
   }
 
   render() {
@@ -123,4 +125,22 @@ class PostGrid extends Component {
     );
   };
 }
-export default PostGrid;
+
+
+function mapStateToProps(state) {
+  return {
+    categories: state.categories,
+    posts: state.posts,
+    dialoguePostDetailOpen: state.appState.dialoguePostDetailOpen
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PostGrid);

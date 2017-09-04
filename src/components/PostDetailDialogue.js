@@ -24,36 +24,32 @@ class PostDetailDialogue extends Component {
   };
 
   button = undefined;
+  
   updatePost = (prop, value) => {
     let post = this.state.post;
     post[prop] = value
-    this.setState({ post });
-
+    //this.setState({ post });
   };
 
   handleRequestClose = () => {
     this.props.onRequestClose(this.props.selectedValue);
   };
 
-  handleListItemClick = value => {
-    this.props.onRequestClose(value);
-  };
-
   handleClickListItem = event => {
-    this.setState({ catMenuOpen: true, anchorEl: event.currentTarget });
+    //this.setState({ catMenuOpen: true, anchorEl: event.currentTarget });
   };
 
   handleMenuItemClick = (event, index) => {
-    this.setState({ selectedIndex: index, catMenuOpen: false });
+    //this.setState({ selectedIndex: index, catMenuOpen: false });
   };
 
   handleMenuClose = () => {
-    this.setState({ catMenuOpen: false });
+    //this.setState({ catMenuOpen: false });
   };
 
   render() {
-    
-    const { classes, onRequestClose, selectedValue, post, user, category, categories, ...other } = this.props;
+
+    const { classes, onRequestClose, post, user, category, categories, ...other } = this.props;
     //console.log('post', post)
     return (
       post

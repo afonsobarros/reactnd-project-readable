@@ -58,7 +58,7 @@ class App extends Component {
 
   onDataLoad = (prop, val) => {
     this.totalLoad++;
-    console.log('onDataLoad', prop, val)
+    //console.log('onDataLoad', prop, val)
     switch (prop) {
       case 'user':
         this.props.updateUser(val)
@@ -69,9 +69,9 @@ class App extends Component {
       case 'categories':
         this.props.updateCategories(val)
         break
-      /*case 'comments': 
-      this.props.updateComments(val)
-      */
+      case 'comments':
+        this.props.updateComments(val)
+        break
       default:
         break
     }
@@ -181,11 +181,11 @@ class App extends Component {
 
 function mapStateToProps(state) {
   return {
-    navDrawerOpen: state.appState.navDrawerOpen, 
-    isLoading: state.appState.isLoading, 
-    snackBarOpen: state.appState.snackBarOpen, 
-    snackBarMessage: state.appState.snackBarMessage, 
-    dialogueAddNewOpen: state.appState.dialogueAddNewOpen    
+    navDrawerOpen: state.appState.navDrawerOpen,
+    isLoading: state.appState.isLoading,
+    snackBarOpen: state.appState.snackBarOpen,
+    snackBarMessage: state.appState.snackBarMessage,
+    dialogueAddNewOpen: state.appState.dialogueAddNewOpen
   }
 }
 

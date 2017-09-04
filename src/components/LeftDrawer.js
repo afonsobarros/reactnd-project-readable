@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { AppBar, Divider, Drawer, ListItem, ListItemIcon, ListItemText, Toolbar, Typography } from 'material-ui/';
 import themeDefault from '../theme-default';
 
-//import Data from '../data';
 import UserAvatar from './UserAvatar';
 import { showPostFormDialogue } from '../actions/appState'
 

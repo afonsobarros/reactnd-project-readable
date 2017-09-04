@@ -29,7 +29,7 @@ class PostFormDialogue extends Component {
   updatePost = (prop, value) => {
     let post = this.state.post;
     post[prop] = value;
-    this.setState({ post });
+    //this.setState({ post });
 
   };
 
@@ -42,15 +42,15 @@ class PostFormDialogue extends Component {
   };
 
   handleClickListItem = event => {
-    this.setState({ catMenuOpen: true, anchorEl: event.currentTarget });
+    //this.setState({ catMenuOpen: true, anchorEl: event.currentTarget });
   };
 
   handleMenuItemClick = (event, index) => {
-    this.setState({ selectedIndex: index, catMenuOpen: false });
+    //this.setState({ selectedIndex: index, catMenuOpen: false });
   };
 
   handleMenuClose = () => {
-    this.setState({ catMenuOpen: false });
+    //this.setState({ catMenuOpen: false });
   };
 
   render() {

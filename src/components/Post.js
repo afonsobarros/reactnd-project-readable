@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 import { Avatar, Badge, Chip, Divider, IconButton, Card, CardHeader, CardContent, CardActions, Typography } from 'material-ui';
 import Collapse from 'material-ui/transitions/Collapse';
@@ -7,14 +8,14 @@ import Collapse from 'material-ui/transitions/Collapse';
 import themeDefault from '../theme-default';
 
 import UserAvatar from './UserAvatar';
-import Data from '../data';
+import { updatePosts } from '../actions/posts'
 
 
 class Post extends Component {
   state = { expanded: true };
 
   handleExpandClick = (e) => {
-    this.setState({ expanded: !this.state.expanded });
+    //this.setState({ expanded: !this.state.expanded });
   };
   voteUp = (e) => {
     //this.setState({ expanded: !this.state.expanded });
@@ -24,16 +25,8 @@ class Post extends Component {
   };
 
   render() {
-    const { post, insidedialogue } = this.props;
+    const { post, insidedialogue, comments } = this.props;
     const date = post && post.timestamp ? new Date(post.timestamp).toDateString() : '';
-    let comments = [];
-
-    Object.keys(Data.Comments)
-      .map((comment, index) => {
-        if (Data.Comments[comment].parentId === post.id)
-          comments.push(Data.Comments[comment])
-        return true
-      });
 
     return (
       <div>
@@ -132,4 +125,20 @@ class Post extends Component {
   }
 }
 
-export default Post;
+function mapStateToProps(state) {
+  return {
+    user: state.user,
+    comments:state.comments,
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    updatePosts: (post) => dispatch(updatePosts(post)),
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Post);

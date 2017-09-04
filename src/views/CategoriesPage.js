@@ -9,7 +9,7 @@ import PostGrid from '../components/PostGrid';
 class CategoriesPage extends Component {
 
   render() {
-    const { match, isMobile, categories, posts } = this.props;
+    const { match, isMobile, posts } = this.props;
 
     const currentCat = match.params['category'] || 'all';
     const currentPost = match.params['post_id'] || '';

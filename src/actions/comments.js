@@ -5,10 +5,10 @@ export const UPDATE_COMMENTS = 'UPDATE_COMMENTS'
 export const DELETE_COMMENT = 'DELETE_COMMENT'
 
 
-export function updateComments(comments) {
+export function updateComments( comments ) {
   return {
     type: UPDATE_COMMENTS,
-    posts: comments
+    comments:comments
   }
 }
 
