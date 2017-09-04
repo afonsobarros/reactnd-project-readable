@@ -12,7 +12,6 @@ import { updatePosts } from '../actions/posts'
 
 
 class Post extends Component {
-  state = { expanded: true };
 
   handleExpandClick = (e) => {
     //this.setState({ expanded: !this.state.expanded });
@@ -27,7 +26,7 @@ class Post extends Component {
   render() {
     const { post, insidedialogue, comments } = this.props;
     const date = post && post.timestamp ? new Date(post.timestamp).toDateString() : '';
-
+    let expanded = false;
     return (
       <div>
         <Card style={!insidedialogue ? themeDefault.card : themeDefault.cardNoShadow}>
@@ -88,7 +87,7 @@ class Post extends Component {
             </CardActions>
             {
               insidedialogue
-                ? <Collapse in={this.state.expanded} transitionDuration="auto" unmountOnExit>
+                ? <Collapse in={expanded} transitionDuration="auto" unmountOnExit>
                   <Divider />
                   <CardContent style={themeDefault.commentsContainer}>
                     {
@@ -129,6 +128,7 @@ function mapStateToProps(state) {
   return {
     user: state.user,
     comments:state.comments,
+    posts:state.posts
   }
 }
 

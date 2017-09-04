@@ -7,40 +7,40 @@ import { GridList, GridListTile } from 'material-ui/GridList';
 import themeDefault from '../theme-default';
 import Post from '../components/Post';
 
+import {
+  setOrderFilter, openOrderFilter, closeOrderFilter,
+  closeFilter, openFilter
+} from '../actions/appState'
+
 class PostGrid extends Component {
 
-  state = {
-    orderBy: 'timestamp',
-    filterOpen: false,
-    orderOpen: false,
-    anchorEl: undefined,
+  openFilter = event => {
+    this.handleRequestClose()
+    this.props.openFilter({ target: event.currentTarget });
   };
 
   openOrder = event => {
-    //this.setState({ orderOpen: true, anchorEl: event.currentTarget });
+    this.handleRequestClose()
+    this.props.openOrderFilter({ target: event.currentTarget });
   };
 
-  openFilter = event => {
-    //this.setState({ filterOpen: true, anchorEl: event.currentTarget });
-  };
+  setOrderFilter = (filter) => {
+    this.handleRequestClose()
+    this.props.setOrderFilter(filter)
+  }
 
-  orderBy = (val) => {
-    //this.setState({ orderBy: val, filterOpen: false, orderOpen: false });
+  handleRequestClose = () => {
+    this.props.closeFilter();
+    this.props.closeOrderFilter();
   }
 
   render() {
-    const { categories, orderBy, currentCat, posts, isMobile } = this.props;
-    let filteredPosts = [];
+    const { categories, currentCat, posts, isMobile,
+      orderBy, anchorEl,
+      orderOpen, filterOpen } = this.props;
 
-    Object.keys(posts)
-      .map((post, index) => {
-        if (posts[post].category === currentCat || currentCat === 'all')
-          filteredPosts.push(posts[post])
-        return true
-      }
-      );
-
-    filteredPosts.sort(function (a, b) { return b[orderBy] - a[orderBy] });
+    let filteredPosts = posts.length === 0 ? []
+      : posts.filter(post => post.category === currentCat || currentCat === 'all').sort((a, b) => a[orderBy] - b[orderBy]);
 
     return (
       <div>
@@ -49,7 +49,7 @@ class PostGrid extends Component {
           <div>
             <IconButton
               aria-label="More"
-              aria-owns={this.state.orderOpen ? 'long-menu' : null}
+              aria-owns={orderOpen ? 'long-menu' : null}
               aria-haspopup="true"
               onClick={this.openOrder}
               color="accent"
@@ -57,21 +57,24 @@ class PostGrid extends Component {
               <i className="material-icons">swap_vert</i>
             </IconButton>
             <Menu
-              anchorEl={this.state.anchorEl}
-              open={this.state.orderOpen}
+              anchorEl={anchorEl}
+              open={orderOpen}
               onRequestClose={this.handleRequestClose}
             >
-              <MenuItem selected={orderBy === 'timestamp'} onClick={this.orderBy('timestamp')}>
+              <MenuItem selected={orderBy === 'timestamp'} onClick={ () => this.setOrderFilter('timestamp')}>
                 date
               </MenuItem>
-              <MenuItem selected={orderBy === 'voteScore'} onClick={this.orderBy('voteScore')}>
+              <MenuItem selected={orderBy === 'voteScore'} onClick={() => this.setOrderFilter('voteScore')}>
                 votes
+              </MenuItem>
+              <MenuItem selected={orderBy === 'id'} onClick={() => this.setOrderFilter('id')}>
+                id
               </MenuItem>
             </Menu>
 
             <IconButton
               aria-label="More"
-              aria-owns={this.state.filterOpen ? 'long-menu' : null}
+              aria-owns={filterOpen ? 'long-menu' : null}
               aria-haspopup="true"
               onClick={this.openFilter}
               color="accent"
@@ -79,8 +82,8 @@ class PostGrid extends Component {
               <i className="material-icons">filter_list</i>
             </IconButton>
             <Menu
-              anchorEl={this.state.anchorEl}
-              open={this.state.filterOpen}
+              anchorEl={anchorEl}
+              open={filterOpen}
               onRequestClose={this.handleRequestClose}
 
             >
@@ -131,12 +134,21 @@ function mapStateToProps(state) {
   return {
     categories: state.categories,
     posts: state.posts,
-    dialoguePostDetailOpen: state.appState.dialoguePostDetailOpen
+    dialoguePostDetailOpen: state.appState.dialoguePostDetailOpen,
+    orderBy: state.appState.orderBy,
+    anchorEl: state.appState.anchorEl,
+    filterOpen: state.appState.filterOpen,
+    orderOpen: state.appState.orderByOpen,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
+    openOrderFilter: (target) => dispatch(openOrderFilter(target)),
+    closeOrderFilter: () => dispatch(closeOrderFilter()),
+    setOrderFilter: (orderBy) => dispatch(setOrderFilter(orderBy)),
+    openFilter: (target) => dispatch(openFilter(target)),
+    closeFilter: () => dispatch(closeFilter()),
   }
 }
 

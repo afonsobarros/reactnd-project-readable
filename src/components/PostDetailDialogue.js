@@ -28,32 +28,28 @@ class PostDetailDialogue extends Component {
   updatePost = (prop, value) => {
     let post = this.state.post;
     post[prop] = value
-    //this.setState({ post });
-  };
-
-  handleRequestClose = () => {
-    this.props.onRequestClose(this.props.selectedValue);
+    this.setState({ post });
   };
 
   handleClickListItem = event => {
-    //this.setState({ catMenuOpen: true, anchorEl: event.currentTarget });
+    this.setState({ catMenuOpen: true, anchorEl: event.currentTarget });
   };
 
   handleMenuItemClick = (event, index) => {
-    //this.setState({ selectedIndex: index, catMenuOpen: false });
+    this.setState({ selectedIndex: index, catMenuOpen: false });
   };
 
   handleMenuClose = () => {
-    //this.setState({ catMenuOpen: false });
+    this.setState({ catMenuOpen: false });
   };
 
   render() {
 
     const { classes, onRequestClose, post, user, category, categories, ...other } = this.props;
-    //console.log('post', post)
+    
     return (
       post
-        ? <Dialog onRequestClose={this.handleRequestClose} {...other}>
+        ? <Dialog onRequestClose={onRequestClose} {...other}>
           <form>
             <DialogContent>
               <Post post={post} insidedialogue={true} />
@@ -68,11 +64,11 @@ class PostDetailDialogue extends Component {
                   style={themeDefault.inputFullActions}
                 />
                 <Link to={`/${category}`}>
-                  <Button raised onClick={this.handleRequestClose} color="primary" style={themeDefault.raisedButton}>
+                  <Button raised onClick={onRequestClose} color="primary" style={themeDefault.raisedButton}>
                     cancel
                 </Button>
                 </Link>
-                <Button raised color="accent" onClick={this.handleRequestClose} style={themeDefault.raisedButton}>
+                <Button raised color="accent" onClick={onRequestClose} style={themeDefault.raisedButton}>
                   save
               </Button>
               </div>

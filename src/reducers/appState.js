@@ -5,6 +5,11 @@ import {
   SHOW_LOADING, HIDE_LOADING,
   SHOW_SNACKBAR, HIDE_SNACKBAR,
   SHOW_HEADERMENU, HIDE_HEADERMENU,
+  SET_ORDERFILTER,
+  OPEN_ORDERFILTER,
+  CLOSE_ORDERFILTER,
+  OPEN_FILTER,
+  CLOSE_FILTER
 } from '../actions/appState'
 
 const initialAppState = {
@@ -15,7 +20,8 @@ const initialAppState = {
   dialogueAddNewOpen: false,
   dialoguePostDetailOpen: false,
   headerMenuOpen: false,
-  anchorEl: null
+  anchorEl: null,
+  orderBy:'timestamp'
 }
 
 function app(appState = initialAppState, action) {
@@ -96,6 +102,34 @@ function app(appState = initialAppState, action) {
         anchorEl: null,
         headerMenuOpen: false,
       }
+      //ORDER BY
+    case SET_ORDERFILTER:
+    return {
+      ...appState,
+      orderBy: action.orderBy
+    }
+    case OPEN_ORDERFILTER:
+    return {
+      ...appState,
+      orderByOpen: true,
+      anchorEl:action.target
+    }
+    case CLOSE_ORDERFILTER:
+    return {
+      ...appState,
+      orderByOpen: false
+    }
+    case OPEN_FILTER:
+    return {
+      ...appState,
+      filterOpen: true,
+      anchorEl: action.target
+    }
+    case CLOSE_FILTER:
+    return {
+      ...appState,
+      filterOpen: false
+    }
     default:
       return appState
   }

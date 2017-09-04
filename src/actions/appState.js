@@ -17,6 +17,14 @@ export const HIDE_POSTDETAIL = 'HIDE_POSTDETAIL'
 export const SHOW_HEADERMENU = 'SHOW_HEADERMENU'
 export const HIDE_HEADERMENU = 'HIDE_HEADERMENU'
 
+export const SET_ORDERFILTER = 'SET_ORDERFILTER'
+export const OPEN_ORDERFILTER = 'OPEN_ORDERFILTER'
+export const CLOSE_ORDERFILTER = 'CLOSE_ORDERFILTER'
+
+export const OPEN_FILTER = 'OPEN_FILTER'
+export const CLOSE_FILTER = 'CLOSE_FILTER'
+
+
 //SIDENAV
 export function toggleSidenav() {
   return {
@@ -91,7 +99,7 @@ export function hidePostDetailDialogue() {
 }
 
 // HEADER SUBMENU (USER LINKS)
-export function showHeaderSubmenu( { target } ) {
+export function showHeaderSubmenu({ target }) {
   return {
     type: SHOW_HEADERMENU,
     target
@@ -103,3 +111,40 @@ export function hideHeaderSubmenu() {
     type: HIDE_HEADERMENU
   }
 }
+
+// POSTS ORDER FILTER 
+
+export function setOrderFilter(orderBy) {
+  return {
+    type: SET_ORDERFILTER,
+    orderBy
+  }
+}
+
+export function openOrderFilter({ target }) {
+  return {
+    type: OPEN_ORDERFILTER,
+    target
+  }
+}
+export function closeOrderFilter() {
+  return {
+    type: CLOSE_ORDERFILTER,
+  }
+}
+
+// CATEGORIES MENU 
+
+export function openFilter({ target }) {
+  return {
+    type: OPEN_FILTER,
+    target
+  }
+}
+export function closeFilter() {
+  return {
+    type: CLOSE_FILTER,
+  }
+}
+
+
