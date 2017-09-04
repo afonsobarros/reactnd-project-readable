@@ -64,6 +64,7 @@ class Header extends Component {
 
 function mapStateToProps(state) {
   return {
+    user:state.user,
     headerMenuOpen: state.appState.headerMenuOpen,
     anchorEl: state.appState.anchorEl
   }
