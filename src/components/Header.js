@@ -3,23 +3,14 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import { AppBar, IconButton, Menu, MenuItem, Toolbar, Typography } from 'material-ui/';
 
+import themeDefault from '../theme-default';
+
 class Header extends Component {
 
   state = {
     open: false,
     anchorEl: undefined,
   };
-
-  styles = {
-    toolbar: {
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      width: '100%',
-      display: 'flex',
-      flexWrap: 'wrap',
-      boxSizing: ' border-box',
-    }
-  }
 
   handleClick = event => {
     //this.setState({ open: true, anchorEl: event.currentTarget });
@@ -35,7 +26,7 @@ class Header extends Component {
     return (
       <div>
         <AppBar position="static" >
-          <Toolbar style={this.styles.toolbar}>
+          <Toolbar style={themeDefault.toolbar}>
             <IconButton onClick={handleChangeRequestNavDrawer} color="contrast" >
               <i className="material-icons">menu</i>
             </IconButton>

@@ -168,6 +168,14 @@ const themeDefault = createMuiTheme({
   greenColor: {
     color:green[900]
   },
+  toolbar: {
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    display: 'flex',
+    flexWrap: 'wrap',
+    boxSizing: ' border-box',
+  },
   overrides: {
     MuiDivider: {
       root: {
