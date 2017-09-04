@@ -4,6 +4,7 @@ import {
   CLOSE_SIDENAV, OPEN_SIDENAV, TOGLE_SIDENAV,
   SHOW_LOADING, HIDE_LOADING,
   SHOW_SNACKBAR, HIDE_SNACKBAR,
+  SHOW_HEADERMENU, HIDE_HEADERMENU,
 } from '../actions/appState'
 
 const initialAppState = {
@@ -12,7 +13,9 @@ const initialAppState = {
   snackBarOpen: false,
   snackBarMessage: null,
   dialogueAddNewOpen: false,
-  dialoguePostDetailOpen: false
+  dialoguePostDetailOpen: false,
+  headerMenuOpen: false,
+  anchorEl: null
 }
 
 function app(appState = initialAppState, action) {
@@ -69,17 +72,30 @@ function app(appState = initialAppState, action) {
         ...appState,
         dialogueAddNewOpen: false,
       }
-      //POST DETAIL
+    //POST DETAIL
     case SHOW_POSTDETAIL:
-    return {
-      ...appState,
-      dialoguePostDetailOpen: true,
-    }
-  case HIDE_POSTDETAIL:
-    return {
-      ...appState,
-      dialoguePostDetailOpen: false,
-    }
+      return {
+        ...appState,
+        dialoguePostDetailOpen: true,
+      }
+    case HIDE_POSTDETAIL:
+      return {
+        ...appState,
+        dialoguePostDetailOpen: false,
+      }
+    //HEADER USER MENU
+    case SHOW_HEADERMENU:
+      return {
+        ...appState,
+        anchorEl: action.target,
+        headerMenuOpen: true,
+      }
+    case HIDE_HEADERMENU:
+      return {
+        ...appState,
+        anchorEl: null,
+        headerMenuOpen: false,
+      }
     default:
       return appState
   }

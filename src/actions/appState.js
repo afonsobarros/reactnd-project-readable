@@ -14,7 +14,10 @@ export const HIDE_ADDNEWPOST = 'HIDE_ADDNEWPOST'
 export const SHOW_POSTDETAIL = 'SHOW_POSTDETAIL'
 export const HIDE_POSTDETAIL = 'HIDE_POSTDETAIL'
 
+export const SHOW_HEADERMENU = 'SHOW_HEADERMENU'
+export const HIDE_HEADERMENU = 'HIDE_HEADERMENU'
 
+//SIDENAV
 export function toggleSidenav() {
   return {
     type: TOGLE_SIDENAV,
@@ -61,7 +64,7 @@ export function hideSnackbar() {
   }
 }
 
-//ADD NEW
+//ADD NEW DIALOGUE
 export function showPostFormDialogue() {
   return {
     type: SHOW_ADDNEWPOST,
@@ -74,7 +77,7 @@ export function hidePostFormDialogue() {
   }
 }
 
-//POST DETAIL
+//POST DETAIL DIALOGUE
 export function showPostDetailDialogue() {
   return {
     type: SHOW_POSTDETAIL,
@@ -87,3 +90,16 @@ export function hidePostDetailDialogue() {
   }
 }
 
+// HEADER SUBMENU (USER LINKS)
+export function showHeaderSubmenu( { target } ) {
+  return {
+    type: SHOW_HEADERMENU,
+    target
+  }
+}
+
+export function hideHeaderSubmenu() {
+  return {
+    type: HIDE_HEADERMENU
+  }
+}
