@@ -1,74 +1,51 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 
+import {
+  openDialogueCategories,
+  closeDialogueCategories,
+  updateNewPost
+} from '../actions/appState'
+
 import themeDefault from '../theme-default';
-import { Avatar, Button, Chip, CardHeader, CardContent, Divider, Menu, MenuItem, TextField } from 'material-ui';
+import { Avatar, Button, Chip, CardHeader, CardContent, Divider, Menu, MenuItem, Typography,TextField } from 'material-ui';
 import UserAvatar from './UserAvatar';
 import Dialog, {
   DialogActions,
   DialogContent,
   DialogTitle,
 } from 'material-ui/Dialog';
-import { hidePostFormDialogue } from '../actions/appState'
 
 class PostFormDialogue extends Component {
 
-  state = {
-    anchorEl: undefined,
-    open: false,
-    selectedIndex: 0,
-    catMenuOpen: false,
-    post: {
-      title: '',
-      body: '',
-      category: ''
-    }
-  };
-
-  button = undefined;
   updatePost = (prop, value) => {
-    let post = this.state.post;
+    //console.log('update post', prop, value)
+    let post = this.props.post;
     post[prop] = value;
-    //this.setState({ post });
-
-  };
-
-  handleRequestClose = () => {
-    this.props.hidePostFormDialogue();
-  };
-
-  handleListItemClick = value => {
-    this.props.onRequestClose(value);
+    this.props.updateNewPost({ newPost: post });
   };
 
   handleClickListItem = event => {
-    //this.setState({ catMenuOpen: true, anchorEl: event.currentTarget });
+    this.props.openDialogueCategories({ target: event.currentTarget });
   };
 
-  handleMenuItemClick = (event, index) => {
+  handleMenuItemClick = (event, category) => {
+    this.props.closeDialogueCategories();
+    this.updatePost('category', category)
     //this.setState({ selectedIndex: index, catMenuOpen: false });
   };
 
   handleMenuClose = () => {
-    //this.setState({ catMenuOpen: false });
+    this.props.closeDialogueCategories();
   };
 
   render() {
-    const post = {
-      id: '8xf0y6ziyjabvozdd253nd',
-      timestamp: 1467166872634,
-      title: 'post title',
-      body: 'post body',
-      category: 'react',
-      voteScore: 6,
-      deleted: false
-    }
-    const date = post && post.timestamp ? new Date(post.timestamp).toDateString() : '';
+    const { post, classes, onRequestClose, user, categories, dialogueCategoriesOpen, anchorEl, ...other } = this.props;
 
-    const { classes, onRequestClose, user, categories, ...other } = this.props;
+    const date = post && post.timestamp ? new Date(post.timestamp).toDateString() : '';
     //console.log('user', user)
     return (
-      <Dialog onRequestClose={this.handleRequestClose} {...other}>
+      <Dialog onRequestClose={onRequestClose} {...other}>
         <form>
           <DialogTitle>Add a new post</DialogTitle>
           <Divider />
@@ -83,24 +60,26 @@ class PostFormDialogue extends Component {
               subheader={date}
             />
             <CardContent>
-
+            <Typography type="caption" color="inherit" >
+           <p> Select Category </p>
+          </Typography>
               <Chip
                 avatar={
-                  <Avatar>{categories[this.state.selectedIndex] ? categories[this.state.selectedIndex].name[0] : ""}</Avatar>
+                  <Avatar>{post.category ? post.category[0] : categories[0].name[0]}</Avatar>
                 }
-                label={categories[this.state.selectedIndex] ? categories[this.state.selectedIndex].name : ""}
+                label={post.category ? post.category : categories[0].name}
                 onClick={this.handleClickListItem}
                 style={themeDefault.chip} />
               <Menu
                 id="cat-menu"
-                anchorEl={this.state.anchorEl}
-                open={this.state.catMenuOpen}
+                anchorEl={anchorEl}
+                open={dialogueCategoriesOpen}
                 onRequestClose={this.handleMenuClose}
               >
                 {categories.map((category, index) =>
                   <MenuItem key={index}
-                    selected={index === this.state.selectedIndex}
-                    onClick={e => this.handleMenuItemClick(e, index)}>
+                    selected={category.name === post.category}
+                    onClick={e => this.handleMenuItemClick(e, category.name)}>
                     {category.name}
                   </MenuItem>
                 )}
@@ -109,7 +88,7 @@ class PostFormDialogue extends Component {
               <TextField
                 required
                 label="Post title"
-                onChange={this.updatePost}
+                onChange={(event) => this.updatePost('title', event.target.value)}
                 style={themeDefault.inputFull}
               />
 
@@ -118,7 +97,7 @@ class PostFormDialogue extends Component {
                 label="Post body"
                 multiline
                 rowsMax="5"
-                onChange={this.updatePost}
+                onChange={(event) => this.updatePost('body', event.target.value)}
                 style={themeDefault.inputFull}
               />
 
@@ -127,10 +106,10 @@ class PostFormDialogue extends Component {
           <Divider />
 
           <DialogActions>
-            <Button raised onClick={this.handleRequestClose} color="primary" style={themeDefault.raisedButton}>
+            <Button raised onClick={onRequestClose} color="primary" style={themeDefault.raisedButton}>
               cancel
             </Button>
-            <Button raised color="accent" onClick={this.handleRequestClose} style={themeDefault.raisedButton}>
+            <Button raised color="accent" onClick={onRequestClose} style={themeDefault.raisedButton}>
               send
             </Button>
           </DialogActions>
@@ -143,13 +122,18 @@ class PostFormDialogue extends Component {
 
 function mapStateToProps(state) {
   return {
+    post: state.appState.newPost,
     user: state.user,
     categories: state.categories,
+    dialogueCategoriesOpen: state.appState.dialogueCategoriesOpen,
+    anchorEl: state.appState.anchorEl,
   }
 }
 function mapDispatchToProps(dispatch) {
   return {
-    hidePostFormDialogue: () => dispatch(hidePostFormDialogue()),
+    openDialogueCategories: (target) => dispatch(openDialogueCategories(target)),
+    closeDialogueCategories: () => dispatch(closeDialogueCategories()),
+    updateNewPost: (post) => dispatch(updateNewPost(post)),
   }
 }
 

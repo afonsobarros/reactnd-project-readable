@@ -164,7 +164,7 @@ class App extends Component {
                   />
                   <PostFormDialogue
                     open={dialogueAddNewOpen}
-                    onRequestClose={this.props.handleAddNewRequestClose}
+                    onRequestClose={this.handleAddNewRequestClose.bind(this)}
                   />
                 </div>
               )} />

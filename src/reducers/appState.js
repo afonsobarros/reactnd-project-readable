@@ -1,5 +1,7 @@
+import { v4 } from 'node-uuid'
+
 import {
-  SHOW_ADDNEWPOST, HIDE_ADDNEWPOST,
+  SHOW_ADDNEWPOST, HIDE_ADDNEWPOST, UPDATE_NEW_POST, ADD_NEW_POST,
   SHOW_POSTDETAIL, HIDE_POSTDETAIL,
   CLOSE_SIDENAV, OPEN_SIDENAV, TOGLE_SIDENAV,
   SHOW_LOADING, HIDE_LOADING,
@@ -9,8 +11,23 @@ import {
   OPEN_ORDERFILTER,
   CLOSE_ORDERFILTER,
   OPEN_FILTER,
-  CLOSE_FILTER
+  CLOSE_FILTER,
+  OPEN_DETAIL_CATEGORIES,
+  CLOSE_DETAIL_CATEGORIES,
+  TOGLE_COMMENTS
 } from '../actions/appState'
+
+function initialPostState() {
+  return {
+    id: v4(),
+    timestamp: new Date().getTime(),
+    title: 'post title',
+    body: 'post body',
+    category: 'react',
+    voteScore: 0,
+    deleted: false
+  }
+}
 
 const initialAppState = {
   navDrawerOpen: false,
@@ -21,7 +38,9 @@ const initialAppState = {
   dialoguePostDetailOpen: false,
   headerMenuOpen: false,
   anchorEl: null,
-  orderBy:'timestamp'
+  orderBy: 'timestamp',
+  newPost: initialPostState(),
+  commentsExpanded: true
 }
 
 function app(appState = initialAppState, action) {
@@ -72,11 +91,24 @@ function app(appState = initialAppState, action) {
       return {
         ...appState,
         dialogueAddNewOpen: true,
+        newPost: initialPostState()
       }
     case HIDE_ADDNEWPOST:
       return {
         ...appState,
         dialogueAddNewOpen: false,
+      }
+    // NEW POST DATA STORE
+    case UPDATE_NEW_POST:
+      return {
+        ...appState,
+        newPost: action.newPost
+      }
+    // ADD NEW POST
+    case ADD_NEW_POST:
+      return {
+        ...appState,
+        newPost: initialPostState()
       }
     //POST DETAIL
     case SHOW_POSTDETAIL:
@@ -102,34 +134,52 @@ function app(appState = initialAppState, action) {
         anchorEl: null,
         headerMenuOpen: false,
       }
-      //ORDER BY
+    //ORDER BY
     case SET_ORDERFILTER:
-    return {
-      ...appState,
-      orderBy: action.orderBy
-    }
+      return {
+        ...appState,
+        orderBy: action.orderBy
+      }
     case OPEN_ORDERFILTER:
-    return {
-      ...appState,
-      orderByOpen: true,
-      anchorEl:action.target
-    }
+      return {
+        ...appState,
+        orderByOpen: true,
+        anchorEl: action.target
+      }
     case CLOSE_ORDERFILTER:
-    return {
-      ...appState,
-      orderByOpen: false
-    }
+      return {
+        ...appState,
+        orderByOpen: false
+      }
     case OPEN_FILTER:
-    return {
-      ...appState,
-      filterOpen: true,
-      anchorEl: action.target
-    }
+      return {
+        ...appState,
+        filterOpen: true,
+        anchorEl: action.target
+      }
     case CLOSE_FILTER:
-    return {
-      ...appState,
-      filterOpen: false
-    }
+      return {
+        ...appState,
+        filterOpen: false
+      }
+    case OPEN_DETAIL_CATEGORIES:
+      return {
+        ...appState,
+        dialogueCategoriesOpen: true,
+        anchorEl: action.target
+      }
+    case CLOSE_DETAIL_CATEGORIES:
+      return {
+        ...appState,
+        dialogueCategoriesOpen: false
+      }
+    case TOGLE_COMMENTS:
+      return {
+        ...appState,
+        commentsExpanded: !appState.commentsExpanded
+      }
+
+
     default:
       return appState
   }

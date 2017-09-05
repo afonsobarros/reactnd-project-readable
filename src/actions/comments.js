@@ -1,4 +1,3 @@
-import { v4 } from 'node-uuid'
 
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const UPDATE_COMMENTS = 'UPDATE_COMMENTS'

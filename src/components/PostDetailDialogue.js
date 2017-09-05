@@ -44,7 +44,6 @@ class PostDetailDialogue extends Component {
   };
 
   render() {
-
     const { classes, onRequestClose, post, user, category, categories, ...other } = this.props;
     
     return (

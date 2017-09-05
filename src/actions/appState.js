@@ -10,6 +10,8 @@ export const HIDE_SNACKBAR = 'HIDE_SNACKBAR'
 
 export const SHOW_ADDNEWPOST = 'SHOW_ADDNEWPOST'
 export const HIDE_ADDNEWPOST = 'HIDE_ADDNEWPOST'
+export const UPDATE_NEW_POST = 'UPDATE_NEW_POST'
+export const ADD_NEW_POST = 'ADD_NEW_POST'
 
 export const SHOW_POSTDETAIL = 'SHOW_POSTDETAIL'
 export const HIDE_POSTDETAIL = 'HIDE_POSTDETAIL'
@@ -24,6 +26,10 @@ export const CLOSE_ORDERFILTER = 'CLOSE_ORDERFILTER'
 export const OPEN_FILTER = 'OPEN_FILTER'
 export const CLOSE_FILTER = 'CLOSE_FILTER'
 
+export const OPEN_DETAIL_CATEGORIES = 'OPEN_DETAIL_CATEGORIES'
+export const CLOSE_DETAIL_CATEGORIES = 'CLOSE_DETAIL_CATEGORIES'
+
+export const TOGLE_COMMENTS = 'TOGLE_COMMENTS'
 
 //SIDENAV
 export function toggleSidenav() {
@@ -127,6 +133,7 @@ export function openOrderFilter({ target }) {
     target
   }
 }
+
 export function closeOrderFilter() {
   return {
     type: CLOSE_ORDERFILTER,
@@ -147,4 +154,36 @@ export function closeFilter() {
   }
 }
 
+// CATEGORIES MENU IN ADD POST DIALOGUE 
+export function openDialogueCategories({ target }) {
+  return {
+    type: OPEN_DETAIL_CATEGORIES,
+    target
+  }
+}
+export function closeDialogueCategories() {
+  return {
+    type: CLOSE_DETAIL_CATEGORIES,
+  }
+}
 
+export function updateNewPost({ newPost }) {
+  return {
+    type: UPDATE_NEW_POST,
+    newPost
+  }
+}
+
+
+export function addNewPost({ newPost }) {
+  return {
+    type: ADD_NEW_POST,
+    newPost
+  }
+}
+
+export function toggleComments() {
+  return {
+    type: TOGLE_COMMENTS,
+  }
+}

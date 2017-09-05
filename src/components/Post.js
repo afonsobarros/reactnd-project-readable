@@ -9,12 +9,13 @@ import themeDefault from '../theme-default';
 
 import UserAvatar from './UserAvatar';
 import { updatePosts } from '../actions/posts'
+import { toggleComments } from '../actions/appState'
 
 
 class Post extends Component {
 
   handleExpandClick = (e) => {
-    //this.setState({ expanded: !this.state.expanded });
+    this.props.toggleComments();
   };
   voteUp = (e) => {
     //this.setState({ expanded: !this.state.expanded });
@@ -24,9 +25,9 @@ class Post extends Component {
   };
 
   render() {
-    const { post, insidedialogue, comments } = this.props;
+    const { post, insidedialogue, comments, commentsExpanded } = this.props;
     const date = post && post.timestamp ? new Date(post.timestamp).toDateString() : '';
-    let expanded = true;
+    const filteredComments = comments.filter( comment => comment.parentId === post.id)
     return (
       <div>
         <Card style={!insidedialogue ? themeDefault.card : themeDefault.cardNoShadow}>
@@ -80,18 +81,18 @@ class Post extends Component {
                 onClick={insidedialogue ? this.handleExpandClick : null}
                 color="primary"
               >
-                <Badge badgeContent={comments.length} color="accent">
-                  <i className="material-icons">{comments.length > 0 ? 'speaker_notes' : 'speaker_notes_off'}</i>
+                <Badge badgeContent={filteredComments.length} color="accent">
+                  <i className="material-icons">{filteredComments.length > 0 ? 'speaker_notes' : 'speaker_notes_off'}</i>
                 </Badge>
               </IconButton>
             </CardActions>
             {
               insidedialogue
-                ? <Collapse in={expanded} transitionDuration="auto" unmountOnExit>
+                ? <Collapse in={commentsExpanded} transitionDuration="auto" unmountOnExit>
                   <Divider />
                   <CardContent style={themeDefault.commentsContainer}>
                     {
-                      comments.map((comment, index) =>
+                      filteredComments.map((comment, index) =>
                         <div key={index}>
                           <CardHeader
                             avatar={
@@ -109,7 +110,7 @@ class Post extends Component {
                       )
                     }
                     {
-                      comments.length < 1
+                      filteredComments.length < 1
                         ? <p>Be the first to comment this post!</p>
                         : null
                     }
@@ -128,13 +129,15 @@ function mapStateToProps(state) {
   return {
     user: state.user,
     comments:state.comments,
-    posts:state.posts
+    posts:state.posts,
+    commentsExpanded: state.appState.commentsExpanded    
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     updatePosts: (post) => dispatch(updatePosts(post)),
+    toggleComments:() => dispatch(toggleComments())
   }
 }
 
