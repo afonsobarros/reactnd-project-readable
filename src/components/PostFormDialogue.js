@@ -6,9 +6,12 @@ import {
   closeDialogueCategories,
   updateNewPost
 } from '../actions/appState'
+import {
+  addNewPost,
+} from '../actions/posts'
 
 import themeDefault from '../theme-default';
-import { Avatar, Button, Chip, CardHeader, CardContent, Divider, Menu, MenuItem, Typography,TextField } from 'material-ui';
+import { Avatar, Button, Chip, CardHeader, CardContent, Divider, Menu, MenuItem, Typography, TextField } from 'material-ui';
 import UserAvatar from './UserAvatar';
 import Dialog, {
   DialogActions,
@@ -17,12 +20,16 @@ import Dialog, {
 } from 'material-ui/Dialog';
 
 class PostFormDialogue extends Component {
-
+  updatePostTimeout = 0;
+  
   updatePost = (prop, value) => {
     //console.log('update post', prop, value)
     let post = this.props.post;
     post[prop] = value;
-    this.props.updateNewPost({ newPost: post });
+    clearTimeout(this.updateNewPost);
+    this.updateNewPost = setTimeout(() => {
+      this.props.updateNewPost({ newPost: post });      
+    }, 500);
   };
 
   handleClickListItem = event => {
@@ -39,11 +46,19 @@ class PostFormDialogue extends Component {
     this.props.closeDialogueCategories();
   };
 
+  savePost = () => {
+    let { post } = this.props;
+    post.author = this.props.user.userName;
+    const disabled = (post.body === 'post body' || post.title === 'post title');
+    this.props.addNewPost( post );
+    this.props.onRequestClose();
+  };
+
   render() {
     const { post, classes, onRequestClose, user, categories, dialogueCategoriesOpen, anchorEl, ...other } = this.props;
 
     const date = post && post.timestamp ? new Date(post.timestamp).toDateString() : '';
-    //console.log('user', user)
+
     return (
       <Dialog onRequestClose={onRequestClose} {...other}>
         <form>
@@ -60,9 +75,9 @@ class PostFormDialogue extends Component {
               subheader={date}
             />
             <CardContent>
-            <Typography type="caption" color="inherit" >
-           <p> Select Category </p>
-          </Typography>
+              <Typography type="caption" color="inherit" >
+                <p> Select Category </p>
+              </Typography>
               <Chip
                 avatar={
                   <Avatar>{post.category ? post.category[0] : categories[0].name[0]}</Avatar>
@@ -109,7 +124,7 @@ class PostFormDialogue extends Component {
             <Button raised onClick={onRequestClose} color="primary" style={themeDefault.raisedButton}>
               cancel
             </Button>
-            <Button raised color="accent" onClick={onRequestClose} style={themeDefault.raisedButton}>
+            <Button raised color="accent" onClick={this.savePost} style={themeDefault.raisedButton}>
               send
             </Button>
           </DialogActions>
@@ -134,6 +149,8 @@ function mapDispatchToProps(dispatch) {
     openDialogueCategories: (target) => dispatch(openDialogueCategories(target)),
     closeDialogueCategories: () => dispatch(closeDialogueCategories()),
     updateNewPost: (post) => dispatch(updateNewPost(post)),
+    addNewPost: (post) => dispatch(addNewPost(post)),
+
   }
 }
 

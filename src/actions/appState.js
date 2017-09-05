@@ -11,7 +11,6 @@ export const HIDE_SNACKBAR = 'HIDE_SNACKBAR'
 export const SHOW_ADDNEWPOST = 'SHOW_ADDNEWPOST'
 export const HIDE_ADDNEWPOST = 'HIDE_ADDNEWPOST'
 export const UPDATE_NEW_POST = 'UPDATE_NEW_POST'
-export const ADD_NEW_POST = 'ADD_NEW_POST'
 
 export const SHOW_POSTDETAIL = 'SHOW_POSTDETAIL'
 export const HIDE_POSTDETAIL = 'HIDE_POSTDETAIL'
@@ -170,14 +169,6 @@ export function closeDialogueCategories() {
 export function updateNewPost({ newPost }) {
   return {
     type: UPDATE_NEW_POST,
-    newPost
-  }
-}
-
-
-export function addNewPost({ newPost }) {
-  return {
-    type: ADD_NEW_POST,
     newPost
   }
 }

@@ -1,10 +1,9 @@
 import { v4 } from 'node-uuid'
 
 export const GET_POSTS = 'GET_POSTS'
-export const ADD_POST = 'ADD_POST'
+export const ADD_NEW_POST = 'ADD_NEW_POST'
 export const UPDATE_POSTS = 'UPDATE_POSTS'
 export const DELETE_POST = 'DELETE_POST'
-
 
 export function getCategories() {
   return {
@@ -19,17 +18,10 @@ export function updatePosts(posts) {
   }
 }
 
-export const addPost = (title, body, author, category) => {
+export const addNewPost = (post) => {
   return {
-    type: ADD_POST,
-    payload: {
-      id: v4(),
-      timestamp: Date.now(),
-      title,
-      body,
-      author,
-      category
-    }
+    type: ADD_NEW_POST,
+    post
   }
 }
 

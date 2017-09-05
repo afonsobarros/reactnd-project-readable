@@ -11,18 +11,6 @@ import Post from './Post';
 
 class PostDetailDialogue extends Component {
 
-  state = {
-    anchorEl: undefined,
-    open: false,
-    selectedIndex: 0,
-    catMenuOpen: false,
-    post: {
-      title: '',
-      body: '',
-      category: ''
-    }
-  };
-
   button = undefined;
   
   updatePost = (prop, value) => {

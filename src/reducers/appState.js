@@ -1,7 +1,7 @@
 import { v4 } from 'node-uuid'
 
 import {
-  SHOW_ADDNEWPOST, HIDE_ADDNEWPOST, UPDATE_NEW_POST, ADD_NEW_POST,
+  SHOW_ADDNEWPOST, HIDE_ADDNEWPOST, UPDATE_NEW_POST,
   SHOW_POSTDETAIL, HIDE_POSTDETAIL,
   CLOSE_SIDENAV, OPEN_SIDENAV, TOGLE_SIDENAV,
   SHOW_LOADING, HIDE_LOADING,
@@ -19,6 +19,7 @@ import {
 
 function initialPostState() {
   return {
+    author:'',
     id: v4(),
     timestamp: new Date().getTime(),
     title: 'post title',
@@ -104,12 +105,7 @@ function app(appState = initialAppState, action) {
         ...appState,
         newPost: action.newPost
       }
-    // ADD NEW POST
-    case ADD_NEW_POST:
-      return {
-        ...appState,
-        newPost: initialPostState()
-      }
+    
     //POST DETAIL
     case SHOW_POSTDETAIL:
       return {

@@ -40,7 +40,9 @@ class PostGrid extends Component {
       orderOpen, filterOpen } = this.props;
 
     let filteredPosts = posts.length === 0 ? []
-      : posts.filter(post => post.category === currentCat || currentCat === 'all').sort((a, b) => a[orderBy] - b[orderBy]);
+      : posts.filter(post => post.category === currentCat || currentCat === 'all').sort((a, b) => 
+        orderBy === 'timestamp' ? b[orderBy] - a[orderBy] : b[orderBy] - a[orderBy]
+      );
 
     return (
       <div>
