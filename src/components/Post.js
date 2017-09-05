@@ -26,7 +26,7 @@ class Post extends Component {
   render() {
     const { post, insidedialogue, comments } = this.props;
     const date = post && post.timestamp ? new Date(post.timestamp).toDateString() : '';
-    let expanded = false;
+    let expanded = true;
     return (
       <div>
         <Card style={!insidedialogue ? themeDefault.card : themeDefault.cardNoShadow}>
