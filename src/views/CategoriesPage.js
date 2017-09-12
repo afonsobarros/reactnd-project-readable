@@ -9,6 +9,8 @@ import PostGrid from '../components/PostGrid';
 import { hidePostDetailDialogue, showPostDetailDialogue } from '../actions/appState';
 
 class CategoriesPage extends Component {
+  post = {}
+
   constructor(props) {
     super(props)
     this.onRequestClose = this.onRequestClose.bind(this)
@@ -22,16 +24,14 @@ class CategoriesPage extends Component {
   }
 
   componentDidMount() {
-    this.props.showPostDetailDialogue();
+    this.props.showPostDetailDialogue(this.post);
   }
 
   render() {
-    const { match, isMobile, posts, dialoguePostDetailOpen } = this.props;
+    const { match, isMobile, dialoguePostDetailOpen } = this.props;
 
     const currentCat = match.params['category'] || 'all';
-    const currentPost = match.params['post_id'] || '';
-    const post = posts.filter(post => post.id === currentPost)[0];
-
+    
     return (
 
       <PageBase title={currentCat}
@@ -39,7 +39,6 @@ class CategoriesPage extends Component {
 
         <PostDetailDialogue
           open={dialoguePostDetailOpen}
-          post={post}
           category={currentCat}
           onRequestClose={this.onRequestClose}
         />
@@ -52,8 +51,6 @@ class CategoriesPage extends Component {
 
 function mapStateToProps(state) {
   return {
-    categories: state.categories,
-    posts: state.posts,
     dialoguePostDetailOpen: state.appState.dialoguePostDetailOpen
   }
 }
@@ -61,7 +58,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     hidePostDetailDialogue: () => dispatch(hidePostDetailDialogue()),
-    showPostDetailDialogue: () => dispatch(showPostDetailDialogue())
+    showPostDetailDialogue: (post) => dispatch(showPostDetailDialogue(post))
 
   }
 }

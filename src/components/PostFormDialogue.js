@@ -51,7 +51,7 @@ class PostFormDialogue extends Component {
   };
 
   render() {
-    const { post, classes, onRequestClose, user, categories, dialogueCategoriesOpen, anchorEl, ...other } = this.props;
+    const { post, classes, onRequestClose,updateNewPost,addNewPost, user, categories, dialogueCategoriesOpen, openDialogueCategories, closeDialogueCategories, anchorEl, ...other } = this.props;
 
     const date = post && post.timestamp ? new Date(post.timestamp).toDateString() : '';
     const isDisabled = post.title === '' || post.body === '';

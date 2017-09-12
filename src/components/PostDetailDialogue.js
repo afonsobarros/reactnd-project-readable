@@ -29,14 +29,12 @@ class PostDetailDialogue extends Component {
   }
   onDelete() {
     this.props.deletePost(this.props.post);
-    this.props.onRequestClose();
-    this.props.toggleEditMode();
   }
   render() {
     const { classes, onRequestClose, post, user, category, categories, editMode, toggleEditMode, deletePost,...other } = this.props;
 
     return (
-      post
+      post.id
         ? <Dialog onRequestClose={onRequestClose} {...other}>
           <DialogContent>
             {
@@ -75,7 +73,8 @@ class PostDetailDialogue extends Component {
 
 function mapStateToProps(state) {
   return {
-    editMode: state.appState.editMode
+    editMode: state.appState.editMode,
+    post: state.appState.editPost
   }
 }
 

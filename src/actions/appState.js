@@ -96,15 +96,16 @@ export function hidePostFormDialogue() {
 }
 
 //POST DETAIL DIALOGUE
-export function showPostDetailDialogue() {
+export function showPostDetailDialogue(post) {
   return {
     type: SHOW_POSTDETAIL,
+    editPost:post
   }
 }
 
 export function hidePostDetailDialogue() {
   return {
-    type: HIDE_POSTDETAIL
+    type: HIDE_POSTDETAIL,
   }
 }
 

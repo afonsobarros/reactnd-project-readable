@@ -10,7 +10,8 @@ import Post from '../components/Post';
 import {
   setOrderFilter, openOrderFilter, closeOrderFilter,
   closeFilter, openFilter,
-  showPostDetailDialogue
+  showPostDetailDialogue,
+  showPostFormDialogue,  
 } from '../actions/appState'
 
 class PostGrid extends Component {
@@ -39,7 +40,7 @@ class PostGrid extends Component {
     const { categories, currentCat, posts, isMobile,
       orderBy, anchorEl,
       orderOpen, filterOpen,
-      showPostDetailDialogue } = this.props;
+      showPostDetailDialogue,showPostFormDialogue } = this.props;
 
     let filteredPosts = posts.length === 0 ? []
       : posts.filter(post => (post.category === currentCat || currentCat === 'all') && !post.deleted).sort((a, b) =>
@@ -111,7 +112,7 @@ class PostGrid extends Component {
               filteredPosts.map((post, index) =>
                 <GridListTile key={index} cols={1} >
                   <Link key={index}
-                    to={`/${currentCat}/${post.id}`} onClick={showPostDetailDialogue}>
+                    to={`/${currentCat}/${post.id}`} onClick={() => showPostDetailDialogue(post)}>
                     <Post post={post} />
                   </Link>
                 </GridListTile>,
@@ -120,7 +121,11 @@ class PostGrid extends Component {
           </GridList>
           {
             filteredPosts.length < 1
-              ? <p style={themeDefault.noResult}> no posts found for <b>"{currentCat}"</b>.<br /><br />Try another category, or <Link to="/all"><Button >view all</Button></Link></p>
+              ? <div>
+                <p style={themeDefault.noResult}> no posts found for <b>"{currentCat}"</b></p>
+                <p>Try another category, <Link to="/all"><Button >view all</Button></Link>, or</p>
+                <Button onClick={showPostFormDialogue}raised style={themeDefault.raisedButton} color="primary"><i className="material-icons">playlist_add</i>create a new post</Button>
+                </div>
               : null
           }
         </div>
@@ -150,7 +155,8 @@ function mapDispatchToProps(dispatch) {
     setOrderFilter: (orderBy) => dispatch(setOrderFilter(orderBy)),
     openFilter: (target) => dispatch(openFilter(target)),
     closeFilter: () => dispatch(closeFilter()),
-    showPostDetailDialogue: () => dispatch(showPostDetailDialogue()),
+    showPostDetailDialogue: (post) => dispatch(showPostDetailDialogue(post)),
+    showPostFormDialogue: () => dispatch(showPostFormDialogue()),
   }
 }
 

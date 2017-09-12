@@ -54,6 +54,7 @@ const initialAppState = {
   orderBy: 'timestamp',
   newComment: initialCommentState(),
   newPost: initialPostState(),
+  editPost: {},
   commentsExpanded: true,
   editMode:false
 }
@@ -71,7 +72,8 @@ function app(appState = initialAppState, action) {
       return {
         ...appState,
         editMode: false,
-        dialoguePostDetailOpen:false
+        dialoguePostDetailOpen:false,
+        editPost:{}
       }
     //SIDENAV STATES
     case TOGLE_SIDENAV:
@@ -118,7 +120,7 @@ function app(appState = initialAppState, action) {
       return {
         ...appState,
         dialogueAddNewOpen: true,
-        newPost: initialPostState()
+        newPost: initialPostState(),
       }
     case HIDE_ADDNEWPOST:
       return {
@@ -138,12 +140,14 @@ function app(appState = initialAppState, action) {
       return {
         ...appState,
         dialoguePostDetailOpen: true,
+        editPost: action.editPost
       }
     case HIDE_POSTDETAIL:
       return {
         ...appState,
         editMode: false,
-        dialoguePostDetailOpen:false
+        dialoguePostDetailOpen:false,
+        editPost:{}
       }
     //HEADER USER MENU
     case SHOW_HEADERMENU:
