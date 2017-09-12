@@ -17,8 +17,8 @@ const nullUser = {
   password: null,
 }
 
-if (!user){
-  user = localStorage.user = nullUser
+if (!user) {
+  user = localStorage.user = JSON.stringify(nullUser);
 }
 
 export const getUser = () => new Promise((resolve, reject) => resolve(JSON.parse(user)));
@@ -30,7 +30,7 @@ export const deleteUser = () => new Promise((resolve, reject) => {
 
 export const updateUser = (userData) =>
   new Promise((resolve, reject) => {
-    localStorage.user = JSON.stringify(userData);
+    user = localStorage.user = JSON.stringify(userData);
     resolve(userData);
   });
 
