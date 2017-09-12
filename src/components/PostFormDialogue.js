@@ -147,7 +147,6 @@ function mapDispatchToProps(dispatch) {
     closeDialogueCategories: () => dispatch(closeDialogueCategories()),
     updateNewPost: (post) => dispatch(updateNewPost(post)),
     addNewPost: (post) => dispatch(addNewPost(post)),
-
   }
 }
 

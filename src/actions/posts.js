@@ -4,7 +4,7 @@ export const VOTE_POST_DOWN = 'VOTE_POST_DOWN'
 export const ADD_NEW_POST = 'ADD_NEW_POST'
 export const UPDATE_POSTS = 'UPDATE_POSTS'
 export const DELETE_POST = 'DELETE_POST'
-export const EDIT_POST = 'EDIT_POST'
+export const UPDATE_POST = 'UPDATE_POST'
 
 export function getCategories() {
   return {
@@ -19,9 +19,9 @@ export function updatePosts(posts) {
   }
 }
 
-export const editPost = (post) => {
+export const updatePost = (post) => {
   return {
-    type: EDIT_POST,
+    type: UPDATE_POST,
     post
   }
 }

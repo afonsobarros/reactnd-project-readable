@@ -9,7 +9,6 @@ import PostGrid from '../components/PostGrid';
 import { hidePostDetailDialogue, showPostDetailDialogue } from '../actions/appState';
 
 class CategoriesPage extends Component {
-  post = {}
 
   constructor(props) {
     super(props)
@@ -22,16 +21,20 @@ class CategoriesPage extends Component {
     this.props.hidePostDetailDialogue();
     this.forceUpdate();
   }
-
   componentDidMount() {
-    this.props.showPostDetailDialogue(this.post);
+    // for direct links
+    const currentPost = this.props.match.params['post_id'] || '';
+    const post = this.props.posts.filter(post => post.id === currentPost ? post : null )[0];
+    if (post)
+      this.props.showPostDetailDialogue(post);
   }
 
   render() {
     const { match, isMobile, dialoguePostDetailOpen } = this.props;
 
     const currentCat = match.params['category'] || 'all';
-    
+    const currentPost = this.props.match.params['post_id'] || '';
+    const post = this.props.posts.filter(post => post.id === currentPost ? post : null )[0];
     return (
 
       <PageBase title={currentCat}
@@ -41,6 +44,7 @@ class CategoriesPage extends Component {
           open={dialoguePostDetailOpen}
           category={currentCat}
           onRequestClose={this.onRequestClose}
+          post={post}
         />
         <PostGrid isMobile={isMobile} currentCat={currentCat} />
       </PageBase>
@@ -51,7 +55,8 @@ class CategoriesPage extends Component {
 
 function mapStateToProps(state) {
   return {
-    dialoguePostDetailOpen: state.appState.dialoguePostDetailOpen
+    dialoguePostDetailOpen: state.appState.dialoguePostDetailOpen,
+    posts:state.posts
   }
 }
 
@@ -59,7 +64,6 @@ function mapDispatchToProps(dispatch) {
   return {
     hidePostDetailDialogue: () => dispatch(hidePostDetailDialogue()),
     showPostDetailDialogue: (post) => dispatch(showPostDetailDialogue(post))
-
   }
 }
 

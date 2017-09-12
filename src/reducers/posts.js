@@ -4,7 +4,7 @@ import {
   VOTE_POST_DOWN,
   DELETE_POST,
   UPDATE_POSTS,
-  EDIT_POST
+  UPDATE_POST
 } from '../actions/posts'
 
 function posts(state = [], action) {
@@ -21,7 +21,7 @@ function posts(state = [], action) {
       })
     case UPDATE_POSTS:
       return posts
-    case EDIT_POST:
+    case UPDATE_POST:
       return state.map(item => {
         if (item.id === post.id) {
           item.title = post.title;

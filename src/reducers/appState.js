@@ -11,10 +11,10 @@ import {
   OPEN_FILTER, CLOSE_FILTER,
   OPEN_DETAIL_CATEGORIES, CLOSE_DETAIL_CATEGORIES,
   TOGLE_COMMENTS, UPDATE_NEW_COMMENT, RESET_NEW_COMMENT,
-  TOGLE_EDIT
+  TOGLE_EDIT, EDIT_POST
 } from '../actions/appState'
 
-import { DELETE_POST} from '../actions/posts'
+import { DELETE_POST } from '../actions/posts'
 
 function initialPostState() {
   return {
@@ -63,10 +63,17 @@ function app(appState = initialAppState, action) {
 
   switch (action.type) {
     //EDIT MODE
+    
+    case EDIT_POST:
+    return {
+      ...appState,
+      editPost: action.editPost
+    }
     case TOGLE_EDIT:
       return {
         ...appState,
-        editMode: !appState.editMode
+        editMode: !appState.editMode,
+        editPost: action.editPost
       }
       case DELETE_POST:
       return {
@@ -140,7 +147,7 @@ function app(appState = initialAppState, action) {
       return {
         ...appState,
         dialoguePostDetailOpen: true,
-        editPost: action.editPost
+        editMode:false
       }
     case HIDE_POSTDETAIL:
       return {

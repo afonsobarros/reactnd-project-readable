@@ -33,7 +33,7 @@ export const UPDATE_NEW_COMMENT = 'UPDATE_NEW_COMMENT'
 export const RESET_NEW_COMMENT = 'RESET_NEW_COMMENT'
 
 export const TOGLE_EDIT = 'TOGLE_EDIT'
-
+export const EDIT_POST = 'EDIT_POST'
 
 //SIDENAV
 export function toggleSidenav() {
@@ -198,8 +198,16 @@ export function resetNewComment() {
   }
 }
 
-export function toggleEditMode() {
+export function toggleEditMode(post) {
   return {
     type: TOGLE_EDIT,
+    editPost:post ? post : {}
+  }
+}
+
+export function updateEditPost(post) {
+  return {
+    type: EDIT_POST,
+    editPost: post
   }
 }
