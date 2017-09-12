@@ -25,8 +25,8 @@ class Post extends Component {
     const { post, insidedialogue, comments, commentsExpanded } = this.props;
     const date = post && post.timestamp ? new Date(post.timestamp).toDateString() : '';
     const filteredComments = comments.filter(comment => comment.parentId === post.id).sort((a, b) => b.timestamp - a.timestamp);
+    
     return (
-      <div>
         <Card style={!insidedialogue ? themeDefault.card : themeDefault.cardNoShadow}>
           <Link to={"/" + post.category}>
             <Chip style={themeDefault.chipAbsolute}
@@ -102,7 +102,6 @@ class Post extends Component {
             }
           </div>
         </Card>
-      </div>
     );
   }
 }

@@ -39,8 +39,19 @@ class Rating extends Component {
     this.forceUpdate()
   };
 
+  getScore(id, target) {
+    let element;
+    if (target === 'post') {
+      element = this.props.posts.filter((item) => item.id === id)
+    } else {
+      element = this.props.comments.filter((item) => item.id === id)
+    }
+    return element[0].voteScore;
+  }
+
   render() {
-    const { target, type } = this.props;
+    const { target, type, posts, comments } = this.props;
+    let voteScore = this.getScore(target.id, type);
 
     return (
       <div style={type === 'post' ? themeDefault.reverse : themeDefault.reverseAbsolute}>
@@ -57,7 +68,7 @@ class Rating extends Component {
         </IconButton>
 
         <IconButton aria-label="Rating" color="primary">
-          <Badge badgeContent={target.voteScore} color="accent">
+          <Badge badgeContent={voteScore} color="accent">
             <i className="material-icons">stars</i>
           </Badge>
         </IconButton>
@@ -68,7 +79,8 @@ class Rating extends Component {
 
 function mapStateToProps(state) {
   return {
-
+    posts: state.posts,
+    comments: state.comments
   }
 }
 function mapDispatchToProps(dispatch) {
