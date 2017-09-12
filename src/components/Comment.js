@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 
 import themeDefault from '../theme-default';
-import { Badge, Button, IconButton, TextField } from 'material-ui';
+import { Button, TextField } from 'material-ui';
 
 import { updateNewComment, resetNewComment } from '../actions/appState'
 import { addComment } from '../actions/comments'
@@ -32,7 +32,7 @@ class Comment extends Component {
   };
 
   render() {
-    const { target, onRequestClose, newComment } = this.props;
+    const { onRequestClose, newComment } = this.props;
     const isDisabled = newComment.body === '';
     return (
       <div style={themeDefault.actionsDiv}>

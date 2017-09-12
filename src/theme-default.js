@@ -208,7 +208,7 @@ const themeDefault = createMuiTheme({
     },
     MuiCardContent: {
       root: {
-        maxHeight: '20vh',
+        maxHeight: '25vh',
         overflow: 'auto',
       }
     },

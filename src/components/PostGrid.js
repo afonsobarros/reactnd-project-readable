@@ -42,7 +42,7 @@ class PostGrid extends Component {
       showPostDetailDialogue } = this.props;
 
     let filteredPosts = posts.length === 0 ? []
-      : posts.filter(post => post.category === currentCat || currentCat === 'all').sort((a, b) => 
+      : posts.filter(post => post.category === currentCat || currentCat === 'all').sort((a, b) =>
         orderBy === 'timestamp' ? b[orderBy] - a[orderBy] : b[orderBy] - a[orderBy]
       );
 
@@ -65,14 +65,11 @@ class PostGrid extends Component {
               open={orderOpen}
               onRequestClose={this.handleRequestClose}
             >
-              <MenuItem selected={orderBy === 'timestamp'} onClick={ () => this.setOrderFilter('timestamp')}>
+              <MenuItem selected={orderBy === 'timestamp'} onClick={() => this.setOrderFilter('timestamp')}>
                 date
               </MenuItem>
               <MenuItem selected={orderBy === 'voteScore'} onClick={() => this.setOrderFilter('voteScore')}>
                 votes
-              </MenuItem>
-              <MenuItem selected={orderBy === 'id'} onClick={() => this.setOrderFilter('id')}>
-                id
               </MenuItem>
             </Menu>
 
@@ -153,7 +150,7 @@ function mapDispatchToProps(dispatch) {
     setOrderFilter: (orderBy) => dispatch(setOrderFilter(orderBy)),
     openFilter: (target) => dispatch(openFilter(target)),
     closeFilter: () => dispatch(closeFilter()),
-    showPostDetailDialogue: () => dispatch(showPostDetailDialogue()),    
+    showPostDetailDialogue: () => dispatch(showPostDetailDialogue()),
   }
 }
 
