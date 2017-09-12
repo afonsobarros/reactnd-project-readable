@@ -9,7 +9,9 @@ import { voteCommentDown, voteCommentUp } from '../actions/comments'
 class Rating extends Component {
 
   voteUp = (e) => {
-    
+    e.preventDefault();
+    e.stopPropagation();
+
     switch (this.props.type) {
       case 'post':
         this.props.votePostUp(this.props.target);
@@ -23,10 +25,12 @@ class Rating extends Component {
   };
 
   voteDown = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     switch (this.props.type) {
       case 'post':
-      this.props.votePostDown(this.props.target);
-      break
+        this.props.votePostDown(this.props.target);
+        break
       case 'comment':
         this.props.voteCommentDown(this.props.target);
         break
@@ -39,7 +43,7 @@ class Rating extends Component {
     const { target, type } = this.props;
 
     return (
-      <div style={themeDefault.reverse}>
+      <div style={type === 'post' ? themeDefault.reverse : themeDefault.reverseAbsolute}>
         <IconButton aria-label="Vote up"
           onClick={this.voteUp}
           style={themeDefault.greenColor}>
@@ -64,7 +68,7 @@ class Rating extends Component {
 
 function mapStateToProps(state) {
   return {
-    
+
   }
 }
 function mapDispatchToProps(dispatch) {

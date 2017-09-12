@@ -24,12 +24,12 @@ class Post extends Component {
   render() {
     const { post, insidedialogue, comments, commentsExpanded } = this.props;
     const date = post && post.timestamp ? new Date(post.timestamp).toDateString() : '';
-    const filteredComments = comments.filter(comment => comment.parentId === post.id)
+    const filteredComments = comments.filter(comment => comment.parentId === post.id).sort((a, b) => b.timestamp - a.timestamp);
     return (
       <div>
         <Card style={!insidedialogue ? themeDefault.card : themeDefault.cardNoShadow}>
           <Link to={"/" + post.category}>
-            <Chip style={themeDefault.shipAbsolute}
+            <Chip style={themeDefault.chipAbsolute}
               avatar={<Avatar>{post.category[0]}</Avatar>}
               label={post.category} />
           </Link>
@@ -74,7 +74,7 @@ class Post extends Component {
                   <CardContent style={themeDefault.commentsContainer}>
                     {
                       filteredComments.map((comment, index) =>
-                        <div key={index}>
+                        <div key={index} style={themeDefault.relative}>
                           <CardHeader
                             avatar={
                               <UserAvatar small={true} username={comment.author} />
@@ -83,7 +83,7 @@ class Post extends Component {
                             subheader={new Date(comment.timestamp).toDateString()}
                           />
                           <CardContent style={themeDefault.noPadding}>
-                            <Typography type="title" gutterBottom={true}>
+                            <Typography type="title" gutterBottom={true} style={themeDefault.comment}>
                               {comment.body}
                             </Typography>
                             <Rating target={comment} type="comment" />

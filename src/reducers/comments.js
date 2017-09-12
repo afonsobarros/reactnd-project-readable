@@ -10,7 +10,7 @@ function comments(commentsState = initialCommentsState, action) {
     case UPDATE_COMMENTS:
       return action.comments
     case ADD_COMMENT:
-      return commentsState.concat([action.comment])
+      return commentsState.concat([action.newComment])
     case VOTE_COMMENT_UP:
       return commentsState.map(item => {
         if (item.id === action.comment.id)

@@ -29,6 +29,8 @@ export const OPEN_DETAIL_CATEGORIES = 'OPEN_DETAIL_CATEGORIES'
 export const CLOSE_DETAIL_CATEGORIES = 'CLOSE_DETAIL_CATEGORIES'
 
 export const TOGLE_COMMENTS = 'TOGLE_COMMENTS'
+export const UPDATE_NEW_COMMENT = 'UPDATE_NEW_COMMENT'
+export const RESET_NEW_COMMENT = 'RESET_NEW_COMMENT'
 
 //SIDENAV
 export function toggleSidenav() {
@@ -176,5 +178,18 @@ export function updateNewPost({ newPost }) {
 export function toggleComments() {
   return {
     type: TOGLE_COMMENTS,
+  }
+}
+
+export function updateNewComment({ newComment }) {
+  return {
+    type: UPDATE_NEW_COMMENT,
+    newComment
+  }
+}
+
+export function resetNewComment() {
+  return {
+    type: RESET_NEW_COMMENT
   }
 }

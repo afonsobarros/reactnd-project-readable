@@ -14,12 +14,12 @@ import {
   CLOSE_FILTER,
   OPEN_DETAIL_CATEGORIES,
   CLOSE_DETAIL_CATEGORIES,
-  TOGLE_COMMENTS
+  TOGLE_COMMENTS, UPDATE_NEW_COMMENT, RESET_NEW_COMMENT
 } from '../actions/appState'
 
 function initialPostState() {
   return {
-    author:'',
+    author: '',
     id: v4(),
     timestamp: new Date().getTime(),
     title: 'post title',
@@ -27,6 +27,18 @@ function initialPostState() {
     category: 'react',
     voteScore: 0,
     deleted: false
+  }
+}
+function initialCommentState() {
+  return {
+    author: '',
+    id: v4(),
+    parentId: '',
+    timestamp: new Date().getTime(),
+    body: '',
+    voteScore: 0,
+    deleted: false,
+    parentDeleted: false
   }
 }
 
@@ -40,6 +52,7 @@ const initialAppState = {
   headerMenuOpen: false,
   anchorEl: null,
   orderBy: 'timestamp',
+  newComment: initialCommentState(),
   newPost: initialPostState(),
   commentsExpanded: true
 }
@@ -105,7 +118,8 @@ function app(appState = initialAppState, action) {
         ...appState,
         newPost: action.newPost
       }
-    
+
+
     //POST DETAIL
     case SHOW_POSTDETAIL:
       return {
@@ -174,7 +188,16 @@ function app(appState = initialAppState, action) {
         ...appState,
         commentsExpanded: !appState.commentsExpanded
       }
-      
+    case UPDATE_NEW_COMMENT:
+      return {
+        ...appState,
+        newComment: action.newComment
+      }
+      case RESET_NEW_COMMENT:
+      return {
+        ...appState,
+        newComment: initialCommentState()
+      }
     default:
       return appState
   }

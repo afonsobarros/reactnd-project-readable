@@ -21,14 +21,14 @@ import Dialog, {
 
 class PostFormDialogue extends Component {
   updatePostTimeout = 0;
-  
+
   updatePost = (prop, value) => {
     //console.log('update post', prop, value)
     let post = this.props.post;
     post[prop] = value;
     clearTimeout(this.updateNewPost);
     this.updateNewPost = setTimeout(() => {
-      this.props.updateNewPost({ newPost: post });      
+      this.props.updateNewPost({ newPost: post });
     }, 500);
   };
 

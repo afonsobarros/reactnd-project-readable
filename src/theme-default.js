@@ -24,7 +24,7 @@ const themeDefault = createMuiTheme({
     },
     white: white,
     grey: grey,
-    warn:red
+    warn: red
     //type:'dark'
   }),
   actionsDiv: {
@@ -69,9 +69,9 @@ const themeDefault = createMuiTheme({
     overflow: 'visible',
     width: '100%'
   },
-  center:{
-    textAlign:'center',
-    margin:'0 auto'
+  center: {
+    textAlign: 'center',
+    margin: '0 auto'
   },
   chip: {
     cursor: 'pointer',
@@ -79,10 +79,10 @@ const themeDefault = createMuiTheme({
     right: '16px',
     textTransform: 'capitalize'
   },
-  loading:{
-    margin:'0 auto'
+  loading: {
+    margin: '0 auto'
   },
-  shipAbsolute:{
+  chipAbsolute: {
     position: 'absolute',
     cursor: 'pointer',
     top: '16px',
@@ -129,17 +129,22 @@ const themeDefault = createMuiTheme({
     backgroundColor: accent[500],
     color: 'white'
   },
-  commentsContainer:{
-    marginTop:'24px',
-    padding:'0 24px'
+  commentsContainer: {
+    marginTop: '24px',
+    padding: '0 24px'
+  },
+  comment: {
+    maxWidth: '100%',
+    overflow: 'hidden',
+    wordWrap: 'break-word'
   },
   menu: {
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
   },
-  noResult:{
-    textAlign:'center'
+  noResult: {
+    textAlign: 'center'
   },
   page: {
     width: '90%',
@@ -153,12 +158,22 @@ const themeDefault = createMuiTheme({
   raisedButton: {
     primaryColor: primary[600],
     color: 'white',
-    width:'auto',
+    width: 'auto',
     margin: '16px 0 16px 16px'
   },
-  reverse:{
-    display:'flex',
-    flexFlow: 'row-reverse'   
+  reverse: {
+    display: 'flex',
+    flexFlow: 'row-reverse'
+  },
+  reverseAbsolute: {
+    display: 'flex',
+    flexFlow: 'row-reverse',
+    position: 'absolute',
+    top: 20,
+    right: -20,
+  },
+  relative: {
+    position: 'relative',
   },
   noPadding: {
     padding: 0
@@ -167,10 +182,10 @@ const themeDefault = createMuiTheme({
     overflow: 'visible',
   },
   warnColor: {
-    color:red[900]
+    color: red[900]
   },
   greenColor: {
-    color:green[900]
+    color: green[900]
   },
   toolbar: {
     justifyContent: 'space-between',
@@ -213,29 +228,11 @@ const themeDefault = createMuiTheme({
       }
     },
     MuiDialogActions: {
-      root:{
+      root: {
         margin: 0,
         padding: '0 24px'
       },
-      action:{
-        //width: '100%'
-       }
     }
-    /*
-    MuiButton: {
-      // Name of the styleSheet
-      root: {
-        // Name of the rule
-        background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-        borderRadius: 3,
-        border: 0,
-        color: 'white',
-        height: 48,
-        padding: '0 30px',
-        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .30)',
-      },
-    },
-    */
   },
 });
 

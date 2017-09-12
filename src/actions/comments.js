@@ -5,17 +5,17 @@ export const DELETE_COMMENT = 'DELETE_COMMENT'
 export const VOTE_COMMENT_UP = 'VOTE_COMMENT_UP'
 export const VOTE_COMMENT_DOWN = 'VOTE_COMMENT_DOWN'
 
-export function updateComments( comments ) {
+export function updateComments(comments) {
   return {
     type: UPDATE_COMMENTS,
-    comments:comments
+    comments: comments
   }
 }
 
-export function addComment({ comment }) {
+export function addComment({ newComment }) {
   return {
     type: ADD_COMMENT,
-    comment,
+    newComment,
   }
 }
 
