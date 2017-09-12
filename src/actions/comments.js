@@ -2,7 +2,8 @@
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const UPDATE_COMMENTS = 'UPDATE_COMMENTS'
 export const DELETE_COMMENT = 'DELETE_COMMENT'
-
+export const VOTE_COMMENT_UP = 'VOTE_COMMENT_UP'
+export const VOTE_COMMENT_DOWN = 'VOTE_COMMENT_DOWN'
 
 export function updateComments( comments ) {
   return {
@@ -10,7 +11,6 @@ export function updateComments( comments ) {
     comments:comments
   }
 }
-
 
 export function addComment({ comment }) {
   return {
@@ -23,5 +23,19 @@ export function deleteComment({ comment }) {
   return {
     type: DELETE_COMMENT,
     comment,
+  }
+}
+
+export const voteCommentUp = (comment) => {
+  return {
+    type: VOTE_COMMENT_UP,
+    comment
+  }
+}
+
+export const voteCommentDown = (comment) => {
+  return {
+    type: VOTE_COMMENT_DOWN,
+    comment
   }
 }

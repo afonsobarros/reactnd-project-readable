@@ -156,6 +156,10 @@ const themeDefault = createMuiTheme({
     width:'auto',
     margin: '16px 0 16px 16px'
   },
+  reverse:{
+    display:'flex',
+    flexFlow: 'row-reverse'   
+  },
   noPadding: {
     padding: 0
   },

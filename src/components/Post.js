@@ -7,6 +7,7 @@ import Collapse from 'material-ui/transitions/Collapse';
 
 import themeDefault from '../theme-default';
 
+import Rating from './Rating';
 import UserAvatar from './UserAvatar';
 import { updatePosts } from '../actions/posts'
 import { toggleComments } from '../actions/appState'
@@ -15,19 +16,15 @@ import { toggleComments } from '../actions/appState'
 class Post extends Component {
 
   handleExpandClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     this.props.toggleComments();
-  };
-  voteUp = (e) => {
-    //this.setState({ expanded: !this.state.expanded });
-  };
-  voteDown = (e) => {
-    //this.setState({ expanded: !this.state.expanded });
   };
 
   render() {
     const { post, insidedialogue, comments, commentsExpanded } = this.props;
     const date = post && post.timestamp ? new Date(post.timestamp).toDateString() : '';
-    const filteredComments = comments.filter( comment => comment.parentId === post.id)
+    const filteredComments = comments.filter(comment => comment.parentId === post.id)
     return (
       <div>
         <Card style={!insidedialogue ? themeDefault.card : themeDefault.cardNoShadow}>
@@ -46,7 +43,6 @@ class Post extends Component {
           <Divider />
 
           <CardContent>
-
             <Typography type="headline" >
               {post.title}
             </Typography>
@@ -58,24 +54,9 @@ class Post extends Component {
             <Divider />
 
             <CardActions >
-
-              <IconButton aria-label="Vote up"
-                onClick={insidedialogue ? this.voteUp : null}
-                style={themeDefault.greenColor}>
-                <i className="material-icons">thumb_up</i>
-              </IconButton>
-
-              <IconButton aria-label="Vote down"
-                onClick={insidedialogue ? this.voteDown : null}
-                style={themeDefault.warnColor}>
-                <i className="material-icons">thumb_down</i>
-              </IconButton>
-
-              <IconButton aria-label="Rating" color="primary">
-                <Badge badgeContent={post.voteScore} color="accent">
-                  <i className="material-icons">stars</i>
-                </Badge>
-              </IconButton>
+              <Link to={"#"}>
+                <Rating target={post} type="post" />
+              </Link>
               <div style={themeDefault.flexGrow} />
               <IconButton
                 onClick={insidedialogue ? this.handleExpandClick : null}
@@ -105,6 +86,7 @@ class Post extends Component {
                             <Typography type="title" gutterBottom={true}>
                               {comment.body}
                             </Typography>
+                            <Rating target={comment} type="comment" />
                           </CardContent>
                         </div>
                       )
@@ -128,16 +110,16 @@ class Post extends Component {
 function mapStateToProps(state) {
   return {
     user: state.user,
-    comments:state.comments,
-    posts:state.posts,
-    commentsExpanded: state.appState.commentsExpanded    
+    comments: state.comments,
+    posts: state.posts,
+    commentsExpanded: state.appState.commentsExpanded
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    updatePosts: (post) => dispatch(updatePosts(post)),
-    toggleComments:() => dispatch(toggleComments())
+    updatePosts: (posts) => dispatch(updatePosts(posts)),
+    toggleComments: () => dispatch(toggleComments())
   }
 }
 

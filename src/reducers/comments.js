@@ -1,4 +1,4 @@
-import { UPDATE_COMMENTS, DELETE_COMMENT, ADD_COMMENT } from '../actions/comments'
+import { UPDATE_COMMENTS, DELETE_COMMENT, ADD_COMMENT, VOTE_COMMENT_UP, VOTE_COMMENT_DOWN } from '../actions/comments'
 
 const initialCommentsState = {}
 
@@ -10,7 +10,19 @@ function comments(commentsState = initialCommentsState, action) {
     case UPDATE_COMMENTS:
       return action.comments
     case ADD_COMMENT:
-      return commentsState.push(action.comment)
+      return commentsState.concat([action.comment])
+    case VOTE_COMMENT_UP:
+      return commentsState.map(item => {
+        if (item.id === action.comment.id)
+          item.voteScore++;
+        return item
+      })
+    case VOTE_COMMENT_DOWN:
+      return commentsState.map(item => {
+        if (item.id === action.comment.id)
+          item.voteScore--;
+        return item
+      })
     default:
       return commentsState
   }

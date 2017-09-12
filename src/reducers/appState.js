@@ -174,8 +174,7 @@ function app(appState = initialAppState, action) {
         ...appState,
         commentsExpanded: !appState.commentsExpanded
       }
-
-
+      
     default:
       return appState
   }
