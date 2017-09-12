@@ -85,7 +85,7 @@ class App extends Component {
     if (this.props.snackBarOpen)
       this.props.hideSnackbar()
   }
-  handleAddNewRequestClose() {
+  onRequestClose() {
     if (this.props.dialogueAddNewOpen)
       this.props.hidePostFormDialogue()
   }
@@ -164,7 +164,7 @@ class App extends Component {
                   />
                   <PostFormDialogue
                     open={dialogueAddNewOpen}
-                    onRequestClose={this.handleAddNewRequestClose.bind(this)}
+                    onRequestClose={this.onRequestClose.bind(this)}
                   />
                 </div>
               )} />

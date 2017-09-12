@@ -9,10 +9,6 @@ import { showPostFormDialogue } from '../actions/appState'
 
 class PageBase extends Component {
 
-  state = {
-    dialogueOpen: false,
-    newPostData:{}
-  };
   openDialogue = event => {
     this.props.showPostFormDialogue()
   };

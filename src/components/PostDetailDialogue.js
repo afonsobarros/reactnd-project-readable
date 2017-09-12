@@ -10,34 +10,13 @@ import Dialog, {
 import Post from './Post';
 
 class PostDetailDialogue extends Component {
-
-  button = undefined;
-  
-  updatePost = (prop, value) => {
-    let post = this.state.post;
-    post[prop] = value
-    this.setState({ post });
-  };
-
-  handleClickListItem = event => {
-    this.setState({ catMenuOpen: true, anchorEl: event.currentTarget });
-  };
-
-  handleMenuItemClick = (event, index) => {
-    this.setState({ selectedIndex: index, catMenuOpen: false });
-  };
-
-  handleMenuClose = () => {
-    this.setState({ catMenuOpen: false });
-  };
-
+ 
   render() {
     const { classes, onRequestClose, post, user, category, categories, ...other } = this.props;
     
     return (
       post
         ? <Dialog onRequestClose={onRequestClose} {...other}>
-          <form>
             <DialogContent>
               <Post post={post} insidedialogue={true} />
             </DialogContent>
@@ -50,17 +29,14 @@ class PostDetailDialogue extends Component {
                   rowsMax="4"
                   style={themeDefault.inputFullActions}
                 />
-                <Link to={`/${category}`}>
                   <Button raised onClick={onRequestClose} color="primary" style={themeDefault.raisedButton}>
                     cancel
                 </Button>
-                </Link>
                 <Button raised color="accent" onClick={onRequestClose} style={themeDefault.raisedButton}>
                   save
               </Button>
               </div>
             </DialogActions>
-          </form>
         </Dialog>
         : null
     );

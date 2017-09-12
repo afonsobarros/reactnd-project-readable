@@ -9,7 +9,8 @@ import Post from '../components/Post';
 
 import {
   setOrderFilter, openOrderFilter, closeOrderFilter,
-  closeFilter, openFilter
+  closeFilter, openFilter,
+  showPostDetailDialogue
 } from '../actions/appState'
 
 class PostGrid extends Component {
@@ -37,7 +38,8 @@ class PostGrid extends Component {
   render() {
     const { categories, currentCat, posts, isMobile,
       orderBy, anchorEl,
-      orderOpen, filterOpen } = this.props;
+      orderOpen, filterOpen,
+      showPostDetailDialogue } = this.props;
 
     let filteredPosts = posts.length === 0 ? []
       : posts.filter(post => post.category === currentCat || currentCat === 'all').sort((a, b) => 
@@ -112,7 +114,7 @@ class PostGrid extends Component {
               filteredPosts.map((post, index) =>
                 <GridListTile key={index} cols={1} >
                   <Link key={index}
-                    to={`/${currentCat}/${post.id}`}>
+                    to={`/${currentCat}/${post.id}`} onClick={showPostDetailDialogue}>
                     <Post post={post} />
                   </Link>
                 </GridListTile>,
@@ -151,6 +153,7 @@ function mapDispatchToProps(dispatch) {
     setOrderFilter: (orderBy) => dispatch(setOrderFilter(orderBy)),
     openFilter: (target) => dispatch(openFilter(target)),
     closeFilter: () => dispatch(closeFilter()),
+    showPostDetailDialogue: () => dispatch(showPostDetailDialogue()),    
   }
 }
 

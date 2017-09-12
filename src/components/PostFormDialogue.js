@@ -39,7 +39,6 @@ class PostFormDialogue extends Component {
   handleMenuItemClick = (event, category) => {
     this.props.closeDialogueCategories();
     this.updatePost('category', category)
-    //this.setState({ selectedIndex: index, catMenuOpen: false });
   };
 
   handleMenuClose = () => {
@@ -49,7 +48,6 @@ class PostFormDialogue extends Component {
   savePost = () => {
     let { post } = this.props;
     post.author = this.props.user.userName;
-    const disabled = (post.body === 'post body' || post.title === 'post title');
     this.props.addNewPost( post );
     this.props.onRequestClose();
   };
