@@ -19,7 +19,8 @@ class Rating extends Component {
       case 'comment':
         this.props.voteCommentUp(this.props.target);
         break
-      default: ''
+      default:
+        break;
     }
     this.forceUpdate()
   };
@@ -27,14 +28,16 @@ class Rating extends Component {
   voteDown = (e) => {
     e.preventDefault();
     e.stopPropagation();
+
     switch (this.props.type) {
       case 'post':
         this.props.votePostDown(this.props.target);
-        break
+        break;
       case 'comment':
         this.props.voteCommentDown(this.props.target);
-        break
-      default: ''
+        break;
+      default:
+        break;
     }
     this.forceUpdate()
   };
@@ -50,7 +53,7 @@ class Rating extends Component {
   }
 
   render() {
-    const { target, type, posts, comments } = this.props;
+    const { target, type } = this.props;
     let voteScore = this.getScore(target.id, type);
 
     return (

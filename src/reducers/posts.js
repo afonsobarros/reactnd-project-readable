@@ -4,6 +4,7 @@ import {
   VOTE_POST_DOWN,
   DELETE_POST,
   UPDATE_POSTS,
+  EDIT_POST
 } from '../actions/posts'
 
 function posts(state = [], action) {
@@ -13,13 +14,21 @@ function posts(state = [], action) {
     case ADD_NEW_POST:
       return state.concat([post])
     case DELETE_POST:
-    return state.map(item => {
-      if (item.id === post.id)
+      return state.map(item => {
+        if (item.id === post.id)
           item.deleted = true;
-      return item
-    })
+        return item
+      })
     case UPDATE_POSTS:
       return posts
+    case EDIT_POST:
+      return state.map(item => {
+        if (item.id === post.id) {
+          item.title = post.title;
+          item.body = post.body;
+        }
+        return item
+      })
     case VOTE_POST_UP:
       return state.map(item => {
         if (item.id === post.id)

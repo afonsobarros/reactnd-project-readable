@@ -42,7 +42,7 @@ class PostGrid extends Component {
       showPostDetailDialogue } = this.props;
 
     let filteredPosts = posts.length === 0 ? []
-      : posts.filter(post => post.category === currentCat || currentCat === 'all').sort((a, b) =>
+      : posts.filter(post => (post.category === currentCat || currentCat === 'all') && !post.deleted).sort((a, b) =>
         orderBy === 'timestamp' ? b[orderBy] - a[orderBy] : b[orderBy] - a[orderBy]
       );
 

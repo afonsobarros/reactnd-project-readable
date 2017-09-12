@@ -32,6 +32,9 @@ export const TOGLE_COMMENTS = 'TOGLE_COMMENTS'
 export const UPDATE_NEW_COMMENT = 'UPDATE_NEW_COMMENT'
 export const RESET_NEW_COMMENT = 'RESET_NEW_COMMENT'
 
+export const TOGLE_EDIT = 'TOGLE_EDIT'
+
+
 //SIDENAV
 export function toggleSidenav() {
   return {
@@ -191,5 +194,11 @@ export function updateNewComment({ newComment }) {
 export function resetNewComment() {
   return {
     type: RESET_NEW_COMMENT
+  }
+}
+
+export function toggleEditMode() {
+  return {
+    type: TOGLE_EDIT,
   }
 }

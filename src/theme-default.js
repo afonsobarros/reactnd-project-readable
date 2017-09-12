@@ -89,6 +89,14 @@ const themeDefault = createMuiTheme({
     right: '16px',
     textTransform: 'capitalize'
   },
+  editAbsolute: {
+    //position: 'absolute',
+    float:'right',
+    cursor: 'pointer',
+    top: '0',
+    right: '0',
+    textTransform: 'capitalize'
+  },
   capitalize: {
 
   },

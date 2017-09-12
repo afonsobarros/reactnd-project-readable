@@ -26,10 +26,8 @@ class PostFormDialogue extends Component {
     //console.log('update post', prop, value)
     let post = this.props.post;
     post[prop] = value;
-    clearTimeout(this.updateNewPost);
-    this.updateNewPost = setTimeout(() => {
-      this.props.updateNewPost({ newPost: post });
-    }, 500);
+    this.props.updateNewPost({ newPost: post });
+    this.forceUpdate();
   };
 
   handleClickListItem = event => {
@@ -48,7 +46,7 @@ class PostFormDialogue extends Component {
   savePost = () => {
     let { post } = this.props;
     post.author = this.props.user.userName;
-    this.props.addNewPost( post );
+    this.props.addNewPost(post);
     this.props.onRequestClose();
   };
 
@@ -56,6 +54,7 @@ class PostFormDialogue extends Component {
     const { post, classes, onRequestClose, user, categories, dialogueCategoriesOpen, anchorEl, ...other } = this.props;
 
     const date = post && post.timestamp ? new Date(post.timestamp).toDateString() : '';
+    const isDisabled = post.title === '' || post.body === '';
 
     return (
       <Dialog onRequestClose={onRequestClose} {...other}>
@@ -122,7 +121,7 @@ class PostFormDialogue extends Component {
             <Button raised onClick={onRequestClose} color="primary" style={themeDefault.raisedButton}>
               cancel
             </Button>
-            <Button raised color="accent" onClick={this.savePost} style={themeDefault.raisedButton}>
+            <Button raised color="accent" disabled={isDisabled} onClick={this.savePost} style={themeDefault.raisedButton}>
               send
             </Button>
           </DialogActions>

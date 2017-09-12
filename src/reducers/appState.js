@@ -7,28 +7,28 @@ import {
   SHOW_LOADING, HIDE_LOADING,
   SHOW_SNACKBAR, HIDE_SNACKBAR,
   SHOW_HEADERMENU, HIDE_HEADERMENU,
-  SET_ORDERFILTER,
-  OPEN_ORDERFILTER,
-  CLOSE_ORDERFILTER,
-  OPEN_FILTER,
-  CLOSE_FILTER,
-  OPEN_DETAIL_CATEGORIES,
-  CLOSE_DETAIL_CATEGORIES,
-  TOGLE_COMMENTS, UPDATE_NEW_COMMENT, RESET_NEW_COMMENT
+  SET_ORDERFILTER, OPEN_ORDERFILTER, CLOSE_ORDERFILTER,
+  OPEN_FILTER, CLOSE_FILTER,
+  OPEN_DETAIL_CATEGORIES, CLOSE_DETAIL_CATEGORIES,
+  TOGLE_COMMENTS, UPDATE_NEW_COMMENT, RESET_NEW_COMMENT,
+  TOGLE_EDIT
 } from '../actions/appState'
+
+import { DELETE_POST} from '../actions/posts'
 
 function initialPostState() {
   return {
     author: '',
     id: v4(),
     timestamp: new Date().getTime(),
-    title: 'post title',
-    body: 'post body',
+    title: '',
+    body: '',
     category: 'react',
     voteScore: 0,
     deleted: false
   }
 }
+
 function initialCommentState() {
   return {
     author: '',
@@ -54,12 +54,25 @@ const initialAppState = {
   orderBy: 'timestamp',
   newComment: initialCommentState(),
   newPost: initialPostState(),
-  commentsExpanded: true
+  commentsExpanded: true,
+  editMode:false
 }
 
 function app(appState = initialAppState, action) {
 
   switch (action.type) {
+    //EDIT MODE
+    case TOGLE_EDIT:
+      return {
+        ...appState,
+        editMode: !appState.editMode
+      }
+      case DELETE_POST:
+      return {
+        ...appState,
+        editMode: false,
+        dialoguePostDetailOpen:false
+      }
     //SIDENAV STATES
     case TOGLE_SIDENAV:
       return {
@@ -129,7 +142,8 @@ function app(appState = initialAppState, action) {
     case HIDE_POSTDETAIL:
       return {
         ...appState,
-        dialoguePostDetailOpen: false,
+        editMode: false,
+        dialoguePostDetailOpen:false
       }
     //HEADER USER MENU
     case SHOW_HEADERMENU:
@@ -193,7 +207,7 @@ function app(appState = initialAppState, action) {
         ...appState,
         newComment: action.newComment
       }
-      case RESET_NEW_COMMENT:
+    case RESET_NEW_COMMENT:
       return {
         ...appState,
         newComment: initialCommentState()
