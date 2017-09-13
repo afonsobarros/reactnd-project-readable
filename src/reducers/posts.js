@@ -20,7 +20,7 @@ function posts(state = [], action) {
         return item
       })
     case UPDATE_POSTS:
-      return posts
+      return state.concat(posts)
     case UPDATE_POST:
       return state.map(item => {
         if (item.id === post.id) {
