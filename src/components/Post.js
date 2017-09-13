@@ -96,7 +96,7 @@ class Post extends Component {
             }
           </CardContent>
           {
-            !editMode
+            !editMode || !insidedialogue
               ?
               <div>
                 <Divider />

@@ -56,6 +56,18 @@ export const addPost = (post) => {
     .then(data => data);
 }
 
+export const updatePost = (post) => {
+  var request = new Request(`${api}/posts/${post.id}`, {
+    method: 'POST',
+    body: {
+      title:post.title,
+      body:post.body,
+    },
+    headers: headers
+  });
+  return fetch(request)
+    .then(data => data);
+}
 
 export const getCategories = () =>
   fetch(`${api}/categories`, { headers })

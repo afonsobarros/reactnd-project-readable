@@ -4,11 +4,13 @@ import { connect } from 'react-redux'
 import {
   openDialogueCategories,
   closeDialogueCategories,
-  updateNewPost
+  updateNewPost,
+  showSnackbar
 } from '../actions/appState'
 import {
   addNewPost,
 } from '../actions/posts'
+import * as ReadableAPI from '../utils/ReadableAPI';
 
 import themeDefault from '../theme-default';
 import { Avatar, Button, Chip, CardHeader, CardContent, Divider, Menu, MenuItem, Typography, TextField } from 'material-ui';
@@ -18,7 +20,6 @@ import Dialog, {
   DialogContent,
   DialogTitle,
 } from 'material-ui/Dialog';
-import * as ReadableAPI from '../utils/ReadableAPI';
 
 class PostFormDialogue extends Component {
   updatePostTimeout = 0;
@@ -50,9 +51,10 @@ class PostFormDialogue extends Component {
 
     ReadableAPI.addPost(post)
       .then(res => {
-        console.log(res, post)
+        //console.log(res, post)
         this.props.addNewPost(post);
         this.props.onRequestClose();
+        this.props.showSnackbar('Post saved');
       })
   };
 
@@ -154,6 +156,8 @@ function mapDispatchToProps(dispatch) {
     closeDialogueCategories: () => dispatch(closeDialogueCategories()),
     updateNewPost: (post) => dispatch(updateNewPost(post)),
     addNewPost: (post) => dispatch(addNewPost(post)),
+    showSnackbar: (message) => dispatch(showSnackbar({ message })),
+
   }
 }
 

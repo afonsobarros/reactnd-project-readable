@@ -242,6 +242,11 @@ const themeDefault = createMuiTheme({
 
       }
     },
+    MuiFormControl: {
+      root:{
+        width:'100%'
+      }
+    },
     MuiDialogActions: {
       root: {
         width:'90%',

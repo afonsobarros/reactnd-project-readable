@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import * as ReadableAPI from '../utils/ReadableAPI';
 
 import Dialog, {
-  DialogActions,
   DialogContent,
 } from 'material-ui/Dialog';
 
@@ -16,24 +16,30 @@ import Post from './Post';
 import Comment from './Comment';
 
 import { deletePost, updatePost } from '../actions/posts'
-import { toggleEditMode } from '../actions/appState'
+import { toggleEditMode, showSnackbar } from '../actions/appState'
 
 class PostDetailDialogue extends Component {
 
   toggleEdit() {
-    this.props.toggleEditMode( this.props.post );
+    this.props.toggleEditMode( {...this.props.post} );
   }
 
   onSave() {
-    this.props.updatePost(this.props.editPost);
-    this.props.toggleEditMode();
+    const post = this.props.editPost;
+    ReadableAPI.updatePost(post)
+    .then(res => {
+      this.props.updatePost(post);
+      this.props.toggleEditMode();
+      this.props.showSnackbar('Post saved');
+    })
+   
   }
   onDelete() {
     this.props.deletePost(this.props.post);
   }
 
   render() {
-    const { classes, updatePost, editPost, onRequestClose, post, user, category, categories, editMode, toggleEditMode, deletePost, ...other } = this.props;
+    const { classes, updatePost, editPost,showSnackbar, onRequestClose, post, user, category, categories, editMode, toggleEditMode, deletePost, ...other } = this.props;
 
     return (
       post
@@ -89,7 +95,8 @@ function mapDispatchToProps(dispatch) {
   return {
     toggleEditMode: (post) => dispatch(toggleEditMode(post)),
     deletePost: (post) => dispatch(deletePost(post)),
-    updatePost: (post) => dispatch(updatePost(post)),    
+    updatePost: (post) => dispatch(updatePost(post)),
+    showSnackbar: (message) => dispatch(showSnackbar({ message })),    
   }
 }
 

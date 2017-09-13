@@ -113,7 +113,7 @@ class PostGrid extends Component {
                 <GridListTile key={index} cols={1} >
                   <Link key={index}
                     to={`/${currentCat}/${post.id}`} onClick={() => showPostDetailDialogue(post)}>
-                    <Post post={post} />
+                    <Post insidedialogue={false} post={post} />
                   </Link>
                 </GridListTile>,
               )}
