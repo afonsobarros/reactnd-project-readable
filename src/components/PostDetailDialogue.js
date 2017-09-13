@@ -25,7 +25,6 @@ class PostDetailDialogue extends Component {
   }
 
   onSave() {
-    debugger
     this.props.updatePost(this.props.editPost);
     this.props.toggleEditMode();
   }
