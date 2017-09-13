@@ -42,18 +42,15 @@ class App extends Component {
 
   componentDidMount = () => {
     this.props.showLoading();
-
+    console.log('componentDidMount')
     ReadableAPI.getUser()
       .then((res) => this.onDataLoad('user', res));
-
-    ReadableAPI.getPosts()
-      .then((posts) => this.onDataLoad('posts', posts));
 
     ReadableAPI.getCategories()
       .then((categories) => this.onDataLoad('categories', categories));
 
-    ReadableAPI.getComments()
-      .then((comments) => this.onDataLoad('comments', comments));
+    ReadableAPI.getPosts()
+      .then((posts) => this.onDataLoad('posts', posts));
   }
 
   onDataLoad = (prop, val) => {
@@ -65,6 +62,11 @@ class App extends Component {
         break
       case 'posts':
         this.props.updatePosts(val)
+        val.map(val => {
+          ReadableAPI.getComments(val.id)
+            .then((comments) => this.onDataLoad('comments', comments))
+        }
+        )
         break
       case 'categories':
         this.props.updateCategories(val)

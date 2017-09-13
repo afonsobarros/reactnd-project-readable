@@ -26,8 +26,6 @@ class Post extends Component {
     this.props.toggleComments();
   };
 
-  updatePostTimeout = 0;
-
   updateEditPost = (prop, value) => {
     let post = this.props.editPost;
     post[prop] = value;
