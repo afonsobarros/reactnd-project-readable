@@ -82,7 +82,7 @@ function vote(token, id, option) {
         comment.voteScore = comment.voteScore - 1
         break
       default:
-        console.log(`comments.vote received incorrect parameter: ${option}`)
+        console.log(`comments.vote received incorrect option parameter: ${option}`)
     }
     res(comment)
   })

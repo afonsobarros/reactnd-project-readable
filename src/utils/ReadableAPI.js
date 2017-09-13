@@ -8,6 +8,7 @@ if (!token)
 
 const headers = {
   'Accept': 'application/json',
+  "Content-Type": "application/json",
   'Authorization': token
 }
 
@@ -44,14 +45,14 @@ export const getPosts = () =>
 export const addPost = (post) => {
   var request = new Request(`${api}/posts`, {
     method: 'POST',
-    body: {
-      id:post.id,
-      timestamp:post.id,
-      title:post.title,
-      body:post.body,
-      author:post.author,
-      category:post.category,
-    },
+    body: JSON.stringify({
+      id: post.id,
+      timestamp: post.timestamp,
+      title: post.title,
+      body: post.body,
+      author: post.author,
+      category: post.category,
+    }),
     headers: headers
   });
   return fetch(request)
@@ -60,17 +61,26 @@ export const addPost = (post) => {
 
 export const updatePost = (post) => {
   var request = new Request(`${api}/posts/${post.id}`, {
-    method: 'POST',
-    body: {
-      title:post.title,
-      body:post.body,
-    },
+    method: 'PUT',
+    body: JSON.stringify({
+      title: post.title,
+      body: post.body,
+    }),
     headers: headers
   });
   return fetch(request)
     .then(data => data);
 }
 
+export const votePost = (post, option) => {
+  var request = new Request(`${api}/posts/${post.id}`, {
+    method: 'POST',
+    headers: headers,
+    body: JSON.stringify({option})        
+  });
+  return fetch(request)
+    .then(data => data);
+}
 
 export const deletePost = (post) => {
   var request = new Request(`${api}/posts/${post.id}`, {
@@ -85,14 +95,33 @@ export const deletePost = (post) => {
 export const addComment = (comment) => {
   var request = new Request(`${api}/comments`, {
     method: 'POST',
-    body: {
-      id:comment.id,
-      timestamp:comment.id,
-      body:comment.body,
-      author:comment.author,
-      parentId:comment.parentId,
-    },
+    body: JSON.stringify({
+      id: comment.id,
+      timestamp: comment.timestamp,
+      body: comment.body,
+      author: comment.author,
+      parentId: comment.parentId,
+    }),
     headers: headers
+  });
+  return fetch(request)
+    .then(data => data);
+}
+
+export const voteComment = (comment, option) => {
+  var request = new Request(`${api}/comments/${comment.id}`, {
+    method: 'POST',
+    headers: headers,
+    body:JSON.stringify({option})    
+  });
+  return fetch(request)
+    .then(data => data);
+}
+
+export const deleteComment = (comment) => {
+  var request = new Request(`${api}/comments/${comment.id}`, {
+    method: 'DELETE',
+    headers: headers,    
   });
   return fetch(request)
     .then(data => data);
