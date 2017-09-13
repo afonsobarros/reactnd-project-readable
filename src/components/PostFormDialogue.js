@@ -18,6 +18,7 @@ import Dialog, {
   DialogContent,
   DialogTitle,
 } from 'material-ui/Dialog';
+import * as ReadableAPI from '../utils/ReadableAPI';
 
 class PostFormDialogue extends Component {
   updatePostTimeout = 0;
@@ -46,12 +47,17 @@ class PostFormDialogue extends Component {
   savePost = () => {
     let { post } = this.props;
     post.author = this.props.user.userName;
-    this.props.addNewPost(post);
-    this.props.onRequestClose();
+
+    ReadableAPI.addPost(post)
+      .then(res => {
+        console.log(res, post)
+        this.props.addNewPost(post);
+        this.props.onRequestClose();
+      })
   };
 
   render() {
-    const { post, classes, onRequestClose,updateNewPost,addNewPost, user, categories, dialogueCategoriesOpen, openDialogueCategories, closeDialogueCategories, anchorEl, ...other } = this.props;
+    const { post, classes, onRequestClose, updateNewPost, addNewPost, user, categories, dialogueCategoriesOpen, openDialogueCategories, closeDialogueCategories, anchorEl, ...other } = this.props;
 
     const date = post && post.timestamp ? new Date(post.timestamp).toDateString() : '';
     const isDisabled = post.title === '' || post.body === '';
@@ -118,6 +124,7 @@ class PostFormDialogue extends Component {
           <Divider />
 
           <DialogActions>
+            <span style={themeDefault.flexGrow}></span>
             <Button raised onClick={onRequestClose} color="primary" style={themeDefault.raisedButton}>
               cancel
             </Button>

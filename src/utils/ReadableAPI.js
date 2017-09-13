@@ -39,12 +39,30 @@ export const getPosts = () =>
     .then(res => res.json())
     .then(data => data);
 
+export const addPost = (post) => {
+  var request = new Request(`${api}/posts`, {
+    method: 'POST',
+    body: {
+      id:post.id,
+      timestamp:post.id,
+      title:post.title,
+      body:post.body,
+      author:post.author,
+      category:post.category,
+    },
+    headers: headers
+  });
+  return fetch(request)
+    .then(data => data);
+}
+
+
 export const getCategories = () =>
   fetch(`${api}/categories`, { headers })
     .then(res => res.json())
     .then(data => data.categories);
 
-export const getComments = (postId = "8xf0y6ziyjabvozdd253nd") =>
+export const getComments = (postId) =>
   fetch(`${api}/posts/${postId}/comments`, { headers })
     .then(res => res.json())
     .then(data => data);

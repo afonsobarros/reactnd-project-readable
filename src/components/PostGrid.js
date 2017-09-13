@@ -11,7 +11,7 @@ import {
   setOrderFilter, openOrderFilter, closeOrderFilter,
   closeFilter, openFilter,
   showPostDetailDialogue,
-  showPostFormDialogue,  
+  showPostFormDialogue,
 } from '../actions/appState'
 
 class PostGrid extends Component {
@@ -40,12 +40,12 @@ class PostGrid extends Component {
     const { categories, currentCat, posts, isMobile,
       orderBy, anchorEl,
       orderOpen, filterOpen,
-      showPostDetailDialogue,showPostFormDialogue } = this.props;
+      showPostDetailDialogue, showPostFormDialogue } = this.props;
 
-    let filteredPosts = posts.length === 0 ? []
-      : posts.filter(post => (post.category === currentCat || currentCat === 'all') && !post.deleted).sort((a, b) =>
-        orderBy === 'timestamp' ? b[orderBy] - a[orderBy] : b[orderBy] - a[orderBy]
-      );
+    let filteredPosts = posts.length === 0
+      ? []
+      : posts.filter(post => (post.category === currentCat || currentCat === 'all') && !post.deleted && post.id)
+        .sort((a, b) => orderBy === 'timestamp' ? b[orderBy] - a[orderBy] : b[orderBy] - a[orderBy]);
 
     return (
       <div>
@@ -124,8 +124,8 @@ class PostGrid extends Component {
               ? <div>
                 <p style={themeDefault.noResult}> no posts found for <b>"{currentCat}"</b></p>
                 <p>Try another category, <Link to="/all"><Button >view all</Button></Link>, or</p>
-                <Button onClick={showPostFormDialogue}raised style={themeDefault.raisedButton} color="primary"><i className="material-icons">playlist_add</i>create a new post</Button>
-                </div>
+                <Button onClick={showPostFormDialogue} raised style={themeDefault.raisedButton} color="primary"><i className="material-icons">playlist_add</i>create a new post</Button>
+              </div>
               : null
           }
         </div>
