@@ -64,9 +64,8 @@ class App extends Component {
         this.props.updatePosts(val)
         val.map(val => {
           ReadableAPI.getComments(val.id)
-            .then((comments) => this.onDataLoad('comments', comments))
-        }
-        )
+            .then(comments => this.onDataLoad('comments', comments))
+        })
         break
       case 'categories':
         this.props.updateCategories(val)

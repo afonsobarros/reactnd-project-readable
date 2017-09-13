@@ -11,7 +11,8 @@ import {
   OPEN_FILTER, CLOSE_FILTER,
   OPEN_DETAIL_CATEGORIES, CLOSE_DETAIL_CATEGORIES,
   TOGLE_COMMENTS, UPDATE_NEW_COMMENT, RESET_NEW_COMMENT,
-  TOGLE_EDIT, EDIT_POST
+  TOGLE_EDIT_POST, EDIT_POST,
+  TOGLE_EDIT_COMMENT, EDIT_COMMENT
 } from '../actions/appState'
 
 import { DELETE_POST } from '../actions/posts'
@@ -56,31 +57,44 @@ const initialAppState = {
   newPost: initialPostState(),
   editPost: {},
   commentsExpanded: true,
-  editMode:false
+  editMode: false,
+  editCommentMode: false,
+  editComment: {}
 }
 
 function app(appState = initialAppState, action) {
 
   switch (action.type) {
     //EDIT MODE
-    
+
     case EDIT_POST:
-    return {
-      ...appState,
-      editPost: action.editPost
-    }
-    case TOGLE_EDIT:
+      return {
+        ...appState,
+        editPost: action.editPost
+      }
+    case EDIT_COMMENT:
+      return {
+        ...appState,
+        editPost: action.editComment
+      }
+    case TOGLE_EDIT_POST:
       return {
         ...appState,
         editMode: !appState.editMode,
         editPost: action.editPost
       }
-      case DELETE_POST:
+      case TOGLE_EDIT_COMMENT:
+      return {
+        ...appState,
+        editCommentMode: !appState.editCommentMode,
+        editComment: action.editComment
+      }
+    case DELETE_POST:
       return {
         ...appState,
         editMode: false,
-        dialoguePostDetailOpen:false,
-        editPost:{}
+        dialoguePostDetailOpen: false,
+        editPost: {}
       }
     //SIDENAV STATES
     case TOGLE_SIDENAV:
@@ -147,14 +161,14 @@ function app(appState = initialAppState, action) {
       return {
         ...appState,
         dialoguePostDetailOpen: true,
-        editMode:false
+        editMode: false
       }
     case HIDE_POSTDETAIL:
       return {
         ...appState,
         editMode: false,
-        dialoguePostDetailOpen:false,
-        editPost:{}
+        dialoguePostDetailOpen: false,
+        editPost: {}
       }
     //HEADER USER MENU
     case SHOW_HEADERMENU:

@@ -32,8 +32,11 @@ export const TOGLE_COMMENTS = 'TOGLE_COMMENTS'
 export const UPDATE_NEW_COMMENT = 'UPDATE_NEW_COMMENT'
 export const RESET_NEW_COMMENT = 'RESET_NEW_COMMENT'
 
-export const TOGLE_EDIT = 'TOGLE_EDIT'
+export const TOGLE_EDIT_POST = 'TOGLE_EDIT_POST'
 export const EDIT_POST = 'EDIT_POST'
+
+export const EDIT_COMMENT = 'EDIT_COMMENT'
+export const TOGLE_EDIT_COMMENT = 'TOGLE_EDIT_COMMENT'
 
 //SIDENAV
 export function toggleSidenav() {
@@ -99,7 +102,7 @@ export function hidePostFormDialogue() {
 export function showPostDetailDialogue(post) {
   return {
     type: SHOW_POSTDETAIL,
-    editPost:post
+    editPost: post
   }
 }
 
@@ -200,8 +203,8 @@ export function resetNewComment() {
 
 export function toggleEditMode(post) {
   return {
-    type: TOGLE_EDIT,
-    editPost:post ? post : {}
+    type: TOGLE_EDIT_POST,
+    editPost: post ? post : {}
   }
 }
 
@@ -209,5 +212,19 @@ export function updateEditPost(editPost) {
   return {
     type: EDIT_POST,
     editPost
+  }
+}
+
+export function toggleEditComment(editComment) {
+  return {
+    type: TOGLE_EDIT_COMMENT,
+    editComment: editComment ? editComment : {}
+  }
+}
+
+export function updateEditComment(editComment) {
+  return {
+    type: EDIT_COMMENT,
+    editComment
   }
 }

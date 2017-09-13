@@ -5,6 +5,7 @@ import themeDefault from '../theme-default';
 import { Badge, IconButton } from 'material-ui';
 import { votePostDown, votePostUp } from '../actions/posts'
 import { voteCommentDown, voteCommentUp } from '../actions/comments'
+import * as ReadableAPI from '../utils/ReadableAPI';
 
 class Rating extends Component {
 
@@ -14,15 +15,22 @@ class Rating extends Component {
 
     switch (this.props.type) {
       case 'post':
-        this.props.votePostUp(this.props.target);
+        ReadableAPI.votePost(this.props.target, 'upVote')
+          .then(res => {
+            this.props.votePostUp(this.props.target);
+            this.forceUpdate()
+          })
         break
       case 'comment':
-        this.props.voteCommentUp(this.props.target);
+        ReadableAPI.voteComment(this.props.target, 'upVote')
+          .then(res => {
+            this.props.voteCommentUp(this.props.target);
+            this.forceUpdate()
+          })
         break
       default:
         break;
     }
-    this.forceUpdate()
   };
 
   voteDown = (e) => {
@@ -31,15 +39,22 @@ class Rating extends Component {
 
     switch (this.props.type) {
       case 'post':
-        this.props.votePostDown(this.props.target);
+        ReadableAPI.votePost(this.props.target, 'downVote')
+          .then(res => {
+            this.props.votePostDown(this.props.target);
+            this.forceUpdate()
+          })
         break;
       case 'comment':
-        this.props.voteCommentDown(this.props.target);
+        ReadableAPI.voteComment(this.props.target, 'downVote')
+          .then(res => {
+            this.props.voteCommentDown(this.props.target);
+            this.forceUpdate()
+          })
         break;
       default:
         break;
     }
-    this.forceUpdate()
   };
 
   getScore(id, target) {

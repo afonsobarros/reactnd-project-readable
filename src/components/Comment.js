@@ -38,7 +38,7 @@ class Comment extends Component {
   };
 
   render() {
-    const { onRequestClose, newComment, ...other } = this.props;
+    const { onRequestClose, newComment } = this.props;
     const isDisabled = newComment.body === '';
     return (
       <div style={themeDefault.actionsDiv}>

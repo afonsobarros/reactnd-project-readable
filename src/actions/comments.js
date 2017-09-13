@@ -19,7 +19,7 @@ export function addComment({ newComment }) {
   }
 }
 
-export function deleteComment({ comment }) {
+export function deleteComment( comment ) {
   return {
     type: DELETE_COMMENT,
     comment,

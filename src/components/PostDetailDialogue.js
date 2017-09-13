@@ -21,30 +21,30 @@ import { toggleEditMode, showSnackbar } from '../actions/appState'
 class PostDetailDialogue extends Component {
 
   toggleEdit() {
-    this.props.toggleEditMode( {...this.props.post} );
+    this.props.toggleEditMode({ ...this.props.post });
   }
 
   onSave() {
     const post = this.props.editPost;
     ReadableAPI.updatePost(post)
-    .then(res => {
-      this.props.updatePost(post);
-      this.props.toggleEditMode();
-      this.props.showSnackbar('Post updated');
-    })
+      .then(res => {
+        this.props.updatePost(post);
+        this.props.toggleEditMode();
+        this.props.showSnackbar('Post updated');
+      })
   }
 
   onDelete() {
     const post = this.props.post;
     ReadableAPI.deletePost(post)
-    .then(res => {
-      this.props.deletePost(post);
-      this.props.showSnackbar('Post deleted');
-    })
+      .then(res => {
+        this.props.deletePost(post);
+        this.props.showSnackbar('Post deleted');
+      })
   }
 
   render() {
-    const { classes, updatePost, editPost,showSnackbar, onRequestClose, post, user, category, categories, editMode, toggleEditMode, deletePost, ...other } = this.props;
+    const { classes, updatePost, editPost, editCommentMode, showSnackbar, onRequestClose, post, user, category, categories, editMode, toggleEditMode, deletePost, ...other } = this.props;
 
     return (
       post
@@ -52,35 +52,34 @@ class PostDetailDialogue extends Component {
           <DialogContent>
             {
               editMode
-                ? <div>
+                ?
+                <div>
                   <Button style={themeDefault.editAbsolute} onClick={this.toggleEdit.bind(this)} color="primary" >
-
                     <i className="material-icons">close</i>cancel
-                </Button>
-
+                  </Button>
                   <Button style={themeDefault.editAbsolute} onClick={this.onSave.bind(this)} color="primary" >
-
                     <i className="material-icons">check</i>save
                   </Button>
+                </div>
+                :
+                <div>
+                  <Button style={themeDefault.editAbsolute} onClick={this.toggleEdit.bind(this)} color="primary" >
+                    <i className="material-icons">edit</i>edit post
+                  </Button>
                   <Button style={themeDefault.editAbsolute} onClick={this.onDelete.bind(this)} color="primary" >
-
                     <i className="material-icons">delete</i> delete post
                   </Button>
                 </div>
-                : <Button style={themeDefault.editAbsolute} onClick={this.toggleEdit.bind(this)} color="primary" >
-
-                  <i className="material-icons">edit</i>edit post
-                </Button>
             }
 
             <Post post={post} insidedialogue={true} />
           </DialogContent>
           {
-            !editMode
+            !editMode && !editCommentMode
               ?
-                <div style={themeDefault.fullWidth} >
+              <div style={themeDefault.fullWidth} >
                 <Comment onRequestClose={onRequestClose} target={post} />
-                </div>
+              </div>
               : null
           }
         </Dialog>
@@ -93,6 +92,7 @@ function mapStateToProps(state) {
   return {
     editMode: state.appState.editMode,
     editPost: state.appState.editPost,
+    editCommentMode: state.appState.editCommentMode
   }
 }
 

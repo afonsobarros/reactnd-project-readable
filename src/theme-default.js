@@ -33,8 +33,8 @@ const themeDefault = createMuiTheme({
     display: 'flex',
     flexWrap: 'wrap',
   },
-  autoWidth:{
-    width:'auto'
+  autoWidth: {
+    width: 'auto'
   },
   avatar: {
     width: 60,
@@ -94,7 +94,7 @@ const themeDefault = createMuiTheme({
   },
   editAbsolute: {
     //position: 'absolute',
-    float:'right',
+    float: 'right',
     cursor: 'pointer',
     top: '0',
     right: '0',
@@ -102,6 +102,9 @@ const themeDefault = createMuiTheme({
   },
   capitalize: {
 
+  },
+  flex: {
+    display: 'flex',
   },
   form: {
 
@@ -118,9 +121,9 @@ const themeDefault = createMuiTheme({
     margin: '24px 24px 24px 0',
     flex: '1 1 auto',
   },
-  fullWidth:{
-    maxWidth:'100%',
-    padding:'0 24px'
+  fullWidth: {
+    maxWidth: '100%',
+    padding: '0 24px'
   },
   drawer: {
     width: 236,
@@ -243,13 +246,13 @@ const themeDefault = createMuiTheme({
       }
     },
     MuiFormControl: {
-      root:{
-        width:'100%'
+      root: {
+        width: '100%'
       }
     },
     MuiDialogActions: {
       root: {
-        width:'90%',
+        width: '90%',
         margin: '0 auto',
         padding: '0 24px',
       },
