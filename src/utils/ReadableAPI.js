@@ -127,6 +127,19 @@ export const deleteComment = (comment) => {
     .then(data => data);
 }
 
+export const updateComment = (comment) => {
+  var request = new Request(`${api}/comments/${comment.id}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      timestamp: new Date().getTime(),
+      body: comment.body,
+    }),
+    headers: headers
+  });
+  return fetch(request)
+    .then(data => data);
+}
+
 //CATEGORIES
 export const getCategories = () =>
   fetch(`${api}/categories`, { headers })

@@ -18,7 +18,7 @@ import Rating from './Rating';
 import UserAvatar from './UserAvatar';
 
 import { toggleComments, updateEditPost, toggleEditComment, updateEditComment, showSnackbar} from '../actions/appState'
-import { deleteComment } from '../actions/comments'
+import { deleteComment,updateComment } from '../actions/comments'
 
 class Post extends Component {
 
@@ -48,10 +48,10 @@ class Post extends Component {
 
   onSaveComment() {
     const comment = this.props.editComment;
-    ReadableAPI.updatePost(comment)
+    ReadableAPI.updateComment(comment)
       .then(res => {
-        this.props.updatePost(comment);
-        this.props.toggleEditMode();
+        this.props.updateComment(comment);
+        this.props.toggleEditComment();
         this.props.showSnackbar('Post updated');
         this.forceUpdate();
         
@@ -242,6 +242,7 @@ function mapDispatchToProps(dispatch) {
     toggleComments: () => dispatch(toggleComments()),
     toggleEditComment: (comment) => dispatch(toggleEditComment(comment)),
     updateEditComment: (comment) => dispatch(updateEditPost( comment )),
+    updateComment: (comment) => dispatch(updateComment( comment )),
     deleteComment: (comment) => dispatch(deleteComment(comment)),
     showSnackbar: (message) =>  dispatch(showSnackbar({message})),
   }
