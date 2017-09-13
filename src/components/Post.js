@@ -52,9 +52,8 @@ class Post extends Component {
       .then(res => {
         this.props.updateComment(comment);
         this.props.toggleEditComment();
-        this.props.showSnackbar('Post updated');
+        this.props.showSnackbar('Comment updated');
         this.forceUpdate();
-        
       })
   }
 
