@@ -21,6 +21,7 @@ class CategoriesPage extends Component {
     this.props.hidePostDetailDialogue();
     this.forceUpdate();
   }
+  
   componentDidMount() {
     // for direct links
     const currentPost = this.props.match.params['post_id'] || '';

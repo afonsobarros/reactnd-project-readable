@@ -205,9 +205,9 @@ export function toggleEditMode(post) {
   }
 }
 
-export function updateEditPost(post) {
+export function updateEditPost(editPost) {
   return {
     type: EDIT_POST,
-    editPost: post
+    editPost
   }
 }

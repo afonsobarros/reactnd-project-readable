@@ -16,15 +16,16 @@ import Post from './Post';
 import Comment from './Comment';
 
 import { deletePost, updatePost } from '../actions/posts'
-import { toggleEditMode, updateEditPost } from '../actions/appState'
+import { toggleEditMode } from '../actions/appState'
 
 class PostDetailDialogue extends Component {
 
   toggleEdit(post) {
-    this.props.toggleEditMode({ ...this.props.post });
+    this.props.toggleEditMode( this.props.post );
   }
 
   onSave() {
+    debugger
     this.props.updatePost(this.props.editPost);
     this.props.toggleEditMode();
   }
@@ -89,7 +90,7 @@ function mapDispatchToProps(dispatch) {
   return {
     toggleEditMode: (post) => dispatch(toggleEditMode(post)),
     deletePost: (post) => dispatch(deletePost(post)),
-    updateEditPost: (post) => dispatch(updateEditPost(post)),
+    updatePost: (post) => dispatch(updatePost(post)),    
   }
 }
 

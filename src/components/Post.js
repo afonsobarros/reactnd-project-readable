@@ -29,17 +29,14 @@ class Post extends Component {
   updatePostTimeout = 0;
 
   updateEditPost = (prop, value) => {
-    //console.log('update post', prop, value)
     let post = this.props.editPost;
     post[prop] = value;
-    //clearTimeout(this.updatePostTimeout);
-    //this.updatePostTimeout = setTimeout(() => {
-    this.props.updateEditPost({ post });
-    //}, 500);
+    this.props.updateEditPost( post );
+    this.forceUpdate();
   };
 
   render() {
-    const { post,editPost, insidedialogue, comments, commentsExpanded, editMode } = this.props;
+    const { post, editPost, insidedialogue, comments, commentsExpanded, editMode } = this.props;
     const date = post && post.timestamp ? new Date(post.timestamp).toDateString() : '';
     const filteredComments = comments.filter(comment => comment.parentId === post.id).sort((a, b) => b.timestamp - a.timestamp);
 
@@ -167,7 +164,7 @@ function mapStateToProps(state) {
     posts: state.posts,
     commentsExpanded: state.appState.commentsExpanded,
     editMode: state.appState.editMode,
-    editPost: state.appState.editPost    
+    editPost: state.appState.editPost
   }
 }
 
