@@ -191,7 +191,7 @@ class Post extends Component {
                                         <i className="material-icons">edit</i>
                                       </IconButton>
                                       <IconButton style={themeDefault.editAbsolute} onClick={() => this.onDeleteComment(comment)} color="primary" >
-                                        <i className="material-icons">delete</i>
+                                        <i className="material-icons">delete_forever</i>
                                       </IconButton>
                                       <Typography type="title" gutterBottom={true} style={themeDefault.comment}>
                                         {comment.body}

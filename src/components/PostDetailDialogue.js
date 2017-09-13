@@ -67,7 +67,7 @@ class PostDetailDialogue extends Component {
                     <i className="material-icons">edit</i>edit post
                   </Button>
                   <Button style={themeDefault.editAbsolute} onClick={this.onDelete.bind(this)} color="primary" >
-                    <i className="material-icons">delete</i> delete post
+                    <i className="material-icons">delete_forever</i> delete post
                   </Button>
                 </div>
             }
