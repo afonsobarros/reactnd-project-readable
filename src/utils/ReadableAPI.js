@@ -21,6 +21,7 @@ if (!user) {
   user = localStorage.user = JSON.stringify(nullUser);
 }
 
+// USER
 export const getUser = () => new Promise((resolve, reject) => resolve(JSON.parse(user)));
 
 export const deleteUser = () => new Promise((resolve, reject) => {
@@ -34,6 +35,7 @@ export const updateUser = (userData) =>
     resolve(userData);
   });
 
+//POSTS
 export const getPosts = () =>
   fetch(`${api}/posts`, { headers })
     .then(res => res.json())
@@ -69,6 +71,7 @@ export const updatePost = (post) => {
     .then(data => data);
 }
 
+
 export const deletePost = (post) => {
   var request = new Request(`${api}/posts/${post.id}`, {
     method: 'DELETE',
@@ -78,6 +81,24 @@ export const deletePost = (post) => {
     .then(data => data);
 }
 
+//COMMENTS
+export const addComment = (comment) => {
+  var request = new Request(`${api}/comments`, {
+    method: 'POST',
+    body: {
+      id:comment.id,
+      timestamp:comment.id,
+      body:comment.body,
+      author:comment.author,
+      parentId:comment.parentId,
+    },
+    headers: headers
+  });
+  return fetch(request)
+    .then(data => data);
+}
+
+//CATEGORIES
 export const getCategories = () =>
   fetch(`${api}/categories`, { headers })
     .then(res => res.json())

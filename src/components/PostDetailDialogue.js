@@ -101,7 +101,7 @@ function mapDispatchToProps(dispatch) {
     toggleEditMode: (post) => dispatch(toggleEditMode(post)),
     deletePost: (post) => dispatch(deletePost(post)),
     updatePost: (post) => dispatch(updatePost(post)),
-    showSnackbar: (message) => dispatch(showSnackbar({ message })),    
+    showSnackbar: (message) => dispatch(showSnackbar({ message })),
   }
 }
 
