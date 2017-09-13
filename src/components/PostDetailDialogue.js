@@ -30,12 +30,17 @@ class PostDetailDialogue extends Component {
     .then(res => {
       this.props.updatePost(post);
       this.props.toggleEditMode();
-      this.props.showSnackbar('Post saved');
+      this.props.showSnackbar('Post updated');
     })
-   
   }
+
   onDelete() {
-    this.props.deletePost(this.props.post);
+    const post = this.props.post;
+    ReadableAPI.deletePost(post)
+    .then(res => {
+      this.props.deletePost(post);
+      this.props.showSnackbar('Post deleted');
+    })
   }
 
   render() {

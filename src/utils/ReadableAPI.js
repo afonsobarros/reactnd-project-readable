@@ -69,6 +69,15 @@ export const updatePost = (post) => {
     .then(data => data);
 }
 
+export const deletePost = (post) => {
+  var request = new Request(`${api}/posts/${post.id}`, {
+    method: 'DELETE',
+    headers: headers
+  });
+  return fetch(request)
+    .then(data => data);
+}
+
 export const getCategories = () =>
   fetch(`${api}/categories`, { headers })
     .then(res => res.json())
