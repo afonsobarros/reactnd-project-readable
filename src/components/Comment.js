@@ -36,16 +36,18 @@ class Comment extends Component {
     const isDisabled = newComment.body === '';
     return (
       <div style={themeDefault.actionsDiv}>
-        <TextField
-          multiline
-          required
-          label="Add a comment"
-          helperText="Please don't be a troll..."
-          rowsMax="4"
-          style={themeDefault.inputFullActions}
-          onChange={(event) => this.updateComment('body', event.target.value)}
-          value={newComment.body}
-        />
+        <span style={themeDefault.flexGrow}>
+          <TextField
+            multiline
+            required
+            label="Add a comment"
+            helperText="Please don't be a troll..."
+            rowsMax="4"
+            style={themeDefault.inputFullActions}
+            onChange={(event) => this.updateComment('body', event.target.value)}
+            value={newComment.body}
+          />
+          </span>
         <Button raised onClick={onRequestClose} color="primary" style={themeDefault.raisedButton}>
           cancel
         </Button>

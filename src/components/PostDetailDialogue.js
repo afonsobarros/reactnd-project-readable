@@ -20,7 +20,7 @@ import { toggleEditMode } from '../actions/appState'
 
 class PostDetailDialogue extends Component {
 
-  toggleEdit(post) {
+  toggleEdit() {
     this.props.toggleEditMode( this.props.post );
   }
 
@@ -67,9 +67,9 @@ class PostDetailDialogue extends Component {
           {
             !editMode
               ?
-              <DialogActions>
+                <div style={themeDefault.fullWidth} >
                 <Comment onRequestClose={onRequestClose} target={post} />
-              </DialogActions>
+                </div>
               : null
           }
         </Dialog>

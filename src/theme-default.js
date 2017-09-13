@@ -33,6 +33,9 @@ const themeDefault = createMuiTheme({
     display: 'flex',
     flexWrap: 'wrap',
   },
+  autoWidth:{
+    width:'auto'
+  },
   avatar: {
     width: 60,
     height: 60,
@@ -113,7 +116,11 @@ const themeDefault = createMuiTheme({
   },
   inputFullActions: {
     margin: '24px 24px 24px 0',
-    flex: '1'
+    flex: '1 1 auto',
+  },
+  fullWidth:{
+    maxWidth:'100%',
+    padding:'0 24px'
   },
   drawer: {
     width: 236,
@@ -237,8 +244,9 @@ const themeDefault = createMuiTheme({
     },
     MuiDialogActions: {
       root: {
-        margin: 0,
-        padding: '0 24px'
+        width:'90%',
+        margin: '0 auto',
+        padding: '0 24px',
       },
     }
   },
