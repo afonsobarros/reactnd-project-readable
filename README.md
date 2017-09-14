@@ -2,12 +2,6 @@
 
 This is an assessment project for Udacity's [React Nanodegree program](https://www.udacity.com/course/react-nanodegree--nd019), developed by [React Training](https://reacttraining.com).
 
-## Specific Assessment Requirements
-* Use React to build your application UI
-
-* All application state is managed by the Redux store. State-based props are mapped from the store rather than stored as component state. There are times in production environments when it is appropriate to have components own some part of their own state. Since the purpose of this project is to assess the ability to implement Redux in code, that is not an option available for this project.
-
-
 # Installing Dependencies and Running the application
 
 ### `npm install`
@@ -16,6 +10,11 @@ This is an assessment project for Udacity's [React Nanodegree program](https://w
 ### `npm start`
 * runs the application at localhost:3000 
 * runs an aditional server API at localhost:5001
+
+## Specific Assessment Requirements
+* Use React and Redux to build your application UI
+* All application state is managed by the Redux store. State-based props are mapped from the store rather than stored as component state. There are times in production environments when it is appropriate to have components own some part of their own state. Since the purpose of this project is to assess the ability to implement Redux in code, that is not an option available for this project.
+* Updates are triggered by dispatching actions to reducers
 
 ## API Server
 This assessment used the [Readable API Server Starter Template](https://github.com/udacity/reactnd-project-readable-starter) but was changed to be able to run with the app. 
