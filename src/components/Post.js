@@ -240,7 +240,7 @@ function mapDispatchToProps(dispatch) {
     updateEditPost: (post) => dispatch(updateEditPost(post)),
     toggleComments: () => dispatch(toggleComments()),
     toggleEditComment: (comment) => dispatch(toggleEditComment(comment)),
-    updateEditComment: (comment) => dispatch(updateEditPost( comment )),
+    updateEditComment: (comment) => dispatch(updateEditComment( comment )),
     updateComment: (comment) => dispatch(updateComment( comment )),
     deleteComment: (comment) => dispatch(deleteComment(comment)),
     showSnackbar: (message) =>  dispatch(showSnackbar({message})),
