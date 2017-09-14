@@ -40,6 +40,7 @@ class PostDetailDialogue extends Component {
       .then(res => {
         this.props.deletePost(post);
         this.props.showSnackbar('Post deleted');
+        this.props.onRequestClose();
       })
   }
 
