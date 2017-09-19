@@ -42,7 +42,7 @@ class App extends Component {
 
   componentDidMount = () => {
     this.props.showLoading();
-    console.log('componentDidMount')
+    //console.log('componentDidMount')
     ReadableAPI.getUser()
       .then((res) => this.onDataLoad('user', res));
 
