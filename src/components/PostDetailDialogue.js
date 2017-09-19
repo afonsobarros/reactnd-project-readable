@@ -48,7 +48,7 @@ class PostDetailDialogue extends Component {
     const { classes, updatePost, editPost, editCommentMode, showSnackbar, onRequestClose, post, user, category, categories, editMode, toggleEditMode, deletePost, ...other } = this.props;
 
     return (
-      post
+      post && !post.deleted
         ? <Dialog onRequestClose={onRequestClose} {...other}>
           <DialogContent>
             {
